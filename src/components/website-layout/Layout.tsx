@@ -6,13 +6,13 @@ import Container from "@/components/shared/Container";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>
+    <div className="bg-[#F9FBFD]">
       <Container
         style={{
           backgroundImage: `url(/header-bg.jpg)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-          backgroundPosition: "bottom",
+          backgroundPosition: "top",
         }}
       >
         <Navbar />

@@ -3,10 +3,12 @@ import type { ReactElement } from "react";
 import type { NextPageWithLayout } from "./_app";
 import Layout from "@/components/website-layout/Layout";
 import LetsGrowTogether from "@/components/views/website/LetsGrowTogether";
+import MockupSlider from "@/components/views/website/MockupSlider";
 
 const Page: NextPageWithLayout = () => {
   return (
     <>
+      <MockupSlider />
       <LetsGrowTogether />
     </>
   );

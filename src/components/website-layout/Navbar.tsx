@@ -20,10 +20,15 @@ const Navbar = () => {
           Home
         </Link>
         <Flex>
-          <IconButton onClick={() => {}} Icon={ShoppingCartIcon} />
+          <IconButton
+            variant={"ghost"}
+            onClick={() => {}}
+            Icon={ShoppingCartIcon}
+            className="rounded-full px-8 py-6 "
+          />
           <Button
             onClick={() => Router.push("/login")}
-            className="bg-occupy-primary px-6 text-white rounded-full"
+            className="bg-occupy-primary px-8 py-6  text-white font-bold text-[16px] rounded-full"
           >
             Log in
           </Button>
