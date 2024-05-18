@@ -9,7 +9,7 @@ import PlayStoreIcon from "@/assets/icon/playstore.svg";
 const Header = () => {
   return (
     <header className="w-full pt-12 lg:pt-0 items-center grid gap-4 lg:grid-cols-2">
-      <div className="pb-12">
+      <div className="lg:pb-12">
         <p className="text-[54px] lg:text-[66px] font-bold">
           Grocery Shopping just got{" "}
           <span className="text-occupy-primary">Better</span>
