@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import Router from "next/router";
 import Flex from "@/components/shared/Flex";
 import { AppleIcon } from "lucide-react";
+import AppStoreIcon from "@/assets/icon/appstore.svg";
+import PlayStoreIcon from "@/assets/icon/playstore.svg";
 const Header = () => {
   return (
     <header className="w-full pt-12 lg:pt-0 items-center grid gap-4 lg:grid-cols-2">
@@ -17,33 +19,30 @@ const Header = () => {
           dolorum provident nostrum sint natus, sapiente non quisquam ad
           corporis nihil!
         </p>
-        <Button
-          onClick={() => Router.push("/login")}
-          className="bg-occupy-primary px-6 text-white rounded-full"
-        >
+        <Button onClick={() => Router.push("/login")} className=" rounded-full">
           Go Shopping
         </Button>
         <Flex className="mt-4">
-          <Flex
-            onClick={() => {}}
-            className="bg-[#333333] rounded-md cursor-pointer text-white  p-2"
-          >
-            <AppleIcon />
-            <div>
-              <p className="text-[11px]">Download on the</p>
-              <p className="font-[500]">App Store</p>
-            </div>
-          </Flex>
-          <Flex
-            onClick={() => {}}
-            className="bg-[#333333] rounded-md cursor-pointer text-white  p-2"
-          >
-            <AppleIcon />
-            <div>
-              <p className="text-[11px]">Download on the</p>
-              <p className="font-[500]">Google play</p>
-            </div>
-          </Flex>
+          {[
+            { desc: "App Store", onClick: () => {}, imgSrc: AppStoreIcon },
+            { desc: "Google play", onClick: () => {}, imgSrc: PlayStoreIcon },
+          ].map((data, idx) => (
+            <Flex
+              key={idx}
+              onClick={data.onClick}
+              className="bg-[#333333] rounded-lg cursor-pointer text-white  p-4"
+            >
+              <Image
+                className="w-[24px]"
+                src={data.imgSrc}
+                alt={data.desc + "-icon"}
+              />
+              <div>
+                <p className="text-[11px] text-[#B3B3B3]">Download on the</p>
+                <p className="font-[500]">{data.desc}</p>
+              </div>
+            </Flex>
+          ))}
         </Flex>
       </div>
       <Image alt="header-image" src={CartImage} />
