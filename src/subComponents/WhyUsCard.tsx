@@ -1,12 +1,11 @@
 import { WhyUs } from "@/data/whyUsData";
 import Image from "next/image";
-import Link from "next/link";
 
-interface TalentCardProps {
+interface CardProps {
   data: WhyUs;
 }
 
-const WhyUsCard: React.FC<TalentCardProps> = ({ data }) => (
+const WhyUsCard: React.FC<CardProps> = ({ data }) => (
   <div className="border border-[#6C6C72] rounded-lg">
     <div className="flex items-start gap-2 p-2">
       <Image src={"/icons/checkGood.svg"} alt="check mark" width={20} height={20} />
