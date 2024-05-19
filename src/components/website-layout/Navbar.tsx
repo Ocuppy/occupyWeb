@@ -23,7 +23,7 @@ const Navbar = () => {
           <IconButton
             variant={"ghost"}
             onClick={() => {}}
-            Icon={ShoppingCartIcon}
+            Icon={<ShoppingCartIcon />}
             className="rounded-full px-8 py-6 "
           />
           <Button

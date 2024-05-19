@@ -4,7 +4,11 @@ interface IButtonProps extends ButtonProps {
   Icon: any;
 }
 const IconButton = ({ Icon, ...props }: IButtonProps) => {
-  return <Button {...props}>{<Icon />}</Button>;
+  return (
+    <Button size={"icon"} {...props}>
+      {Icon}
+    </Button>
+  );
 };
 
 export default IconButton;
