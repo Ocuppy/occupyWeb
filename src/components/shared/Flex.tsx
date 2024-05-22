@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { MouseEventHandler, ReactNode } from "react";
 
 const Flex = ({
@@ -10,7 +11,7 @@ const Flex = ({
   onClick?: MouseEventHandler<HTMLDivElement> | undefined;
 }) => {
   return (
-    <div onClick={onClick} className={`flex items-center gap-2 ${className}`}>
+    <div onClick={onClick} className={cn("flex items-center gap-2", className)}>
       {children}
     </div>
   );
