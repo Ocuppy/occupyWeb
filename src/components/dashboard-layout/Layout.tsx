@@ -23,7 +23,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
       </div>
       <div className="flex-1 px-8 pb-4 flex flex-col h-full">
         <DashboardHeader />
-        <main className="overflow-y-auto hideScroll bg-red-200 py-4 mt-12 flex-1 h-full grow">
+        <main className="overflow-y-auto hideScroll mx-6 py-4 mt-12 flex-1 h-full grow">
           {children}
         </main>
       </div>
