@@ -37,11 +37,11 @@ const LetsGrowTogether = () => {
         <p className="text-center font-semibold text-[40px] mb-8">
           Let’s Grow Together
         </p>
-        <div className="grid gap-8 grid-cols md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-wrap lg:grid lg:grid-cols-3 justify-center gap-8 ">
           {DataList.map((data, index) => (
             <div
               key={index}
-              className="p-4 pt-10 pb-4 flex flex-col gap-2 rounded-md bg-white"
+              className="p-4 pt-10 pb-4 flex-[0_0_100%] md:flex-[0_0_calc(50%-32px)] flex flex-col gap-2 rounded-md bg-white"
             >
               <div className="mx-auto">
                 <Image alt="icon" src={data.image} className="w-[120px]" />
