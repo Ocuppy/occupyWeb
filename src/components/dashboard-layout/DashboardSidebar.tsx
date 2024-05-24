@@ -26,42 +26,29 @@ const ParentLinkComponent = ({
   return (
     <Flex className="gap-4">
       <link.icon width={18} />
-      {showFullSidebar && (
-        <span className="font-semibold text-[15px]">{link.title}</span>
-      )}
+      {showFullSidebar && <span className="font-semibold text-[15px]">{link.title}</span>}
     </Flex>
   );
 };
 
-const DashboardSidebar = ({
-  showFullSidebar,
-}: {
-  showFullSidebar: boolean;
-}) => {
+const DashboardSidebar = ({ showFullSidebar }: { showFullSidebar: boolean }) => {
   const router = useRouter();
 
   return (
     <aside
-      className={`bg-occupy-primary  rounded-r-lg ${
+      className={`bg-occupy-primary max-h-screen rounded-r-lg ${
         showFullSidebar && "min-w-[250px]"
       } text-white p-4 overflow-y-auto h-full`}
     >
       <div className="flex items-center relative gap-4 pt-4 pb-16">
         <Avatar>
-          <AvatarImage
-            src={"../../../assets/images/avatar.png"}
-            alt="profile-avatar"
-          />
+          <AvatarImage src={"../../../assets/images/avatar.png"} alt="profile-avatar" />
           <AvatarFallback className="bg-slate-400">CN</AvatarFallback>
         </Avatar>
         {showFullSidebar && (
           <div className="flex  text-white flex-col">
-            <p className="uppercase opacity-[40%] text-[10px]">
-              Live Well Supermarket
-            </p>
-            <p className="font-medium opacity-[80%] text-[14px]">
-              Andrew Smith
-            </p>
+            <p className="uppercase opacity-[40%] text-[10px]">Live Well Supermarket</p>
+            <p className="font-medium opacity-[80%] text-[14px]">Andrew Smith</p>
           </div>
         )}
       </div>
@@ -76,10 +63,7 @@ const DashboardSidebar = ({
                     <AccordionTrigger
                       className={`flex gap-4 p-2 py-[12px] pl-4 rounded-lg items-center bg-transparent text-[#c183b0]`}
                     >
-                      <ParentLinkComponent
-                        showFullSidebar={showFullSidebar}
-                        link={link}
-                      />
+                      <ParentLinkComponent showFullSidebar={showFullSidebar} link={link} />
                     </AccordionTrigger>
                     <AccordionContent>
                       <div className="ml-8  my-4">
@@ -89,9 +73,7 @@ const DashboardSidebar = ({
                           const isLast = idx === link?.subLinks?.length! - 1;
                           return (
                             <div
-                              className={`flex items-baseline gap-4 ${
-                                !isLast && "mb-[-10px]"
-                              }`}
+                              className={`flex items-baseline gap-4 ${!isLast && "mb-[-10px]"}`}
                               key={idx}
                             >
                               <div
@@ -102,9 +84,7 @@ const DashboardSidebar = ({
                               <Link
                                 href={linkToClick}
                                 className={`flex font-semibold px-2 rounded-lg items-center ${
-                                  isCurrentPath
-                                    ? "text-white underline"
-                                    : "text-[#c183b0]"
+                                  isCurrentPath ? "text-white underline" : "text-[#c183b0]"
                                 }`}
                               >
                                 {subLink.title}
@@ -125,10 +105,7 @@ const DashboardSidebar = ({
                   }`}
                   href={link.url}
                 >
-                  <ParentLinkComponent
-                    showFullSidebar={showFullSidebar}
-                    link={link}
-                  />
+                  <ParentLinkComponent showFullSidebar={showFullSidebar} link={link} />
                 </Link>
               )}
             </div>
