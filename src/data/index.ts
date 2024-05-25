@@ -36,3 +36,14 @@ export const AddStoreFormFields: IFieldValue[] = [
     type: "date",
   },
 ];
+
+export const APPROVALSTATUS = {
+  pending: {
+    classNames: "text-[#A5A5A5] bg-[#EBEBEB]",
+    label: "Pending",
+  },
+  approved: {
+    classNames: "text-[#06A561] bg-[#C4F8E2]",
+    label: "Approved",
+  },
+};
