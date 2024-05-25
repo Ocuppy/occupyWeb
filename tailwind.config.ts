@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        nunito: ["Nunito Sans", "sans-serif"],
+      },
       colors: {
         occupy: {
           primary: "#A74E8E",
