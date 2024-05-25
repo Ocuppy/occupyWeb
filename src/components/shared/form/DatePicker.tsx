@@ -25,7 +25,6 @@ const DatePicker = ({
       <Popover>
         <PopoverTrigger asChild>
           <FormControl>
-            {/* <p>{fieldValue.label}</p> */}
             <Button
               variant={"outline"}
               className={cn(
@@ -48,9 +47,14 @@ const DatePicker = ({
             selected={field.value}
             onSelect={field.onChange}
             disabled={(date) =>
-              date > new Date() || date < new Date("1900-01-01")
+              (fieldValue?.isDateOfBirth && date > new Date()) ||
+              date < new Date("1900-01-01")
             }
             initialFocus
+            fromYear={1900}
+            today={field.value}
+            toYear={new Date().getFullYear()}
+            captionLayout="dropdown-buttons"
           />
         </PopoverContent>
       </Popover>
