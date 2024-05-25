@@ -13,6 +13,7 @@ const SteppedFormContext = createContext<SteppedFormContextType | null>(null);
 const SteppedFormProvider = ({ children }: { children: React.ReactNode }) => {
   const [savedFormValues, setSavedFormValues] = useState<any>(null);
   const [currentStep, setCurrentStep] = useState<number>(1);
+
   const goBack = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
@@ -50,7 +51,7 @@ export const useSteppedFormContext = () => {
   return context;
 };
 
-export function withSteppedFormContextProvider<T>(
+export function withSteppedFormContextProvider<T extends {}>(
   Component: React.ComponentType<T>
 ) {
   return function WithSteppedFormContextProvider(props: T) {
@@ -61,11 +62,3 @@ export function withSteppedFormContextProvider<T>(
     );
   };
 }
-
-// export function SteppedFormContextProvider({
-//   children,
-// }: {
-//   children: React.ReactNode;
-// }) {
-//   return <SteppedFormProvider>{children}</SteppedFormProvider>;
-// }

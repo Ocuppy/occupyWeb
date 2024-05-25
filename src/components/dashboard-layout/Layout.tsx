@@ -8,7 +8,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const [showFullSidebar, setShowFullSidebar] = useState<boolean>(true);
   const toggleSidebarState = () => setShowFullSidebar(!showFullSidebar);
   return (
-    <div className="flex gap-12  min-h-screen bg-[#F9FBFD] pr-12">
+    <div className="flex gap-12  h-[100dvh] bg-[#F9FBFD] pr-12">
       <div className="w-max relative ">
         <Button
           onClick={toggleSidebarState}

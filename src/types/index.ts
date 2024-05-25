@@ -20,4 +20,5 @@ export interface IFieldValue {
   name: string;
   type?: HTMLInputTypeAttribute | undefined;
   options?: { label: string; value: string }[];
+  isDateOfBirth?: boolean;
 }
