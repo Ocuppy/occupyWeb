@@ -1,9 +1,7 @@
 "use client";
 
-// * * This is just a demostration of edit modal, actual functionality may vary
-
 import { z } from "zod";
-import { OrderType, labels, priorities, statuses } from "@/lib/validations/schema";
+import { OrderType } from "@/lib/validations/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -55,9 +53,9 @@ export default function EditDialog({ order }: EditProps) {
     resolver: zodResolver(editSchema),
     defaultValues: {
       order_id: order.order_id,
-      product: order.product,
+      product: order.product.name,
       status: order.status,
-      customer: order.customer,
+      customer: order.customer.name,
       total: order.total,
       payment: order.payment,
       date: order.date,

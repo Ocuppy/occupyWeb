@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-export const statuses = ["canceled", "done", "in-progress", "todo", "backlog"] as const;
-export const labels = ["bug", "feature", "documentation"] as const;
-export const priorities = ["low", "medium", "high"] as const;
+// export const statuses = ["canceled", "done", "in-progress", "todo", "backlog"] as const;
+// export const labels = ["bug", "feature", "documentation"] as const;
+// export const priorities = ["low", "medium", "high"] as const;
 
 // Define the schema for the product
 export const productSchema = z.object({
   name: z.string(),
-  image: z.string(),  // assuming image is a URL
+  image: z.string(), // assuming image is a URL
   additionalDetails: z.string().optional(),
 });
 
@@ -16,7 +16,6 @@ export const customerSchema = z.object({
   name: z.string(),
   email: z.string().email(),
 });
-
 
 export const orderSchema = z.object({
   order_id: z.string(),

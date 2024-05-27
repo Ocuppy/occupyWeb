@@ -32,7 +32,7 @@ export const columns: ColumnDef<OrderType>[] = [
     accessorKey: "order_id",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Order ID" />,
     cell: ({ row }) => (
-      <div className="w-[80px] text-occupy-primary">{row.getValue("order_id")}</div>
+      <div className="text-sm text-occupy-primary">{row.getValue("order_id")}</div>
     ),
     enableSorting: false,
     enableHiding: false,
