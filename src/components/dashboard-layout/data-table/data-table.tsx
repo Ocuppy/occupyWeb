@@ -1,3 +1,4 @@
+// DataTable.js or DataTable.tsx
 import * as React from "react";
 import {
   ColumnDef,
@@ -93,7 +94,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center bg-[#F9FBFD]">
-                  <div className="flex flex-col gap-2 items-center  justify-center">
+                  <div className="flex flex-col gap-2 items-center justify-center">
                     <Image
                       src={"/images/no-order.svg"}
                       width={"200"}
@@ -104,7 +105,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                       No Ongoing Order
                     </span>
                     <p className="text-[#AAAAAA] font-normal text-center text-sm">
-                      We’re good, No ongoing ORder
+                      We’re good, No ongoing Order
                     </p>
                   </div>
                 </TableCell>

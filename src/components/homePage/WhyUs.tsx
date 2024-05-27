@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const WhyUs = () => {
   return (
-    <section className="bg-white flex flex-col font-[inter] gap-6">
+    <section className="bg-white flex flex-col pt-20 gap-6">
       <div className="flex flex-col justify-center items-center px-6 lg:px-0 gap-4">
         <h1 className="font-bold text-[#232233] text-2xl md:text-3xl">Why Choose Us</h1>
         <p className="font-normal text-[#6C6C72] text-sm md:text-lg text-center md:w-[601px]">

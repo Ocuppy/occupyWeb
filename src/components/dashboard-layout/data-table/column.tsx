@@ -1,9 +1,7 @@
+import Image from "next/image";
 import { ColumnDef } from "@tanstack/react-table";
-
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-
-import { label_options, priority_options, status_options } from "../../filters";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 import { OrderType } from "@/lib/validations/schema";
@@ -33,79 +31,77 @@ export const columns: ColumnDef<OrderType>[] = [
   {
     accessorKey: "order_id",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Order ID" />,
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("order_id")}</div>,
+    cell: ({ row }) => (
+      <div className="w-[80px] text-occupy-primary">{row.getValue("order_id")}</div>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "product",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Product" />,
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("product")}</div>,
-    // cell: ({ row }) => {
-    //   const label = label_options.find((label: any) => label.value === row.original.label);
-
-    //   return (
-    //     <div className="flex space-x-2">
-    //       {label && <Badge variant="outline">{label.label}</Badge>}
-    //       <span className="max-w-[500px] truncate font-medium">{row.getValue("product")}</span>
-    //     </div>
-    //   );
-    // },
+    cell: ({ row }) => {
+      const product = row.getValue("product") as {
+        name: string;
+        image: string;
+        additionalDetails?: string;
+      };
+      return (
+        <div className="flex items-center">
+          <div className="bg-[#E0E2E7] h-[44px] w-[44px] rounded-lg">
+            <Image src={product.image} alt={product.name} width={50} height={50} />
+          </div>
+          <div className="ml-2 flex flex-col">
+            <span className="text-sm">{product.name}</span>
+            {product.additionalDetails && (
+              <span className="text-xs text-gray-500">
+                {product.additionalDetails} other products
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "date",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />,
     cell: ({ row }) => {
       const field = row.getValue("date") as Date;
-      return <div>{field?.toDateString()}</div>;
+      return <div className="text-sm">{field?.toDateString()}</div>;
     },
   },
   {
     accessorKey: "customer",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Customer" />,
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("customer")}</div>,
+    cell: ({ row }) => {
+      const customer = row.getValue("customer") as { name: string; email: string };
+      return (
+        <div className="flex flex-col">
+          <span className="text-sm">{customer.name}</span>
+          <span className="text-xs text-gray-500">{customer.email}</span>
+        </div>
+      );
+    },
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "total",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Total" />,
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("total")}</div>,
+    cell: ({ row }) => <div className="text-sm">{row.getValue("total")}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "payment",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Payment" />,
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("payment")}</div>,
-    // filterFn: (row, id, value) => {
-    //   return value.includes(row.getValue(id));
-    // },
+    cell: ({ row }) => <div className="text-sm">{row.getValue("payment")}</div>,
   },
   {
     accessorKey: "status",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
-    // cell: ({ row }) => {
-    //   const status = status_options.find(
-    //     (status: any) => status.value === row.getValue("status")
-    //   );
-
-    //   if (!status) {
-    //     return null;
-    //   }
-
-    //   return (
-    //     <div className="flex w-[100px] items-center">
-    //       {status.icon && <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />}
-    //       <span>{status.label}</span>
-    //     </div>
-    //   );
-    // },
-
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("status")}</div>,
-    // filterFn: (row, id, value) => {
-    //   return value.includes(row.getValue(id));
-    // },
+    cell: ({ row }) => <div className="text-sm">{row.getValue("status")}</div>,
   },
   {
     id: "actions",

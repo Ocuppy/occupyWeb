@@ -25,7 +25,7 @@ const CheckAppSection: React.FC = () => {
   };
 
   return (
-    <section className="flex justify-center items-center  pb-20 font-[inter]">
+    <section className="flex justify-center items-center  pb-20">
       <div className="relative w-full px-12 md:px-0 max-w-lg md:max-w-2xl">
         <Slider ref={sliderRef} {...settings} initialSlide={currentSlide}>
           {checkAppData.map((feature, index) => (
