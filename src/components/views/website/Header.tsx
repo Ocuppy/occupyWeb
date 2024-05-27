@@ -19,7 +19,7 @@ const Header = () => {
           dolorum provident nostrum sint natus, sapiente non quisquam ad
           corporis nihil!
         </p>
-        <Button onClick={() => Router.push("/login")} className=" rounded-full">
+        <Button onClick={() => Router.push("/auth/login")} className=" rounded-full">
           Go Shopping
         </Button>
         <Flex className="mt-4">

@@ -27,7 +27,7 @@ const Navbar = () => {
             className="rounded-full px-8 py-6 "
           />
           <Button
-            onClick={() => Router.push("/login")}
+            onClick={() => Router.push("/auth/login")}
             className="bg-occupy-primary px-8 py-6  text-white font-bold text-[16px] rounded-full"
           >
             Log in
