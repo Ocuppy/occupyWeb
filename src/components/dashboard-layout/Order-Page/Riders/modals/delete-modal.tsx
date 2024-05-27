@@ -8,10 +8,11 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { RiderType } from "@/lib/validations/riders.schema";
 import { OrderType } from "@/lib/validations/schema";
 
 type DeleteProps = {
-  task: OrderType;
+  task: RiderType;
   isOpen: boolean;
   showActionToggle: (open: boolean) => void;
 };
@@ -25,7 +26,7 @@ export default function DeleteDialog({ task, isOpen, showActionToggle }: DeleteP
           <AlertDialogTitle>Are you sure absolutely sure ?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. You are about to delete Order Details of{" "}
-            <b>{task?.product.name}</b>
+            <b>{task?.item}</b>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

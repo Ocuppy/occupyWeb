@@ -8,9 +8,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Eye, EyeOff } from "lucide-react";
 import { loginValidationSchema } from "@/formValidation/yup.validation";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -24,14 +26,20 @@ const Login = () => {
     validationSchema: loginValidationSchema,
     onSubmit: (values) => {
       console.log(values);
-      // handle form submission
+      router.push("/dashboard");
     },
   });
 
   return (
     <section className="lg:relative font-[inter] w-full min-h-screen flex lg:items-center lg:justify-center">
       <div className="lg:absolute hidden lg:block top-0 left-0 w-full h-full">
-        <Image src={"/images/onboarding.png"} alt="" layout="fill" objectFit="cover" className="w-full h-full" />
+        <Image
+          src={"/images/onboarding.png"}
+          alt=""
+          layout="fill"
+          objectFit="cover"
+          className="w-full h-full"
+        />
       </div>
 
       <div className="lg:relative lg:z-10 flex items-center gap-20 justify-start w-full lg:py-20 lg:px-8">
@@ -44,7 +52,9 @@ const Login = () => {
           <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
           <div className="flex flex-col items-start gap-3 w-full">
             <h3 className="text-[#12141A] font-medium text-2xl">Login</h3>
-            <p className="text-sm text-[#606778] font-medium pb-12">Login to Access Your Account</p>
+            <p className="text-sm text-[#606778] font-medium pb-12">
+              Login to Access Your Account
+            </p>
             {/* input form  */}
             <form className="flex flex-col gap-4 w-full" onSubmit={formik.handleSubmit}>
               <div className="flex flex-col gap-2 w-full">
@@ -59,7 +69,11 @@ const Login = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
-                  className={formik.touched.email && formik.errors.email ? "border-red-700 w-full" : "w-full"}
+                  className={
+                    formik.touched.email && formik.errors.email
+                      ? "border-red-700 w-full"
+                      : "w-full"
+                  }
                 />
                 {formik.touched.email && formik.errors.email ? (
                   <div className="text-red-500 text-sm">{formik.errors.email}</div>
@@ -78,9 +92,16 @@ const Login = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
-                  className={formik.touched.password && formik.errors.password ? "border-red-700 w-full" : "w-full"}
+                  className={
+                    formik.touched.password && formik.errors.password
+                      ? "border-red-700 w-full"
+                      : "w-full"
+                  }
                 />
-                <div className="absolute top-10 right-4 cursor-pointer" onClick={togglePasswordVisibility}>
+                <div
+                  className="absolute top-10 right-4 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </div>
                 {formik.touched.password && formik.errors.password ? (
@@ -90,7 +111,10 @@ const Login = () => {
               <article className="inline-flex gap-3 w-full">
                 <p className="font-light text-sm text-[#7B8499]">
                   Can't remember your password?{" "}
-                  <Link href={"/auth/forget-password"} className="text-[#A74E8E] font-medium underline">
+                  <Link
+                    href={"/auth/forget-password"}
+                    className="text-[#A74E8E] font-medium underline"
+                  >
                     Forget Password
                   </Link>
                 </p>
