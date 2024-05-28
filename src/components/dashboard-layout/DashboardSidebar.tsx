@@ -44,7 +44,7 @@ const DashboardSidebar = ({
     <aside
       className={`bg-occupy-primary  rounded-r-lg ${
         showFullSidebar && "min-w-[250px]"
-      } text-white p-4 overflow-y-auto h-full`}
+      } text-white p-4 overflow-y-auto top-0 h-screen sticky`}
     >
       <div className="flex items-center relative gap-4 pt-4 pb-16">
         <Avatar>
