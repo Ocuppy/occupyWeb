@@ -4,11 +4,7 @@ import { Button } from "@/components/ui/button";
 import Router from "next/router";
 import React from "react";
 
-const NoSupermarkets = ({
-  toggleOpenState,
-}: {
-  toggleOpenState?: () => void;
-}) => {
+const NoSupermarkets = () => {
   return (
     <Flex className="flex-col h0full gap-4 max-w-[500px] p-4 rounded-lg shadow-[0px_2px_10px_rgba(38,44,71,0.16)]">
       <div className="size-[75px] flex items-center justify-center rounded-full bg-[#ECF2FF] text-occupy-primary">
