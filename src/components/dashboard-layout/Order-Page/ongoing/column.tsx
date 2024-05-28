@@ -1,10 +1,9 @@
 import Image from "next/image";
 import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { OrderType } from "@/lib/validations/schema";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
-import { OrderType } from "@/lib/validations/schema";
 
 export const columns: ColumnDef<OrderType>[] = [
   {
@@ -37,15 +36,38 @@ export const columns: ColumnDef<OrderType>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  // {
+  //   accessorKey: "product",
+  //   header: ({ column }) => <DataTableColumnHeader column={column} title="Product" />,
+  //   cell: ({ row }) => {
+  //     const product = row.getValue("product") as {
+  //       name: string;
+  //       image: string;
+  //       additionalDetails?: string;
+  //     };
+  //     return (
+  //       <div className="flex items-center">
+  //         <div className="bg-[#E0E2E7] h-[44px] w-[44px] rounded-lg">
+  //           <Image src={product.image} alt={product.name} width={50} height={50} />
+  //         </div>
+  //         <div className="ml-2 flex flex-col">
+  //           <span className="text-sm">{product.name}</span>
+  //           {product.additionalDetails && (
+  //             <span className="text-xs text-gray-500">
+  //               {product.additionalDetails} other products
+  //             </span>
+  //           )}
+  //         </div>
+  //       </div>
+  //     );
+  //   },
+  // },
   {
-    accessorKey: "product",
+    accessorFn: (row) => row.product.name,
+    id: "product",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Product" />,
     cell: ({ row }) => {
-      const product = row.getValue("product") as {
-        name: string;
-        image: string;
-        additionalDetails?: string;
-      };
+      const product = row.original.product;
       return (
         <div className="flex items-center">
           <div className="bg-[#E0E2E7] h-[44px] w-[44px] rounded-lg">

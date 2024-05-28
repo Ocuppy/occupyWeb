@@ -1,4 +1,3 @@
-// DataTable.js or DataTable.tsx
 import * as React from "react";
 import {
   ColumnDef,
@@ -24,9 +23,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import Image from "next/image";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { DataTablePagination } from "./data-table-pagination";
-import Image from "next/image";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
