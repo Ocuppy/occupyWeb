@@ -1,6 +1,6 @@
 import OrderSummary from "@/components/dashboard-layout/Order-Page/OrderSummary";
-import { columns } from "@/components/dashboard-layout/data-table/column";
-import { DataTable } from "@/components/dashboard-layout/data-table/data-table";
+import { columns } from "@/components/dashboard-layout/Order-Page/ongoing/column";
+import { DataTable } from "@/components/dashboard-layout/Order-Page/ongoing/data-table";
 import orders from "@/data/orders";
 import React from "react";
 

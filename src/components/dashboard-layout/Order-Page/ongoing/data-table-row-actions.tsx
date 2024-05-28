@@ -17,11 +17,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Copy, Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
-import { label_options } from "@/components/filters";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import EditDialog from "../../modals/edit-modal";
-import DeleteDialog from "../../modals/delete-modal";
 import { orderSchema } from "@/lib/validations/schema";
+import EditDialog from "./modals/edit-modal";
+import DeleteDialog from "./modals/delete-modal";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;

@@ -18,7 +18,6 @@ type DeleteProps = {
 };
 
 export default function DeleteDialog({ task, isOpen, showActionToggle }: DeleteProps) {
-  console.log(task, "orders");
   return (
     <AlertDialog open={isOpen} onOpenChange={showActionToggle}>
       <AlertDialogContent>

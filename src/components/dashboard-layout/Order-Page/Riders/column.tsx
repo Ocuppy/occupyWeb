@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "../../data-table/data-table-column-header";
 import { RiderType } from "@/lib/validations/riders.schema";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { DataTableColumnHeader } from "./data-table-column-header";
 
 export const columns: ColumnDef<RiderType>[] = [
   {
