@@ -6,12 +6,12 @@ import SpaceBetween from "@/components/shared/SpaceBetween";
 import { Button } from "@/components/ui/button";
 
 import Router from "next/router";
-import NoSupermarkets from "@/components/dashboard/homepage/NoSupermarkets";
+import NoSupermarkets from "@/components/dashboard/dashboard/NoSupermarkets";
 import StoreItem from "@/components/dashboard/dashboard/StoreItem";
 
 const Page: NextPageWithLayout = () => {
   return (
-    <div className="h-full overflow-auto hideScroll rounded-md bg-white px-4 py-6">
+    <div className="h-full px-4 overflow-auto hideScroll rounded-md bg-white py-6">
       <SpaceBetween>
         <p className="text-[20px] font-medium">Manage Store</p>
         <Button onClick={() => Router.push("/dashboard/store/add")}>

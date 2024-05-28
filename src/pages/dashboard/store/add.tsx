@@ -17,6 +17,7 @@ import { PlusIcon } from "lucide-react";
 import { InformationIcon } from "@/assets/icon/icons";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import FormSteps from "@/components/dashboard/dashboard/FormSteps";
 // import "react-select/dist/react-select.css";
 
 const Page: NextPageWithLayout = () => {
@@ -131,27 +132,7 @@ const Page: NextPageWithLayout = () => {
             )}
           </>
         </div>
-        <div className="flex-col bg-white rounded-md border-dashed border p-4 flex gap-4">
-          {stepState.map((item, idx) => (
-            <>
-              <Flex className="gap-4" key={idx}>
-                <InformationIcon />
-                <div className="flex-col justify-start items-start">
-                  <p
-                    className={cn(
-                      "text-[#212330] font-medium",
-                      idx === currentStep - 1 && "text-occupy-primary"
-                    )}
-                  >
-                    {item.title}
-                  </p>
-                  <p className="text-[12px] text-[#848484]">{item.desc}</p>
-                </div>
-              </Flex>
-              {idx !== stepState.length - 1 && <Separator />}
-            </>
-          ))}
-        </div>
+        <FormSteps currentStep={currentStep} stepState={stepState} />
       </Flex>
     </div>
   );
