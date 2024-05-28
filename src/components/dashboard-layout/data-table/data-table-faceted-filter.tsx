@@ -77,17 +77,7 @@ export function DataTableFacetedFilter<TData, TValue>({
         <Command>
           <CommandInput placeholder={title} />
           <CommandList>
-            <CommandEmpty>
-              <div className="flex flex-col gap-3 items-center justify-center">
-                <Image src={"40"} height={"40"} alt="no value" />
-                <span className="text-[#060F27] font-normal font-[Nurito sans] text-3xl">
-                  No Ongoing Order
-                </span>
-                <p className="text-[#AAAAAA] font-normal text-center text-sm">
-                  We’re good, No ongoing ORder
-                </p>
-              </div>
-            </CommandEmpty>
+            <CommandEmpty>No order found</CommandEmpty>
             <CommandGroup>
               {options.map((option) => {
                 const isSelected = selectedValues.has(option.value);

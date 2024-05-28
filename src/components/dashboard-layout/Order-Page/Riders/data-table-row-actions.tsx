@@ -17,11 +17,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Copy, Eye, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
-import { label_options } from "@/components/filters";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import EditDialog from "../../modals/edit-modal";
-import DeleteDialog from "../../modals/delete-modal";
-import { orderSchema } from "@/lib/validations/schema";
+import { riderSchema } from "@/lib/validations/riders.schema";
+import EditDialog from "./modals/edit-modal";
+import DeleteDialog from "./modals/delete-modal";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -30,10 +29,10 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
   const [dialogContent, setDialogContent] = React.useState<React.ReactNode | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = React.useState<boolean>(false);
-  const task = orderSchema.parse(row.original);
+  const task = riderSchema.parse(row.original);
 
   const handleEditClick = () => {
-    setDialogContent(<EditDialog order={task} />);
+    setDialogContent(<EditDialog rider={task} />);
   };
 
   return (

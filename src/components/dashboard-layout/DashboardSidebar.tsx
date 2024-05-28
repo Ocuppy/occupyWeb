@@ -95,7 +95,7 @@ const DashboardSidebar = ({
                               key={idx}
                             >
                               <div
-                                className={`border-b border-b-[2px] border-l- border-l border-[#c183b0] rounded-bl-md w-[20px] ${
+                                className={` border-b-[2px] border-l- border-l border-[#c183b0] rounded-bl-md w-[20px] ${
                                   idx === 0 ? "h-[40px]" : "h-[50px]"
                                 }`}
                               ></div>

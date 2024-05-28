@@ -12,7 +12,7 @@ const DownloadBtn: React.FC<DownloadBtnProps> = ({ href, icon, name, title }) =>
     <Link href={href}>
       <div
         className="
-          rounded-md cursor-pointer py-2 px-2 lg:px-0 font-medium font-[inter] 
+          rounded-md cursor-pointer py-2 px-2 lg:px-0 font-medium  
           flex items-center justify-center hover:scale-105 transform w-full md:w-[154px] bg-black
         "
       >

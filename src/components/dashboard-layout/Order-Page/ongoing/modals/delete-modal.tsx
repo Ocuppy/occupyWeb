@@ -7,28 +7,25 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { TaskType } from "@/lib/validations/schema";
 import { Button } from "@/components/ui/button";
+import { OrderType } from "@/lib/validations/schema";
 
 type DeleteProps = {
-  task: TaskType;
+  task: OrderType;
   isOpen: boolean;
   showActionToggle: (open: boolean) => void;
 };
 
-export default function DeleteDialog({
-  task,
-  isOpen,
-  showActionToggle,
-}: DeleteProps) {
+export default function DeleteDialog({ task, isOpen, showActionToggle }: DeleteProps) {
+  console.log(task, "orders");
   return (
     <AlertDialog open={isOpen} onOpenChange={showActionToggle}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure absolutely sure ?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. You are about to delete Task Details of{" "}
-            <b>{task.title}</b>
+            This action cannot be undone. You are about to delete Order Details of{" "}
+            <b>{task?.product.name}</b>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
