@@ -9,7 +9,7 @@ const orders: OrderType[] = [
       image: "/images/product1.jpg",
       additionalDetails: "+3",
     },
-    status: "in-progress",
+    status: "Processing",
     customer: {
       name: "Bug Smith",
       email: "bugsmith@example.com",
@@ -25,7 +25,39 @@ const orders: OrderType[] = [
       image: "/images/product2.jpg",
       additionalDetails: "+2",
     },
-    status: "declined",
+    status: "Shipped",
+    customer: {
+      name: "Just Being",
+      email: "justbeing@example.com",
+    },
+    total: "$450",
+    date: new Date("2024-05-24"),
+    payment: "Mastercard",
+  },
+  {
+    order_id: "#23422",
+    product: {
+      name: "justice",
+      image: "/images/product2.jpg",
+      additionalDetails: "+2",
+    },
+    status: "Delivered",
+    customer: {
+      name: "Just Being",
+      email: "justbeing@example.com",
+    },
+    total: "$450",
+    date: new Date("2024-05-24"),
+    payment: "Mastercard",
+  },
+  {
+    order_id: "#23422",
+    product: {
+      name: "cancel stat",
+      image: "/images/product2.jpg",
+      additionalDetails: "+2",
+    },
+    status: "Cancelled",
     customer: {
       name: "Just Being",
       email: "justbeing@example.com",
