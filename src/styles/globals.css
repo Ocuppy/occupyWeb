@@ -11,7 +11,3 @@
     font-family: "Inter", sans-serif;
   }
 }
-
-.hideScroll::-webkit-scrollbar {
-  display: none;
-}
