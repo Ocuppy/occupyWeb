@@ -19,7 +19,7 @@ export function DataTableViewOptions<TData>({ table }: DataTableViewOptionsProps
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="ml-auto hidden h-8 lg:flex">
+        <Button className="ml-auto hidden py-1 px-3 bg-transparent text-black border lg:flex">
           <SlidersHorizontal className="mr-2 h-4 w-4" />
           {/* <Settings2 className="mr-2 h-4 w-4" /> */}
           Filter

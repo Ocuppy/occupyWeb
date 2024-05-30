@@ -123,7 +123,41 @@ export const columns: ColumnDef<OrderType>[] = [
   {
     accessorKey: "status",
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
-    cell: ({ row }) => <div className="text-sm">{row.getValue("status")}</div>,
+    cell: ({ row }) => {
+      const status: string = row.getValue("status");
+      let backgroundColor, textColor;
+
+      switch (status.toLowerCase()) {
+        case "processing":
+          backgroundColor = "bg-[#E46A11]";
+          textColor = "text-[#E46A11] font-bold";
+          break;
+        case "shipped":
+          backgroundColor = "bg-[#13B2E4]";
+          textColor = "text-[#13B2E4] font-bold";
+          break;
+        case "delivered":
+          backgroundColor = "bg-[#0D894F]";
+          textColor = "text-[#0D894F] font-bold";
+          break;
+        case "cancelled":
+          backgroundColor = "bg-[#F04438]";
+          textColor = "text-[#F04438] font-bold";
+          break;
+        default:
+          backgroundColor = "bg-white";
+          textColor = "text-gray-800";
+          break;
+      }
+
+      return (
+        <div
+          className={`text-xs text-center px-2 py-1 rounded-md ${backgroundColor} ${textColor} bg-opacity-25`}
+        >
+          {status}
+        </div>
+      );
+    },
   },
   {
     id: "actions",

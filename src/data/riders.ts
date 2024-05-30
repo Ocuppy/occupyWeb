@@ -4,7 +4,7 @@ const riders: RiderType[] = [
   {
     order_id: "#302012",
     item: "Item 1",
-    status: "in-progress",
+    status: "Delivered",
     customer: "Bug Smith",
     riders: "5",
     address: "FCT, Abuja",
@@ -14,7 +14,17 @@ const riders: RiderType[] = [
   {
     order_id: "#302012",
     item: "golang",
-    status: "in-progress",
+    status: "Assigned",
+    customer: "John doe",
+    riders: "5",
+    address: "New Karu, Nas. State",
+    quantities: "Visa",
+    prices: "500",
+  },
+  {
+    order_id: "#302012",
+    item: "kelehi",
+    status: "in-transit",
     customer: "John doe",
     riders: "5",
     address: "New Karu, Nas. State",

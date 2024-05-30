@@ -24,7 +24,7 @@ export default function DeleteDialog({ task, isOpen, showActionToggle }: DeleteP
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure absolutely sure ?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. You are about to delete Order Details of{" "}
+            This action cannot be undone. You are about to delete Rider Details of{" "}
             <b>{task?.item}</b>
           </AlertDialogDescription>
         </AlertDialogHeader>
