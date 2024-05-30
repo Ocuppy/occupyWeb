@@ -11,7 +11,7 @@ import StoreItem from "@/components/dashboard/dashboard/StoreItem";
 
 const Page: NextPageWithLayout = () => {
   return (
-    <div className="h-full px-4 overflow-auto hideScroll rounded-md bg-white py-6">
+    <div className="h-full px-4 rounded-md bg-white py-6">
       <SpaceBetween>
         <p className="text-[20px] font-medium">Manage Store</p>
         <Button onClick={() => Router.push("/dashboard/store/add")}>

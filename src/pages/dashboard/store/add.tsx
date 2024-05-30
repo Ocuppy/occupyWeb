@@ -18,6 +18,8 @@ import { InformationIcon } from "@/assets/icon/icons";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import FormSteps from "@/components/dashboard/dashboard/FormSteps";
+import WorkTimeActivities from "@/components/dashboard/settings/WorkTimeActivities";
+import { daysOfWeek } from "@/constants";
 // import "react-select/dist/react-select.css";
 
 const Page: NextPageWithLayout = () => {
@@ -25,15 +27,7 @@ const Page: NextPageWithLayout = () => {
     useSteppedFormContext();
   const isFirstStep = currentStep === 1;
   const [value, onChange] = useState("10:00");
-  const daysOfWeek = [
-    { label: "Monday", value: "Monday" },
-    { label: "Tuesday", value: "Tuesday" },
-    { label: "Wednesday", value: "Wednesday" },
-    { label: "Thursday", value: "Thursday" },
-    { label: "Friday", value: "Friday" },
-    { label: "Saturday", value: "Saturday" },
-    { label: "Sunday", value: "Sunday" },
-  ];
+
   const defaultStep2Fields = [
     { label: "Days of Activities", name: "activityDays", options: daysOfWeek },
     { label: "Opening Time", name: "openingTime" },
@@ -86,49 +80,10 @@ const Page: NextPageWithLayout = () => {
                 <ActionButtons />
               </CustomForm>
             ) : (
-              <Flex className="h-full flex items-start justify-center">
-                <div className="w-full">
-                  <Flex className="flex-col gap-4">
-                    {step2FormField.map((field, index) => (
-                      <Flex key={index} className="w-full">
-                        {field.map((item, idx) => (
-                          <>
-                            {item?.options ? (
-                              <Select
-                                key={idx}
-                                closeMenuOnSelect={false}
-                                // components={animatedComponents}
-                                defaultValue={savedFormValues?.workTime}
-                                isMulti
-                                options={item.options}
-                                className="w-1/2"
-                              />
-                            ) : (
-                              <Input
-                                key={idx}
-                                className="w-1/4"
-                                placeholder="hh:mm"
-                                type="time"
-                              />
-                            )}
-                          </>
-                        ))}
-                      </Flex>
-                    ))}
-                  </Flex>
-                  <div className="mt-4">
-                    <Button
-                      onClick={addNewField}
-                      className="text-occupy-primary gap-4 px-0 font-semibold"
-                      variant={"ghost"}
-                    >
-                      <PlusIcon />
-                      <span>Add Sub-sequent days</span>
-                    </Button>
-                  </div>
-                  <ActionButtons />
-                </div>
-              </Flex>
+              <WorkTimeActivities
+                addNewField={addNewField}
+                step2FormField={step2FormField}
+              />
             )}
           </>
         </div>

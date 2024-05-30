@@ -1,13 +1,33 @@
 import FormSteps from "@/components/dashboard/dashboard/FormSteps";
+import WorkTimeActivities from "@/components/dashboard/settings/WorkTimeActivities";
 import Flex from "@/components/shared/Flex";
+import { Form } from "@/components/ui/form";
+import { daysOfWeek } from "@/constants";
+import { withSteppedFormContextProvider } from "@/context/SteppedFormContext";
+import { IFieldValue } from "@/types";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const Index = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const defaultStep2Fields = [
+    { label: "Days of Activities", name: "activityDays", options: daysOfWeek },
+    { label: "Opening Time", name: "openingTime" },
+    { label: "Closing Time", name: "closingTime" },
+  ];
+  const [step2FormField, setFormField] = useState<IFieldValue[][]>([
+    defaultStep2Fields,
+  ]);
+
+  const addNewField = () => {
+    if (step2FormField.length === 3) return;
+    else setFormField([...step2FormField, defaultStep2Fields]);
+  };
   const stepState = [
     {
       title: "General Information",
       desc: "Profile Photo, Name and Location",
+      component: <></>,
     },
     {
       title: "Supermarket Information",
@@ -16,6 +36,12 @@ const Index = () => {
     {
       title: "Work Time Activities",
       desc: "You can set up the supermarket activity period",
+      component: (
+        <WorkTimeActivities
+          addNewField={addNewField}
+          step2FormField={step2FormField}
+        />
+      ),
     },
     {
       title: "Security",
@@ -38,23 +64,23 @@ const Index = () => {
       desc: "Hide & disable current account",
     },
   ];
+
+  const form = useForm<any>({
+    // resolver: zodResolver(schemas[activetab]),
+    defaultValues: {},
+  });
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
   return (
     <div className="p-6 rounded-md h-full bg-white">
       <Flex className="items-start h-full gap-8">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore totam
-          deserunt hic! Unde nisi fuga itaque nesciunt quae facere adipisci
-          ducimus omnis quo natus a voluptate amet alias repellat dolorum
-          expedita incidunt maiores nemo consequuntur nam, beatae recusandae
-          temporibus officia? At labore numquam quos molestias ut perferendis
-          nulla natus quaerat facilis molestiae tempore deserunt corporis beatae
-          assumenda optio hic, quasi eveniet quae reprehenderit? Consequuntur
-          quae nihil consequatur distinctio, quod tenetur veniam commodi
-          quibusdam! Distinctio provident labore totam, eaque harum officia
-          libero ipsam voluptatibus sapiente dolor facilis a sequi quos corrupti
-          omnis consequatur eligendi magnam minus dolorum, ex veritatis. Vel,
-          aliquam?
-        </p>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+            <div>{stepState[currentStep - 1]?.component}</div>
+          </form>
+        </Form>
         <FormSteps
           onClickElement={(val) => setCurrentStep(val)}
           currentStep={currentStep}
@@ -65,4 +91,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default withSteppedFormContextProvider(Index);
