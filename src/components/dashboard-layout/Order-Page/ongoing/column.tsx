@@ -29,39 +29,20 @@ export const columns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "order_id",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Order ID" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        className="text-sm font-medium text-[#333843]"
+        title="Order ID"
+      />
+    ),
     cell: ({ row }) => (
       <div className="text-sm text-occupy-primary">{row.getValue("order_id")}</div>
     ),
     enableSorting: false,
     enableHiding: false,
   },
-  // {
-  //   accessorKey: "product",
-  //   header: ({ column }) => <DataTableColumnHeader column={column} title="Product" />,
-  //   cell: ({ row }) => {
-  //     const product = row.getValue("product") as {
-  //       name: string;
-  //       image: string;
-  //       additionalDetails?: string;
-  //     };
-  //     return (
-  //       <div className="flex items-center">
-  //         <div className="bg-[#E0E2E7] h-[44px] w-[44px] rounded-lg">
-  //           <Image src={product.image} alt={product.name} width={50} height={50} />
-  //         </div>
-  //         <div className="ml-2 flex flex-col">
-  //           <span className="text-sm">{product.name}</span>
-  //           {product.additionalDetails && (
-  //             <span className="text-xs text-gray-500">
-  //               {product.additionalDetails} other products
-  //             </span>
-  //           )}
-  //         </div>
-  //       </div>
-  //     );
-  //   },
-  // },
+
   {
     accessorFn: (row) => row.product.name,
     id: "product",
@@ -70,13 +51,13 @@ export const columns: ColumnDef<OrderType>[] = [
       const product = row.original.product;
       return (
         <div className="flex items-center">
-          <div className="bg-[#E0E2E7] h-[44px] w-[44px] rounded-lg">
-            <Image src={product.image} alt={product.name} width={50} height={50} />
+          <div className="bg-[#E0E2E7] h-[44px] w-[44px] rounded-lg border-none">
+            <Image src={product.image} alt={""} width={50} height={50} />
           </div>
           <div className="ml-2 flex flex-col">
-            <span className="text-sm">{product.name}</span>
+            <span className="text-sm text-[#333843] font-medium">{product.name}</span>
             {product.additionalDetails && (
-              <span className="text-xs text-gray-500">
+              <span className="text-xs text-[#667085]">
                 {product.additionalDetails} other products
               </span>
             )}
@@ -87,21 +68,33 @@ export const columns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "date",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        className="text-sm font-medium text-[#333843]"
+        title="Date"
+      />
+    ),
     cell: ({ row }) => {
       const field = row.getValue("date") as Date;
-      return <div className="text-sm">{field?.toDateString()}</div>;
+      return <div className="text-sm text-[#667085] font-medium">{field?.toDateString()}</div>;
     },
   },
   {
     accessorKey: "customer",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Customer" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        className="text-sm font-medium text-[#333843]"
+        title="Customer"
+      />
+    ),
     cell: ({ row }) => {
       const customer = row.getValue("customer") as { name: string; email: string };
       return (
         <div className="flex flex-col">
-          <span className="text-sm">{customer.name}</span>
-          <span className="text-xs text-gray-500">{customer.email}</span>
+          <span className="text-sm text-[#333843] font-medium">{customer.name}</span>
+          <span className="text-xs text-[#667085]">{customer.email}</span>
         </div>
       );
     },
@@ -110,19 +103,41 @@ export const columns: ColumnDef<OrderType>[] = [
   },
   {
     accessorKey: "total",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Total" />,
-    cell: ({ row }) => <div className="text-sm">{row.getValue("total")}</div>,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        className="text-sm font-medium text-[#333843]"
+        title="Total"
+      />
+    ),
+    cell: ({ row }) => (
+      <div className="text-sm text-[#667085] font-medium">{row.getValue("total")}</div>
+    ),
     enableSorting: false,
     enableHiding: false,
   },
   {
     accessorKey: "payment",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Payment" />,
-    cell: ({ row }) => <div className="text-sm">{row.getValue("payment")}</div>,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        className="text-sm font-medium text-[#333843]"
+        title="Payment"
+      />
+    ),
+    cell: ({ row }) => (
+      <div className="text-sm text-[#667085] font-medium">{row.getValue("payment")}</div>
+    ),
   },
   {
     accessorKey: "status",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        className="text-sm font-medium text-[#333843]"
+        title="Status"
+      />
+    ),
     cell: ({ row }) => {
       const status: string = row.getValue("status");
       let backgroundColor, textColor;
@@ -152,16 +167,23 @@ export const columns: ColumnDef<OrderType>[] = [
 
       return (
         <div
-          className={`text-xs text-center px-2 py-1 rounded-md ${backgroundColor} ${textColor} bg-opacity-25`}
+          className={`text-sm text-center p-1 rounded-full font-semibold ${backgroundColor} ${textColor} bg-opacity-25`}
         >
           {status}
         </div>
       );
     },
+    enableSorting: false,
   },
   {
     id: "actions",
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Actions" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        column={column}
+        className="text-sm font-medium text-[#333843]"
+        title="Actions"
+      />
+    ),
     cell: ({ row }) => <DataTableRowActions row={row} />,
   },
 ];
