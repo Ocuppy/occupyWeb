@@ -19,7 +19,7 @@ const DashboardCard = ({
   onSelect?: (value: string) => void;
 }) => {
   return (
-    <div className="border rounded-md p-4 pt-6">
+    <div className="border rounded-md h-fit p-4 pt-6">
       <Flex>
         <p className="text-[14px] whitespace-nowrap w-full font-bold text-[#333333]">
           {title}
