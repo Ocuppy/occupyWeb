@@ -36,7 +36,7 @@ export const DashboardLinks: IDashboardLinks[] = [
   {
     icon: InventoryIcon,
     title: "Inventory",
-    url: ADMIN_DASHBOARD_URL + "inventory",
+    url: ADMIN_DASHBOARD_URL + "/inventory",
     subLinks: [
       { title: "Pending", url: "/pending" },
       { title: "Approved", url: "/approved" },

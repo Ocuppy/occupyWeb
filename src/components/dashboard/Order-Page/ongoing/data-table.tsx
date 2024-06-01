@@ -60,7 +60,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   });
 
   return (
-    <div className="space-y-4 rounded-md border bg-white py-8">
+    <div className="space-y-4 mt-12 rounded-md border bg-white py-8">
       <DataTableToolbar table={table} />
       <div className="">
         <Table className=" ">
