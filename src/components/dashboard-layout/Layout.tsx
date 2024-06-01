@@ -4,15 +4,14 @@ import DashboardHeader from "./DashboardHeader";
 import { Button } from "../ui/button";
 import { AngleLeftIcon } from "@/assets/icon/icons";
 import { cn } from "@/lib/utils";
-import { ScrollArea } from "../ui/scroll-area";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const [showFullSidebar, setShowFullSidebar] = useState<boolean>(true);
   const toggleSidebarState = () => setShowFullSidebar(!showFullSidebar);
   return (
-    <div className="flex  flex-auto flex-col">
-      <div className="flex gap-4 relative flex-auto min-w-0">
-        <div className="relative">
+    <div className="flex bg-[#F9FBFD] flex-auto flex-col">
+      <div className="flex gap-4  flex-auto min-w-0">
+        <div className="">
           <Button
             onClick={toggleSidebarState}
             className={cn(
@@ -27,7 +26,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           </Button>
           <DashboardSidebar showFullSidebar={showFullSidebar} />
         </div>
-        <div className="flex  flex-col flex-auto overflow-y-auto h-screen min-w-0 relative w-full ">
+        <div className="flex mb-12 flex-col flex-auto overflow-y-auto min-h-screen min-w-0 relative w-full ">
           <DashboardHeader />
 
           <main className="pr-4 py-4 mt-[120px] flex-1 h-full grow">
