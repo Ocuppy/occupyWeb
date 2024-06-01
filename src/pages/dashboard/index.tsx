@@ -19,7 +19,7 @@ const Page: NextPageWithLayout = () => {
         </Button>
       </SpaceBetween>
 
-      <Flex className="h-[90%] justify-center">
+      <Flex className="justify-center">
         <NoSupermarkets />
       </Flex>
 
