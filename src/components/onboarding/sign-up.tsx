@@ -8,9 +8,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Eye, EyeOff } from "lucide-react";
 import { signupValidationSchema } from "@/formValidation/yup.validation";
+import { useRouter } from "next/navigation";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -27,14 +29,20 @@ const Signup = () => {
     validationSchema: signupValidationSchema,
     onSubmit: (values) => {
       console.log(values);
-      // handle form submission
+      router.push("/auth/verify");
     },
   });
 
   return (
     <section className="lg:relative font-[inter] w-full min-h-screen flex lg:items-center lg:justify-center">
       <div className="lg:absolute hidden lg:block top-0 left-0 w-full h-full">
-        <Image src={"/images/onboarding.png"} alt="" layout="fill" objectFit="cover" className="w-full h-full" />
+        <Image
+          src={"/images/onboarding.png"}
+          alt=""
+          layout="fill"
+          objectFit="cover"
+          className="w-full h-full"
+        />
       </div>
 
       <div className="lg:relative lg:z-10 flex items-center gap-20 justify-start w-full lg:py-20 lg:px-8">
@@ -46,10 +54,12 @@ const Signup = () => {
         <div className="lg:bg-white px-6 lg:px-8 py-20 w-full max-w-lg rounded-lg lg:shadow-lg flex flex-col gap-8 items-center">
           <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
           <div className="flex flex-col items-start gap-3">
-            <h3 className="text-[#12141A] font-medium text-2xl ">Welcome, let's create an account</h3>
+            <h3 className="text-[#12141A] font-medium text-2xl ">
+              Welcome, let's create an account
+            </h3>
             <p className="text-sm text-[#606778] font-medium pb-12">
-              Create an account to keep track of your customers, and contributors. Once your account has been created
-              then don’t forget to verify your account through mail.
+              Create an account to keep track of your customers, and contributors. Once your
+              account has been created then don’t forget to verify your account through mail.
             </p>
             {/* input form  */}
             <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
@@ -66,7 +76,11 @@ const Signup = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.firstName}
-                    className={formik.touched.firstName && formik.errors.firstName ? "border-red-700" : ""}
+                    className={
+                      formik.touched.firstName && formik.errors.firstName
+                        ? "border-red-700"
+                        : ""
+                    }
                   />
                   {formik.touched.firstName && formik.errors.firstName ? (
                     <div className="text-red-500 text-sm">{formik.errors.firstName}</div>
@@ -84,7 +98,9 @@ const Signup = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.lastName}
-                    className={formik.touched.lastName && formik.errors.lastName ? "border-red-700" : ""}
+                    className={
+                      formik.touched.lastName && formik.errors.lastName ? "border-red-700" : ""
+                    }
                   />
                   {formik.touched.lastName && formik.errors.lastName ? (
                     <div className="text-red-500 text-sm">{formik.errors.lastName}</div>
@@ -105,7 +121,9 @@ const Signup = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
-                    className={formik.touched.email && formik.errors.email ? "border-red-700" : ""}
+                    className={
+                      formik.touched.email && formik.errors.email ? "border-red-700" : ""
+                    }
                   />
                   {formik.touched.email && formik.errors.email ? (
                     <div className="text-red-500 text-sm">{formik.errors.email}</div>
@@ -123,7 +141,9 @@ const Signup = () => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.phone}
-                    className={formik.touched.phone && formik.errors.phone ? "border-red-700" : ""}
+                    className={
+                      formik.touched.phone && formik.errors.phone ? "border-red-700" : ""
+                    }
                   />
                   {formik.touched.phone && formik.errors.phone ? (
                     <div className="text-red-500 text-sm">{formik.errors.phone}</div>
@@ -143,9 +163,14 @@ const Signup = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
-                  className={formik.touched.password && formik.errors.password ? "border-red-700" : ""}
+                  className={
+                    formik.touched.password && formik.errors.password ? "border-red-700" : ""
+                  }
                 />
-                <div className="absolute top-10 right-4 cursor-pointer" onClick={togglePasswordVisibility}>
+                <div
+                  className="absolute top-10 right-4 cursor-pointer"
+                  onClick={togglePasswordVisibility}
+                >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </div>
                 {formik.touched.password && formik.errors.password ? (
