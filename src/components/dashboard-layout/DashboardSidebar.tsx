@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { DashboardLinks, IDashboardLinks } from "./DashboardLinks";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import {
   Accordion,
@@ -10,11 +9,6 @@ import {
 } from "@/components/ui/accordion";
 import Flex from "@/components/shared/Flex";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import ProfileAvatar from "@/assets/images/avatar.png";
-import { useState } from "react";
-import IconButton from "../shared/IconButton";
-import { AngleLeftIcon } from "@/assets/icon/icons";
-import { Button } from "../ui/button";
 
 const ParentLinkComponent = ({
   link,
@@ -44,7 +38,7 @@ const DashboardSidebar = ({
     <aside
       className={`bg-occupy-primary  rounded-r-lg ${
         showFullSidebar && "min-w-[250px]"
-      } text-white p-4 overflow-y-auto h-full`}
+      } text-white p-4 sticky z-10 top-0 h-screen`}
     >
       <div className="flex items-center relative gap-4 pt-4 pb-16">
         <Avatar>

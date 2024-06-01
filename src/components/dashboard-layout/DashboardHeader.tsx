@@ -16,8 +16,8 @@ import {
 
 const DashboardHeader = () => {
   return (
-    <header className="p-4 bg-white">
-      <div className="flex justify-between items-center">
+    <header className="flex pl-8 pr-4 left-[250px] right-0 z-10 fixed items-center h-[100px] bg-white">
+      <div className="flex w-full justify-between items-center">
         <Input
           className="max-w-[300px]"
           placeholder="Search your grocery products etc . . . "

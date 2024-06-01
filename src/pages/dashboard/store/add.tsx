@@ -17,6 +17,9 @@ import { PlusIcon } from "lucide-react";
 import { InformationIcon } from "@/assets/icon/icons";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import FormSteps from "@/components/dashboard/dashboard/FormSteps";
+import WorkTimeActivities from "@/components/dashboard/settings/WorkTimeActivities";
+import { daysOfWeek } from "@/constants";
 // import "react-select/dist/react-select.css";
 
 const Page: NextPageWithLayout = () => {
@@ -24,15 +27,7 @@ const Page: NextPageWithLayout = () => {
     useSteppedFormContext();
   const isFirstStep = currentStep === 1;
   const [value, onChange] = useState("10:00");
-  const daysOfWeek = [
-    { label: "Monday", value: "Monday" },
-    { label: "Tuesday", value: "Tuesday" },
-    { label: "Wednesday", value: "Wednesday" },
-    { label: "Thursday", value: "Thursday" },
-    { label: "Friday", value: "Friday" },
-    { label: "Saturday", value: "Saturday" },
-    { label: "Sunday", value: "Sunday" },
-  ];
+
   const defaultStep2Fields = [
     { label: "Days of Activities", name: "activityDays", options: daysOfWeek },
     { label: "Opening Time", name: "openingTime" },
@@ -85,73 +80,14 @@ const Page: NextPageWithLayout = () => {
                 <ActionButtons />
               </CustomForm>
             ) : (
-              <Flex className="h-full flex items-start justify-center">
-                <div className="w-full">
-                  <Flex className="flex-col gap-4">
-                    {step2FormField.map((field, index) => (
-                      <Flex key={index} className="w-full">
-                        {field.map((item, idx) => (
-                          <>
-                            {item?.options ? (
-                              <Select
-                                key={idx}
-                                closeMenuOnSelect={false}
-                                // components={animatedComponents}
-                                defaultValue={savedFormValues?.workTime}
-                                isMulti
-                                options={item.options}
-                                className="w-1/2"
-                              />
-                            ) : (
-                              <Input
-                                key={idx}
-                                className="w-1/4"
-                                placeholder="hh:mm"
-                                type="time"
-                              />
-                            )}
-                          </>
-                        ))}
-                      </Flex>
-                    ))}
-                  </Flex>
-                  <div className="mt-4">
-                    <Button
-                      onClick={addNewField}
-                      className="text-occupy-primary gap-4 px-0 font-semibold"
-                      variant={"ghost"}
-                    >
-                      <PlusIcon />
-                      <span>Add Sub-sequent days</span>
-                    </Button>
-                  </div>
-                  <ActionButtons />
-                </div>
-              </Flex>
+              <WorkTimeActivities
+                addNewField={addNewField}
+                step2FormField={step2FormField}
+              />
             )}
           </>
         </div>
-        <div className="flex-col bg-white rounded-md border-dashed border p-4 flex gap-4">
-          {stepState.map((item, idx) => (
-            <>
-              <Flex className="gap-4" key={idx}>
-                <InformationIcon />
-                <div className="flex-col justify-start items-start">
-                  <p
-                    className={cn(
-                      "text-[#212330] font-medium",
-                      idx === currentStep - 1 && "text-occupy-primary"
-                    )}
-                  >
-                    {item.title}
-                  </p>
-                  <p className="text-[12px] text-[#848484]">{item.desc}</p>
-                </div>
-              </Flex>
-              {idx !== stepState.length - 1 && <Separator />}
-            </>
-          ))}
-        </div>
+        <FormSteps currentStep={currentStep} stepState={stepState} />
       </Flex>
     </div>
   );

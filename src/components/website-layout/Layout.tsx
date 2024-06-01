@@ -9,7 +9,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <div className="bg-[#F9FBFD]">
       <Container
         style={{
-          backgroundImage: `url(/header-bg.jpg)`,
+          backgroundImage: `url(/header-bg.png)`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "top",

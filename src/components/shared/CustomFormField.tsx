@@ -18,7 +18,7 @@ const CustomFormField = ({
         <FormItem>
           <RenderFormType field={field} fieldValue={fieldValue} form={form} />
 
-          <div className="h-[36px]">
+          <div className="h-[21px]">
             <FormMessage />
           </div>
         </FormItem>
