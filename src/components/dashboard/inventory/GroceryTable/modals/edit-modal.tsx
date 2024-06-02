@@ -24,37 +24,35 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { RiderType } from "@/lib/validations/riders.schema";
+import { InventoryType } from "@/lib/validations/inventory.schema";
 
 type EditProps = {
-  rider: RiderType;
+  data: InventoryType;
 };
 
 const editSchema = z.object({
-  order_id: z.string(),
+  item_id: z.string(),
   item: z.string(),
   status: z.string(),
-  customer: z.string(),
-  riders: z.string(),
-  address: z.string(),
-  quantities: z.string(),
-  prices: z.string(),
+  buying_price: z.string(),
+  availability: z.string(),
+  value: z.string(),
+  quantity: z.string(),
 });
 
 type editSchemaType = z.infer<typeof editSchema>;
 
-export default function EditDialog({ rider }: EditProps) {
+export default function EditDialog({ data }: EditProps) {
   const form = useForm<editSchemaType>({
     resolver: zodResolver(editSchema),
     defaultValues: {
-      order_id: rider.order_id,
-      item: rider.item,
-      status: rider.status,
-      customer: rider.customer,
-      riders: rider.riders,
-      quantities: rider.quantities,
-      address: rider.address,
-      prices: rider.prices,
+      item_id: data.item_id,
+      item: data.item,
+      status: data.status,
+      buying_price: data.buying_price,
+      availability: data.availability,
+      quantity: data.quantity,
+      value: data.value,
     },
   });
 
@@ -64,7 +62,7 @@ export default function EditDialog({ rider }: EditProps) {
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Edit Rider's Details</DialogTitle>
+        <DialogTitle>Edit Grocery Details</DialogTitle>
       </DialogHeader>
       <div className="py-4">
         <Form {...form}>
@@ -101,10 +99,10 @@ export default function EditDialog({ rider }: EditProps) {
             />
             <FormField
               control={form.control}
-              name="customer"
+              name="buying_price"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Customer</FormLabel>
+                  <FormLabel>Buying Price</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
@@ -118,10 +116,10 @@ export default function EditDialog({ rider }: EditProps) {
             />
             <FormField
               control={form.control}
-              name="address"
+              name="availability"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Total</FormLabel>
+                  <FormLabel>Availability</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
