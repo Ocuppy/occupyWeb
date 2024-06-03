@@ -13,7 +13,7 @@ const ActionButtons = ({
   secondaryBtnTitle: string;
 }) => {
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full mt-8 flex justify-center">
       <Flex>
         <Button onClick={onClickPrimaryBtn} type="submit">
           {primaryBtnTitle}

@@ -15,7 +15,7 @@ const CustomFormField = ({
       control={form.control}
       name={fieldValue.name as any}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="w-full">
           <RenderFormType field={field} fieldValue={fieldValue} form={form} />
 
           <div className="h-[21px]">
