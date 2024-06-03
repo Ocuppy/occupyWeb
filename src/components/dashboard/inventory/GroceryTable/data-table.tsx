@@ -61,7 +61,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
   });
 
   return (
-    <div className="space-y-4 rounded-md border bg-white py-8">
+    <div className="space-y-4 mt-12 rounded-md border bg-white py-8">
       <DataTableToolbar table={table} />
       <div className="">
         <Table className=" ">
@@ -102,10 +102,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                       alt="no value"
                     />
                     <span className="text-[#060F27] font-normal font-[Nurito sans] text-3xl">
-                      No Rider's Assigned
+                      No Product found
                     </span>
                     <p className="text-[#AAAAAA] font-normal text-center text-sm">
-                      We’re good, No Rider's Assigned
+                      We’re good, No Product
                     </p>
                   </div>
                 </TableCell>

@@ -64,7 +64,7 @@ export default function EditDialog({ rider }: EditProps) {
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Edit Task Details</DialogTitle>
+        <DialogTitle>Edit Rider's Details</DialogTitle>
       </DialogHeader>
       <div className="py-4">
         <Form {...form}>

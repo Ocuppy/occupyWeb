@@ -68,7 +68,7 @@ export default function EditDialog({ order }: EditProps) {
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Edit Task Details</DialogTitle>
+        <DialogTitle>Edit Ongoing Order Details</DialogTitle>
       </DialogHeader>
       <div className="py-4">
         <Form {...form}>
