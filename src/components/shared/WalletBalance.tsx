@@ -4,7 +4,7 @@ import BackgroundSvg from "@/assets/images/backgroundCard.svg";
 
 const WalletBalance = () => {
   return (
-    <div className="relative ml-[-24px] mr-[-10px] overflow-hidden ">
+    <div className="relative ml-[-24px] min-w-[350px] mr-[-10px] overflow-hidden ">
       <Image className="" src={BackgroundSvg} alt="wallet-card" />
       <div className="top-1/2 absolute text-white left-10 translate-y-[-50%]">
         <p className="text-[14px] ">Wallet Balance</p>

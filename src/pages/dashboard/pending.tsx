@@ -10,7 +10,7 @@ import { ArrowRight } from "lucide-react";
 const Pending: NextPageWithLayout = () => {
   return (
     <div>
-      <div className="grid gap-4 items-center grid-rows-auto md:grid-cols-[auto,1fr] lg:grid-cols-[auto,1fr,1fr]">
+      <div className="grid gap-4 items-center grid-rows-auto md:grid-cols-[auto,1fr] lg:grid-cols-[auto,1fr,1fr] xl:grid-cols-[auto,1fr,1fr,1fr]">
         {/* <GreetingsCard /> */}
         <WalletBalance />
 
