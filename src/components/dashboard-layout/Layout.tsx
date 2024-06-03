@@ -4,12 +4,19 @@ import DashboardHeader from "./DashboardHeader";
 import { Button } from "../ui/button";
 import { AngleLeftIcon } from "@/assets/icon/icons";
 import { cn } from "@/lib/utils";
+import { inter } from "@/pages/_app";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   const [showFullSidebar, setShowFullSidebar] = useState<boolean>(true);
   const toggleSidebarState = () => setShowFullSidebar(!showFullSidebar);
   return (
-    <div className="flex bg-[#F9FBFD] flex-auto flex-col">
+    <div className={cn("flex bg-[#F9FBFD] flex-auto flex-col", className)}>
       <div className="flex gap-4  flex-auto min-w-0">
         <div className="">
           <Button
@@ -29,7 +36,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
         <div className="flex mb-12 flex-col flex-auto overflow-y-auto min-h-screen min-w-0 relative w-full ">
           <DashboardHeader />
 
-          <main className="pr-4 py-4 mt-[120px] flex-1 h-full grow">
+          <main
+            className={cn(
+              "pr-4 py-4 mt-[120px] flex-1 h-full grow",
+              inter.className
+            )}
+          >
             {children}
           </main>
         </div>
