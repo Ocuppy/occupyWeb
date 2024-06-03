@@ -54,7 +54,7 @@ const Inventory = () => {
         </Flex>
       ) : (
         <ScrollArea className="w-full mt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6 gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-20">
             {filteredData.map((item) => (
               <CategoryItem
                 key={item.id}

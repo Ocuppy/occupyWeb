@@ -3,8 +3,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import checkAppData from "@/data/checkAppData";
-import { CustomNextArrow, CustomPrevArrow } from "../ui/customArrow";
+import { CustomNextArrow, CustomPrevArrow } from "../../ui/customArrow";
 import CheckAppCard from "@/subComponents/CheckAppCard";
+import Container from "../../shared/Container";
 
 const CheckAppSection: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -25,17 +26,19 @@ const CheckAppSection: React.FC = () => {
   };
 
   return (
-    <section className="flex justify-center items-center  pb-20">
-      <div className="relative w-full px-12 md:px-0 max-w-lg md:max-w-2xl">
-        <Slider ref={sliderRef} {...settings} initialSlide={currentSlide}>
-          {checkAppData.map((feature, index) => (
-            <div key={index} className="flex justify-center items-center">
-              <CheckAppCard data={feature} />
-            </div>
-          ))}
-        </Slider>
-      </div>
-    </section>
+    <Container>
+      <section className="flex justify-center items-center  pb-20">
+        <div className="relative w-full px-12 md:px-0 max-w-lg md:max-w-2xl">
+          <Slider ref={sliderRef} {...settings} initialSlide={currentSlide}>
+            {checkAppData.map((feature, index) => (
+              <div key={index} className="flex justify-center items-center">
+                <CheckAppCard data={feature} />
+              </div>
+            ))}
+          </Slider>
+        </div>
+      </section>
+    </Container>
   );
 };
 
