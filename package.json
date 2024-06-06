@@ -29,6 +29,7 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@reactuses/core": "^5.0.14",
     "@tanstack/react-table": "^8.17.3",
+    "chart.js": "^4.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
