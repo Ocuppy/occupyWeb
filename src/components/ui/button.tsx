@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex px-6 py-6 items-center justify-center whitespace-nowrap rounded-md text-[16px] font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:bg-[#E0E0E0]",
+  "inline-flex px-6 py-2 items-center justify-center whitespace-nowrap rounded-md text-[16px] font-medium transition-colors focus:outline-none disabled:pointer-events-none disabled:bg-[#E0E0E0]",
   {
     variants: {
       variant: {
@@ -46,7 +46,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
     return (
-      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
     );
   }
 );
