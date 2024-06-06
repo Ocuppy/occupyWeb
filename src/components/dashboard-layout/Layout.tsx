@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { AngleLeftIcon } from "@/assets/icon/icons";
 import { cn } from "@/lib/utils";
 import { inter } from "@/pages/_app";
+import { Toaster } from "../ui/toaster";
 
 const Layout = ({
   children,
@@ -17,7 +18,8 @@ const Layout = ({
   const toggleSidebarState = () => setShowFullSidebar(!showFullSidebar);
   return (
     <div className={cn("flex bg-[#F9FBFD] flex-auto flex-col", className)}>
-      <div className="flex gap-4  flex-auto min-w-0">
+      <Toaster />
+      <div className="flex gap-10  flex-auto min-w-0">
         <div className="">
           <Button
             onClick={toggleSidebarState}

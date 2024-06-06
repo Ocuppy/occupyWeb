@@ -10,11 +10,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import Flex from "../shared/Flex";
 
 const DashboardHeader = () => {
   return (
-    <header className="flex pr-4 pl-[250px] right-0 z-10 fixed items-center h-[100px] bg-white">
-      <div className="flex w-full justify-between items-center">
+    <header className="flex pr-4 pl-[270px] w-full right-0 z-10 fixed items-center h-[100px] bg-white">
+      <Flex className="w-full pl-10 justify-between">
         <Input
           className="max-w-[300px]"
           placeholder="Search your grocery products etc . . . "
@@ -55,7 +56,7 @@ const DashboardHeader = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </div>
+      </Flex>
     </header>
   );
 };
