@@ -4,8 +4,8 @@ export const productSchema = z.object({
   category: z.string({
     required_error: "Please select a category.",
   }),
-  tag: z.string({
-    required_error: "Please select a product tag.",
+  tag: z.array(z.string()).min(1, {
+    message: "Please select at least one product tag.",
   }),
   supermarket: z.string({
     required_error: "Please select a supermarket.",

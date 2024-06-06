@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Flex from "@/components/shared/Flex";
 import {
   Breadcrumb,
@@ -28,17 +29,50 @@ import Router from "next/router";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Image } from "lucide-react";
+import { Image, X } from "lucide-react";
 import { productSchema, productSchemaType } from "@/lib/validations/addProductSchema";
+import { MultiSelect } from "@/components/ui/multiSelect";
 
 const AddProduct = () => {
   const form = useForm<productSchemaType>({
     resolver: zodResolver(productSchema),
+    defaultValues: {
+      tag: [],
+    },
   });
 
   function onSubmit(values: productSchemaType) {
     console.log(values);
   }
+
+  const frameworksList = [
+    {
+      value: "next.js",
+      label: "Next.js",
+    },
+    {
+      value: "sveltekit",
+      label: "SvelteKit",
+    },
+    {
+      value: "nuxt.js",
+      label: "Nuxt.js",
+    },
+    {
+      value: "remix",
+      label: "Remix",
+    },
+    {
+      value: "astro",
+      label: "Astro",
+    },
+  ];
+
+  const options = [
+    { label: "React", value: "react" },
+    { label: "Vue", value: "vue" },
+    { label: "Svelte", value: "svelte" },
+  ];
 
   return (
     <div className="p-6">
@@ -210,6 +244,8 @@ const AddProduct = () => {
                 </Flex>
               </div>
             </div>
+
+            {/* Category form  */}
             <div className="flex flex-col gap-3 shadow-md bg-white border w-[264px] border-slate-200 rounded-lg px-4 py-6">
               <h1 className="text-[#1A1C21] font-medium text-lg">Category</h1>
 
@@ -242,18 +278,15 @@ const AddProduct = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Product Tags</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="bg-[#F9F9FC]">
-                          <SelectValue placeholder="Select tags" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="tag1">Tag 1</SelectItem>
-                        <SelectItem value="tag2">Tag 2</SelectItem>
-                        <SelectItem value="tag3">Tag 3</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <MultiSelect
+                      options={frameworksList}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      placeholder="Select a tag"
+                      variant="inverted"
+                      animation={2}
+                    />
+
                     <FormMessage />
                   </FormItem>
                 )}
