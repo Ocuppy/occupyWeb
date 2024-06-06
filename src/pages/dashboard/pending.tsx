@@ -21,7 +21,7 @@ const Pending: NextPageWithLayout = () => {
       </div>
       {/* <AccountStatus /> */}
       <Flex className="my-4 mx-8 justify-between">
-        <p className="text-[20px] font-semibold text-[#1A1A1A] font-nunito">
+        <p className="text-[20px] font-semibold text-[#1A1A1A] nunito">
           Categories
         </p>
         <Button className="text-[#00B207] gap-2" variant={"link"}>
