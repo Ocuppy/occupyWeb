@@ -1,5 +1,6 @@
 import FormSteps from "@/components/dashboard/dashboard/FormSteps";
 import BillingForm from "@/components/dashboard/settings/BillingForm";
+import ContactCenter from "@/components/dashboard/settings/ContactCenter";
 import GeneralInformation from "@/components/dashboard/settings/GeneralInformation";
 import NotificationSettings from "@/components/dashboard/settings/NotificationSettings";
 import SecurityForm from "@/components/dashboard/settings/SecurityForm";
@@ -71,6 +72,7 @@ const Index = () => {
     {
       title: "Contact Center",
       desc: "Help and Raise Ticket",
+      component: <ContactCenter />,
     },
     {
       title: "Deactivate Account",
