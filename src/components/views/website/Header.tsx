@@ -3,23 +3,32 @@ import CartImage from "../../../../public/cart-image.png";
 import { Button } from "@/components/ui/button";
 import Router from "next/router";
 import Flex from "@/components/shared/Flex";
-import { AppleIcon } from "lucide-react";
 import AppStoreIcon from "@/assets/icon/appstore.svg";
 import PlayStoreIcon from "@/assets/icon/playstore.svg";
 const Header = () => {
   return (
     <header className="w-full pt-12 lg:pt-0 items-center grid gap-4 lg:grid-cols-2">
       <div className="lg:pb-12">
-        <p className="text-[54px] lg:text-[66px] font-bold">
-          Grocery Shopping just got{" "}
-          <span className="text-occupy-primary">Better</span>
-        </p>
+        <div>
+          <p className="text-[54px] lg:text-[66px] font-bold">
+            Grocery Shopping just got{" "}
+            <span className="text-occupy-primary">Better</span>
+          </p>
+
+          <p className="text-[54px] lg:text-[66px] font-bold">
+            Grocery Delivery just made{" "}
+            <span className="text-occupy-primary">Easier</span>
+          </p>
+        </div>
         <p className="mb-4 text-[24px]">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum
           dolorum provident nostrum sint natus, sapiente non quisquam ad
           corporis nihil!
         </p>
-        <Button onClick={() => Router.push("/auth/login")} className=" rounded-full">
+        <Button
+          onClick={() => Router.push("/auth/login")}
+          className=" rounded-full"
+        >
           Go Shopping
         </Button>
         <Flex className="mt-4">

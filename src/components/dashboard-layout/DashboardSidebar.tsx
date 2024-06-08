@@ -94,8 +94,8 @@ const DashboardSidebar = ({
                           const isLast = idx === link?.subLinks?.length! - 1;
                           return (
                             <div
-                              className={`flex items-baseline gap-4 ${
-                                !isLast && "mb-[-10px]"
+                              className={`flex items-baseline  ${
+                                !isLast && "mb-[-18px]"
                               }`}
                               key={idx}
                             >
@@ -106,10 +106,10 @@ const DashboardSidebar = ({
                               ></div>
                               <Link
                                 href={linkToClick}
-                                className={`flex font-semibold px-2 rounded-lg items-center ${
+                                className={`flex font-semibold px-4 py-2   rounded-lg items-center w-full ${
                                   isCurrentPath
-                                    ? "text-white underline"
-                                    : "text-[#c183b0]"
+                                    ? "bg-white text-occupy-primary"
+                                    : "bg-transparent text-[#c183b0]"
                                 }`}
                               >
                                 {subLink.title}
