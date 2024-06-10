@@ -1,5 +1,10 @@
 import FormSteps from "@/components/dashboard/dashboard/FormSteps";
+import BillingForm from "@/components/dashboard/settings/BillingForm";
+import ContactCenter from "@/components/dashboard/settings/ContactCenter";
 import GeneralInformation from "@/components/dashboard/settings/GeneralInformation";
+import NotificationSettings from "@/components/dashboard/settings/NotificationSettings";
+import SecurityForm from "@/components/dashboard/settings/SecurityForm";
+import SupermarketInformation from "@/components/dashboard/settings/SupermarketInformation";
 import WorkTimeActivities from "@/components/dashboard/settings/WorkTimeActivities";
 import Flex from "@/components/shared/Flex";
 import { Form } from "@/components/ui/form";
@@ -37,6 +42,7 @@ const Index = () => {
     {
       title: "Supermarket Information",
       desc: "Supermarket/Partners Information",
+      component: <SupermarketInformation {...form} />,
     },
     {
       title: "Work Time Activities",
@@ -51,18 +57,22 @@ const Index = () => {
     {
       title: "Security",
       desc: "Password & Security questions",
+      component: <SecurityForm {...form} />,
     },
     {
       title: "Billing",
       desc: "Setup Payment Methods",
+      component: <BillingForm {...form} />,
     },
     {
       title: "Notification",
       desc: "Set your email notification",
+      component: <NotificationSettings />,
     },
     {
       title: "Contact Center",
       desc: "Help and Raise Ticket",
+      component: <ContactCenter />,
     },
     {
       title: "Deactivate Account",
@@ -79,7 +89,9 @@ const Index = () => {
         <div className="border w-full h-full border-dashed rounded-md p-6 flex justify-center items-center">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-              <div>{stepState[currentStep - 1]?.component}</div>
+              <div className="max-w-[600px] mx-auto">
+                {stepState[currentStep - 1]?.component}
+              </div>
             </form>
           </Form>
         </div>

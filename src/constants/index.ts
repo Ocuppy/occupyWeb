@@ -9,3 +9,18 @@ export const daysOfWeek = [
   { label: "Saturday", value: "Saturday" },
   { label: "Sunday", value: "Sunday" },
 ];
+
+export const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];

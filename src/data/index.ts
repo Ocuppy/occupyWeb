@@ -171,3 +171,26 @@ export const BillingInformationFields = [
     type: "text",
   },
 ];
+
+export const NotificationFormFields = [
+  {
+    name: "generalNotification",
+    label: "General Notification",
+    description: "Profile Photo, Name and Location",
+  },
+  {
+    name: "supermarketVisibility",
+    label: "Turn on Supermarket Visiblity",
+    description: "Profile Photo, Name and Location",
+  },
+  {
+    name: "orderingActivity",
+    label: "Disable Ordering Activity",
+    description: "Profile Photo, Name and Location",
+  },
+  {
+    name: "activitydays",
+    label: "Enable Activities Days",
+    description: "Profile Photo, Name and Location",
+  },
+];

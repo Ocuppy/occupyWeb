@@ -18,6 +18,10 @@ interface IDashboardLink {
 export interface IDashboardLinks extends IDashboardLink {
   subLinks?: Omit<IDashboardLink, "icon">[];
 }
+const addParentLinkToUrl = (url: string) => {
+  return ADMIN_DASHBOARD_URL + url;
+};
+
 export const DashboardLinks: IDashboardLinks[] = [
   {
     icon: HomeIcon,
@@ -51,7 +55,11 @@ export const DashboardLinks: IDashboardLinks[] = [
   {
     icon: WalletIcon,
     title: "Wallet Management",
-    url: "/wallet-management",
+    url: ADMIN_DASHBOARD_URL + "/wallet-management",
+    subLinks: [
+      { title: "Rider’s Payment", url: "/riders-payment" },
+      { title: "Supermarket Payment", url: "/supermarket-payment" },
+    ],
   },
   {
     icon: AnalyticsIcon,

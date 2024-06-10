@@ -10,7 +10,7 @@ import { ArrowRight } from "lucide-react";
 const Pending: NextPageWithLayout = () => {
   return (
     <div>
-      <div className="grid gap-4 items-center grid-rows-auto md:grid-cols-[auto,1fr] lg:grid-cols-[auto,1fr,1fr]">
+      <div className="grid gap-4 items-center grid-rows-auto md:grid-cols-[auto,1fr] lg:grid-cols-[auto,1fr,1fr] xl:grid-cols-[auto,1fr,1fr,1fr]">
         {/* <GreetingsCard /> */}
         <WalletBalance />
 
@@ -21,7 +21,7 @@ const Pending: NextPageWithLayout = () => {
       </div>
       {/* <AccountStatus /> */}
       <Flex className="my-4 mx-8 justify-between">
-        <p className="text-[20px] font-semibold text-[#1A1A1A] font-nunito">
+        <p className="text-[20px] font-semibold text-[#1A1A1A] nunito">
           Categories
         </p>
         <Button className="text-[#00B207] gap-2" variant={"link"}>

@@ -1,8 +1,6 @@
-import React from "react";
 import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
-import IconButton from "../shared/IconButton";
 import { BellIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { AngleLeftIcon, UserClockIcon } from "@/assets/icon/icons";
@@ -10,14 +8,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import Flex from "../shared/Flex";
 
 const DashboardHeader = () => {
   return (
-    <header className="flex pl-8 pr-4 left-[250px] right-0 z-10 fixed items-center h-[100px] bg-white">
-      <div className="flex w-full justify-between items-center">
+    <header className="flex pr-4 pl-[270px] w-full right-0 z-10 fixed items-center h-[100px] bg-white">
+      <Flex className="w-full pl-10 justify-between">
         <Input
           className="max-w-[300px]"
           placeholder="Search your grocery products etc . . . "
@@ -25,19 +23,19 @@ const DashboardHeader = () => {
         <div className="flex gap-8 items-center">
           <div className="flex items-center space-x-2">
             <Switch id="online-mode" />
-            <Label htmlFor="online-mode">Airplane Mode</Label>
+            <Label htmlFor="online-mode">Online</Label>
           </div>
           <Button
             onClick={() => {}}
             className="rounded-lg px-4 py-6 bg-[#f6f6f6] text-black"
           >
-            <UserClockIcon width={21} className={``} />
+            <UserClockIcon width={21} />
           </Button>
           <Button
             onClick={() => {}}
             className="rounded-lg px-4 py-6 bg-[#f6f6f6] text-black"
           >
-            <BellIcon width={21} className={``} />
+            <BellIcon width={21} />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger>
@@ -58,7 +56,7 @@ const DashboardHeader = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-      </div>
+      </Flex>
     </header>
   );
 };

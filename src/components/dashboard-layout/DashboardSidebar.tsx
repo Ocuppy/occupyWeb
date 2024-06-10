@@ -20,29 +20,42 @@ const ParentLinkComponent = ({
   return (
     <Flex className="gap-4">
       <link.icon width={18} />
-      {showFullSidebar && <span className="font-semibold text-[15px]">{link.title}</span>}
+      {showFullSidebar && (
+        <span className="font-semibold text-[15px]">{link.title}</span>
+      )}
     </Flex>
   );
 };
 
-const DashboardSidebar = ({ showFullSidebar }: { showFullSidebar: boolean }) => {
+const DashboardSidebar = ({
+  showFullSidebar,
+}: {
+  showFullSidebar: boolean;
+}) => {
   const router = useRouter();
 
   return (
     <aside
       className={`bg-occupy-primary  rounded-r-lg ${
-        showFullSidebar && "min-w-[250px]"
-      } text-white p-4 sticky z-10 top-0 h-screen`}
+        showFullSidebar && "w-[270px]"
+      } text-white p-4 sticky z-30 top-0 h-screen`}
     >
       <div className="flex items-center relative gap-4 pt-4 pb-16">
         <Avatar>
-          <AvatarImage src={"../../../assets/images/avatar.png"} alt="profile-avatar" />
+          <AvatarImage
+            src={"../../../assets/images/avatar.png"}
+            alt="profile-avatar"
+          />
           <AvatarFallback className="bg-slate-400">CN</AvatarFallback>
         </Avatar>
         {showFullSidebar && (
           <div className="flex text-white flex-col">
-            <p className="uppercase opacity-[40%] text-[10px]">Live Well Supermarket</p>
-            <p className="font-medium opacity-[80%] text-[14px]">Andrew Smith</p>
+            <p className="uppercase opacity-[40%] text-[10px]">
+              Live Well Supermarket
+            </p>
+            <p className="font-medium opacity-[80%] text-[14px]">
+              Andrew Smith
+            </p>
           </div>
         )}
       </div>
@@ -67,7 +80,10 @@ const DashboardSidebar = ({ showFullSidebar }: { showFullSidebar: boolean }) => 
                           e.stopPropagation();
                         }}
                       >
-                        <ParentLinkComponent showFullSidebar={showFullSidebar} link={link} />
+                        <ParentLinkComponent
+                          showFullSidebar={showFullSidebar}
+                          link={link}
+                        />
                       </Link>
                     </AccordionTrigger>
                     <AccordionContent>
@@ -78,7 +94,9 @@ const DashboardSidebar = ({ showFullSidebar }: { showFullSidebar: boolean }) => 
                           const isLast = idx === link?.subLinks?.length! - 1;
                           return (
                             <div
-                              className={`flex items-baseline gap-4 ${!isLast && "mb-[-10px]"}`}
+                              className={`flex items-baseline  ${
+                                !isLast && "mb-[-18px]"
+                              }`}
                               key={idx}
                             >
                               <div
@@ -88,8 +106,10 @@ const DashboardSidebar = ({ showFullSidebar }: { showFullSidebar: boolean }) => 
                               ></div>
                               <Link
                                 href={linkToClick}
-                                className={`flex font-semibold px-2 rounded-lg items-center ${
-                                  isCurrentPath ? "text-white underline" : "text-[#c183b0]"
+                                className={`flex font-semibold px-4 py-2   rounded-lg items-center w-full ${
+                                  isCurrentPath
+                                    ? "bg-white text-occupy-primary"
+                                    : "bg-transparent text-[#c183b0]"
                                 }`}
                               >
                                 {subLink.title}
@@ -110,7 +130,10 @@ const DashboardSidebar = ({ showFullSidebar }: { showFullSidebar: boolean }) => 
                   }`}
                   href={link.url}
                 >
-                  <ParentLinkComponent showFullSidebar={showFullSidebar} link={link} />
+                  <ParentLinkComponent
+                    showFullSidebar={showFullSidebar}
+                    link={link}
+                  />
                 </Link>
               )}
             </div>
