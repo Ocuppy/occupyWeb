@@ -25,7 +25,7 @@ const Layout = ({
             onClick={toggleSidebarState}
             className={cn(
               "fixed  rounded-lg z-[100] top-8  translate-x-[50%] border-[2px] px-2 py-4 bg-occupy-primary text-white border-[#F3D9EC]",
-              showFullSidebar ? "left-[210px]" : "left-[65px]"
+              showFullSidebar ? "left-[230px]" : "left-[50px]"
             )}
           >
             <AngleLeftIcon
