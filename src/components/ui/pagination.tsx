@@ -1,6 +1,5 @@
 import * as React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
-
 import { cn } from "@/lib/utils";
 import { ButtonProps, buttonVariants } from "@/components/ui/button";
 
@@ -8,7 +7,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav
     role="navigation"
     aria-label="pagination"
-    className={cn(" flex justify-center", className)}
+    className={cn("flex justify-center", className)}
     {...props}
   />
 );
@@ -37,6 +36,7 @@ PaginationItem.displayName = "PaginationItem";
 type PaginationLinkProps = {
   isActive?: boolean;
   disabled?: boolean;
+  variant?: "default" | "outline";
 } & Pick<ButtonProps, "size"> &
   React.ComponentProps<"a">;
 
@@ -44,6 +44,7 @@ const PaginationLink = ({
   className,
   disabled,
   isActive,
+  variant = "default",
   size = "icon",
   ...props
 }: PaginationLinkProps) => (
@@ -55,9 +56,16 @@ const PaginationLink = ({
         variant: isActive ? "outline" : "ghost",
         size,
       }),
-      isActive
-        ? "bg-occupy-primary text-white"
-        : "text-occupy-primary bg-[#DEDEFA]",
+      {
+        // Default variant active and inactive states
+        "bg-occupy-primary text-white": variant === "default" && isActive,
+        "text-occupy-primary bg-[#DEDEFA]": variant === "default" && !isActive,
+        // Outline variant active and inactive states
+        "bg-occupy-primary text-white border border-occupy-primary":
+          variant === "outline" && isActive,
+        "text-occupy-primary bg-transparent border border-occupy-primary":
+          variant === "outline" && !isActive,
+      },
       "font-semibold text-[14px] p-2 rounded-lg",
       disabled ? "cursor-not-allowed opacity-50" : "hover:cursor-pointer",
       className

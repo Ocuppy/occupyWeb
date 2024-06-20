@@ -9,8 +9,8 @@ interface TableDemoProps {
   TableTopBar?: React.JSX.Element;
   children: ReactNode;
   containerClassName?: string | undefined;
-  currentPage: number;
-  totalPages: number;
+  currentPage?: number;
+  totalPages?: number;
 }
 
 export function CustomTable({
@@ -32,9 +32,11 @@ export function CustomTable({
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
 
-      <div className="mt-8">
-        <TablePagination totalPages={totalPages} currentPage={currentPage} />
-      </div>
+      {currentPage && totalPages && (
+        <div className="mt-8">
+          <TablePagination totalPages={totalPages} currentPage={currentPage} />
+        </div>
+      )}
     </div>
   );
 }
