@@ -112,7 +112,7 @@ const Login = () => {
                 <p className="font-light text-sm text-[#7B8499]">
                   Can't remember your password?{" "}
                   <Link
-                    href={"/auth/forget-password"}
+                    href={"/auth/forgot-password"}
                     className="text-[#A74E8E] font-medium underline"
                   >
                     Forget Password
