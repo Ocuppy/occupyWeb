@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Formik, Form, FormikHelpers, FormikProps } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/inputOtp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { useState, useEffect } from "react";
