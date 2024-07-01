@@ -21,6 +21,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import EditDialog from "./modals/edit-modal";
 import DeleteDialog from "./modals/delete-modal";
 import { inventorySchema } from "@/lib/validations/inventory.schema";
+import ViewDialog from "./modals/view-modal";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -28,11 +29,19 @@ interface DataTableRowActionsProps<TData> {
 
 export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
   const [dialogContent, setDialogContent] = React.useState<React.ReactNode | null>(null);
+  const [viewDialogContent, setViewDialogContent] = React.useState<React.ReactNode | null>(
+    null
+  );
   const [showDeleteDialog, setShowDeleteDialog] = React.useState<boolean>(false);
+  const [showViewDialog, setShowViewDialog] = React.useState<boolean>(false);
   const task = inventorySchema.parse(row.original);
 
   const handleEditClick = () => {
     setDialogContent(<EditDialog data={task} />);
+  };
+
+  const handleViewClick = () => {
+    setViewDialogContent(<ViewDialog data={task} />);
   };
 
   return (
@@ -51,7 +60,7 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
             Copy Item ID
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DialogTrigger asChild onClick={() => {}}>
+          <DialogTrigger asChild onClick={handleViewClick}>
             <DropdownMenuItem>
               {" "}
               <Eye className="mr-2 h-4 w-4" />
@@ -72,6 +81,9 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         </DropdownMenuContent>
       </DropdownMenu>
       {dialogContent && <DialogContent>{dialogContent}</DialogContent>}
+      {viewDialogContent && (
+        <DialogContent className="max-w-4xl">{viewDialogContent}</DialogContent>
+      )}
       <DeleteDialog
         task={task}
         isOpen={showDeleteDialog}
