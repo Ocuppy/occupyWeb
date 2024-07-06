@@ -56,10 +56,6 @@ export const DashboardLinks: IDashboardLinks[] = [
     icon: WalletIcon,
     title: "Wallet Management",
     url: ADMIN_DASHBOARD_URL + "/wallet-management",
-    subLinks: [
-      { title: "Rider’s Payment", url: "/riders-payment" },
-      { title: "Supermarket Payment", url: "/supermarket-payment" },
-    ],
   },
   {
     icon: AnalyticsIcon,
