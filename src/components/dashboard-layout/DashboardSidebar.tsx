@@ -10,35 +10,21 @@ import {
 import Flex from "@/components/shared/Flex";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const ParentLinkComponent = ({
-  link,
-  showFullSidebar,
-}: {
-  link: IDashboardLinks;
-  showFullSidebar: boolean;
-}) => {
+const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
   return (
     <Flex className="gap-4">
       <link.icon width={18} />
-      {showFullSidebar && (
-        <span className="font-semibold text-[15px]">{link.title}</span>
-      )}
+      <span className="font-semibold text-[15px]">{link.title}</span>
     </Flex>
   );
 };
 
-const DashboardSidebar = ({
-  showFullSidebar,
-}: {
-  showFullSidebar: boolean;
-}) => {
+const DashboardSidebar = () => {
   const router = useRouter();
 
   return (
     <aside
-      className={`bg-occupy-primary  rounded-r-lg ${
-        showFullSidebar && "w-[270px]"
-      } text-white p-4 sticky z-30 top-0 h-screen`}
+      className={`bg-occupy-primary  rounded-r-lg w-[270px] text-white p-4 sticky z-30 top-0 h-screen`}
     >
       <div className="flex items-center relative gap-4 pt-4 pb-16">
         <Avatar>
@@ -48,16 +34,13 @@ const DashboardSidebar = ({
           />
           <AvatarFallback className="bg-slate-400">CN</AvatarFallback>
         </Avatar>
-        {showFullSidebar && (
-          <div className="flex text-white flex-col">
-            <p className="uppercase opacity-[40%] text-[10px]">
-              Live Well Supermarket
-            </p>
-            <p className="font-medium opacity-[80%] text-[14px]">
-              Andrew Smith
-            </p>
-          </div>
-        )}
+
+        <div className="flex text-white flex-col">
+          <p className="uppercase opacity-[40%] text-[10px]">
+            Live Well Supermarket
+          </p>
+          <p className="font-medium opacity-[80%] text-[14px]">Andrew Smith</p>
+        </div>
       </div>
       <div className="flex flex-col gap-4">
         {DashboardLinks.map((link) => {
@@ -80,10 +63,7 @@ const DashboardSidebar = ({
                           e.stopPropagation();
                         }}
                       >
-                        <ParentLinkComponent
-                          showFullSidebar={showFullSidebar}
-                          link={link}
-                        />
+                        <ParentLinkComponent link={link} />
                       </Link>
                     </AccordionTrigger>
                     <AccordionContent>
@@ -130,10 +110,7 @@ const DashboardSidebar = ({
                   }`}
                   href={link.url}
                 >
-                  <ParentLinkComponent
-                    showFullSidebar={showFullSidebar}
-                    link={link}
-                  />
+                  <ParentLinkComponent link={link} />
                 </Link>
               )}
             </div>
