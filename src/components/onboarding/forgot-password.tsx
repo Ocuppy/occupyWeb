@@ -15,6 +15,10 @@ const ForgotPassword = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const resetForm = () => {
+    setIsComplete(false);
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -98,7 +102,7 @@ const ForgotPassword = () => {
             </div>
           </div>
         ) : (
-          <ForgotResponse />
+          <ForgotResponse resetForm={resetForm} />
         )}
       </div>
     </section>
