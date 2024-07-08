@@ -29,6 +29,7 @@ const variants = {
 };
 
 const Header = () => {
+  const blackText = ["Grocery Delivery just got", "Grocery shopping just made"];
   const texts = ["better", "easier"];
   const [index, setIndex] = useState(0);
   useEffect(() => {
@@ -45,7 +46,7 @@ const Header = () => {
     <header className="w-full pt-12 lg:pt-0 items-center grid gap-4 lg:grid-cols-2">
       <div className="lg:pb-12">
         <p className="text-[54px] lg:text-[66px] font-bold">
-          <span>Grocery Delivery just got&nbsp; </span>
+          <span>{blackText[index]}&nbsp; </span>
           <AnimatePresence>
             <motion.span
               style={{ position: "absolute" }}
@@ -60,7 +61,7 @@ const Header = () => {
                 opacity: { duration: 0.3 },
               }}
             >
-              {" " + texts[index]}
+              {texts[index]}
             </motion.span>
           </AnimatePresence>
         </p>

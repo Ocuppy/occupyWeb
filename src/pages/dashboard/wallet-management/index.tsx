@@ -1,15 +1,12 @@
 import {
   keys,
-  lineChartData,
   walletData,
 } from "@/components/dashboard/wallet-management/mockdata";
 import CustomTabslist from "@/components/shared/CustomTablist";
-import DataChart from "@/components/shared/DataChart";
 import Flex from "@/components/shared/Flex";
 import SpaceBetween from "@/components/shared/SpaceBetween";
 import WalletBalance from "@/components/shared/WalletBalance";
 import { Tabs } from "@/components/ui/tabs";
-import chartStyles from "@/components/dashboard/wallet-management/chart.module.css";
 import { Button } from "@/components/ui/button";
 import { CustomTable } from "@/components/shared/CustomTable";
 import { TableCell, TableHead, TableRow } from "@/components/ui/table";
@@ -18,6 +15,7 @@ import { format } from "date-fns";
 import { useDisclosure } from "@/hooks/useDisclosure";
 import ViewTransactiondetailModal from "@/components/dashboard/wallet-management/ViewTransactiondetailModal";
 import InitiateWithdrawalModal from "@/components/dashboard/wallet-management/InitiateWithdrawalModal";
+import RevenueChart from "@/components/dashboard/wallet-management/RevenueChart";
 
 const tableHeadings = ["Amount", "Customer", "Reference", "Channel", "Paid On"];
 
@@ -42,19 +40,15 @@ const Page = () => {
       <p className="text-[20px] text-[#1C2A53] font-medium">
         Wallet Management
       </p>
-      <Flex className="gap-8 items-start">
+      <Flex className="gap-8 flex-wrap xl:flex-nowrap items-start">
         <WalletBalance walletName="XYZ Wallet" walletNumber="444 221 224 ***" />
-        <SpaceBetween>
-          <div>
+        <Flex>
+          <div className="w-full grow">
             <Tabs defaultValue="Week">
               <CustomTabslist tabsList={["Week", "Month", "Year"]} />
             </Tabs>
-            <div className={chartStyles.chart}>
-              <DataChart
-                type="line"
-                data={lineChartData}
-                options={{ responsive: true }}
-              />
+            <div className="h-[200px]">
+              <RevenueChart />
             </div>
           </div>
           <div className="w-[260px] border border-[#E0E0E0] p-4 rounded-lg">
@@ -87,9 +81,9 @@ const Page = () => {
               <p className="text-[10px] font-semibold text-[#27AE60]">12.5%</p>
             </Flex>
           </div>
-        </SpaceBetween>
+        </Flex>
       </Flex>
-      <Flex className="justify-end gap-4">
+      <Flex className="justify-end mt-6 gap-4">
         <Button className="font-[400]" onClick={toggleWithdrawalOpenState}>
           Initiate Withdrawal
         </Button>

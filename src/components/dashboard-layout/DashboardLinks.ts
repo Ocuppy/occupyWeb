@@ -47,11 +47,11 @@ export const DashboardLinks: IDashboardLinks[] = [
       { title: "Price Management", url: "/price-management" },
     ],
   },
-  {
-    icon: CategoriesIcon,
-    title: "Categories",
-    url: ADMIN_DASHBOARD_URL + "/categories",
-  },
+  // {
+  //   icon: CategoriesIcon,
+  //   title: "Categories",
+  //   url: ADMIN_DASHBOARD_URL + "/categories",
+  // },
   {
     icon: WalletIcon,
     title: "Wallet Management",
