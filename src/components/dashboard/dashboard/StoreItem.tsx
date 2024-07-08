@@ -2,11 +2,20 @@ import Flex from "@/components/shared/Flex";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
-const StoreItem = ({ onEdit }: { onEdit?: () => void }) => {
+const StoreItem = ({
+  onEdit,
+  onClickStore,
+}: {
+  onEdit?: () => void;
+  onClickStore?: () => void;
+}) => {
   return (
     <div className="flex flex-col border rounded-md gap-8">
       <Flex className="gap-0 w-full">
-        <div className="min-w-[280px] h-[150px] flex items-center justify-center bg-[#F0F1F3]">
+        <div
+          onClick={onClickStore}
+          className="hover:cursor-pointer min-w-[280px] hover;cursor-pointer h-[150px] flex items-center justify-center bg-[#F0F1F3]"
+        >
           <p className="font-semibold text-[#48505e]">
             Livewell Kadokuchi, Abuja
           </p>
