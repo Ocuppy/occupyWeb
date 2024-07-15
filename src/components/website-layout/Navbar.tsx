@@ -1,7 +1,6 @@
 import Image from "next/image";
 import SpaceBetween from "../shared/SpaceBetween";
 import OccupyLogo from "../../../public/occupy-logo.png";
-import Link from "next/link";
 import Flex from "../shared/Flex";
 import IconButton from "../shared/IconButton";
 import { ShoppingCartIcon } from "lucide-react";
@@ -13,12 +12,7 @@ const Navbar = () => {
     <nav className="w-full">
       <SpaceBetween>
         <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
-        <Link
-          className="text-[20px] hover:underline hover:text-occupy-primary"
-          href="/"
-        >
-          Home
-        </Link>
+
         <Flex>
           <IconButton
             variant={"ghost"}

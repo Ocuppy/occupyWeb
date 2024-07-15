@@ -43,20 +43,26 @@ const LetsGrowTogether = () => {
               key={index}
               className="p-4 pt-10 pb-4 flex-[0_0_100%] md:flex-[0_0_calc(50%-32px)] flex flex-col gap-2 rounded-md bg-white"
             >
-              <div className="mx-auto">
-                <Image alt="icon" src={data.image} className="w-[120px]" />
+              <div className="w-full flex flex-col justify-between  h-full">
+                <div className="mb-4">
+                  <div className="mx-auto w-[120px]">
+                    <Image alt="icon" src={data.image} />
+                  </div>
+                  <p className="text-[34px] text-[#090335] font-[600]">
+                    {data.title}
+                  </p>
+                  <p className="text-[20px] text-[#090335]">
+                    {data.description}
+                  </p>
+                </div>
+                <Button
+                  onClick={data.onclick}
+                  className="bg-occupy-primary px-6 text-white rounded-full w-fit gap-4"
+                >
+                  <span>{data.btnText}</span>
+                  <ArrowRight />
+                </Button>
               </div>
-              <p className="text-[34px] text-[#090335] font-[600]">
-                {data.title}
-              </p>
-              <p className="text-[20px] text-[#090335]">{data.description}</p>
-              <Button
-                onClick={data.onclick}
-                className="bg-occupy-primary px-6 text-white rounded-full w-fit gap-4"
-              >
-                <span>{data.btnText}</span>
-                <ArrowRight />
-              </Button>
             </div>
           ))}
         </div>
