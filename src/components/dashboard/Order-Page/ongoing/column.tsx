@@ -13,7 +13,7 @@ export const columns: ColumnDef<OrderType>[] = [
         checked={table.getIsAllPageRowsSelected()}
         onCheckedChange={(value: any) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
-        className="translate-y-[2px]"
+        className="translate-y-[1px] mb-1"
       />
     ),
     cell: ({ row }) => (
@@ -21,7 +21,7 @@ export const columns: ColumnDef<OrderType>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value: any) => row.toggleSelected(!!value)}
         aria-label="Select row"
-        className="translate-y-[2px]"
+        className="translate-y-[1px] mb-1"
       />
     ),
     enableSorting: false,
