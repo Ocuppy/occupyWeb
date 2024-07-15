@@ -22,44 +22,48 @@ const addParentLinkToUrl = (url: string) => {
   return ADMIN_DASHBOARD_URL + url;
 };
 
-export const DashboardLinks: IDashboardLinks[] = [
-  {
-    icon: HomeIcon,
-    title: "Dashboard",
-    url: "/dashboard",
-  },
-  {
-    icon: UserIcon,
-    title: "Orders",
-    url: ADMIN_DASHBOARD_URL + "/orders",
-    subLinks: [
-      { title: "Ongoing Orders", url: "/ongoing" },
-      { title: "Rider's Assigning", url: "/riders-assigning" },
-    ],
-  },
-  {
-    icon: InventoryIcon,
-    title: "Inventory",
-    url: ADMIN_DASHBOARD_URL + "/inventory",
-    subLinks: [
-      { title: "Pending", url: "/pending" },
-      { title: "Approved", url: "/approved" },
-      { title: "Price Management", url: "/price-management" },
-    ],
-  },
-  // {
-  //   icon: CategoriesIcon,
-  //   title: "Categories",
-  //   url: ADMIN_DASHBOARD_URL + "/categories",
-  // },
-  {
-    icon: WalletIcon,
-    title: "Wallet Management",
-    url: ADMIN_DASHBOARD_URL + "/wallet-management",
-  },
-  {
-    icon: AnalyticsIcon,
-    title: "Settings",
-    url: ADMIN_DASHBOARD_URL + "/settings",
-  },
-];
+export const DashboardLinks: Record<string, IDashboardLinks[]> = {
+  main: [
+    {
+      icon: HomeIcon,
+      title: "Dashboard",
+      url: "/dashboard",
+    },
+    {
+      icon: UserIcon,
+      title: "Orders",
+      url: ADMIN_DASHBOARD_URL + "/orders",
+      subLinks: [
+        { title: "Ongoing Orders", url: "/ongoing" },
+        { title: "Rider's Assigning", url: "/riders-assigning" },
+      ],
+    },
+    {
+      icon: InventoryIcon,
+      title: "Inventory",
+      url: ADMIN_DASHBOARD_URL + "/inventory",
+      subLinks: [
+        { title: "Pending", url: "/pending" },
+        { title: "Approved", url: "/approved" },
+        { title: "Price Management", url: "/price-management" },
+      ],
+    },
+    // {
+    //   icon: CategoriesIcon,
+    //   title: "Categories",
+    //   url: ADMIN_DASHBOARD_URL + "/categories",
+    // },
+    {
+      icon: WalletIcon,
+      title: "Wallet Management",
+      url: ADMIN_DASHBOARD_URL + "/wallet-management",
+    },
+  ],
+  settings: [
+    {
+      icon: AnalyticsIcon,
+      title: "Settings",
+      url: ADMIN_DASHBOARD_URL + "/settings",
+    },
+  ],
+};
