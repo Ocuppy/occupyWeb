@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import Flex from "@/components/shared/Flex";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from "../ui/separator";
 
 const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
   return (
@@ -26,7 +27,7 @@ const DashboardSidebar = () => {
     <aside
       className={`bg-occupy-primary  rounded-r-lg w-[270px] text-white p-4 sticky z-30 top-0 h-screen`}
     >
-      <div className="flex items-center relative gap-4 pt-4 pb-16">
+      <div className="flex items-center relative gap-4 pt-4 ">
         <Avatar>
           <AvatarImage
             src={"../../../assets/images/avatar.png"}
@@ -42,8 +43,10 @@ const DashboardSidebar = () => {
           <p className="font-medium opacity-[80%] text-[14px]">Andrew Smith</p>
         </div>
       </div>
+      <Separator className="my-8 h-[2px]" />
+      <p className="pl-4 text-white opacity-50 text-[12px]">MAIN</p>
       <div className="flex flex-col gap-4">
-        {DashboardLinks.map((link) => {
+        {DashboardLinks.main.map((link) => {
           const isCurrentPath = link.url === router.pathname;
           return (
             <div key={link.url}>
@@ -54,7 +57,7 @@ const DashboardSidebar = () => {
                       className={`p-2 py-[12px] pl-4  rounded-lg ${
                         isCurrentPath
                           ? "bg-white text-occupy-primary"
-                          : "bg-transparent text-[#c183b0]"
+                          : "bg-transparent text-white"
                       }`}
                     >
                       <Link
@@ -67,7 +70,7 @@ const DashboardSidebar = () => {
                       </Link>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div className="ml-8 my-4">
+                      <div className="ml-8 mth-4">
                         {link.subLinks.map((subLink, idx) => {
                           const linkToClick = `${link.url}${subLink.url}`;
                           const isCurrentPath = linkToClick === router.pathname;
@@ -106,7 +109,7 @@ const DashboardSidebar = () => {
                   className={`flex p-2 py-[12px] pl-4 rounded-lg items-center ${
                     isCurrentPath
                       ? "bg-white text-occupy-primary"
-                      : "bg-transparent text-[#c183b0]"
+                      : "bg-transparent text-white"
                   }`}
                   href={link.url}
                 >
@@ -114,6 +117,26 @@ const DashboardSidebar = () => {
                 </Link>
               )}
             </div>
+          );
+        })}
+      </div>
+      <Separator className="my-12 h-[2px]" />
+      <p className="pl-4 text-white opacity-50 text-[12px]">SETTINGS</p>
+      <div>
+        {DashboardLinks.settings.map((link, i) => {
+          const isCurrentPath = link.url === router.pathname;
+          return (
+            <Link
+              key={i}
+              className={`flex p-2 py-[12px] pl-4 rounded-lg items-center ${
+                isCurrentPath
+                  ? "bg-white text-occupy-primary"
+                  : "bg-transparent text-white"
+              }`}
+              href={link.url}
+            >
+              <ParentLinkComponent link={link} />
+            </Link>
           );
         })}
       </div>
