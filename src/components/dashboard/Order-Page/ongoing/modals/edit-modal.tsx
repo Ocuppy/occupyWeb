@@ -1,0 +1,219 @@
+"use client";
+
+import { z } from "zod";
+import { OrderType } from "@/lib/validations/schema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { format } from "date-fns";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { label_options, priority_options, status_options } from "../../../../filters";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+
+type EditProps = {
+  order: OrderType;
+};
+
+const editSchema = z.object({
+  order_id: z.string(),
+  product: z.string().min(1, { message: "Title Required" }),
+  status: z.string(),
+  customer: z.string(),
+  total: z.string(),
+  payment: z.string(),
+  date: z.date({
+    required_error: "date is required.",
+  }),
+});
+
+type editSchemaType = z.infer<typeof editSchema>;
+
+export default function EditDialog({ order }: EditProps) {
+  const form = useForm<editSchemaType>({
+    resolver: zodResolver(editSchema),
+    defaultValues: {
+      order_id: order.order_id,
+      product: order.product.name,
+      status: order.status,
+      customer: order.customer.name,
+      total: order.total,
+      payment: order.payment,
+      date: order.date,
+    },
+  });
+
+  function onSubmit(values: editSchemaType) {
+    console.log(values);
+  }
+  return (
+    <>
+      <DialogHeader>
+        <DialogTitle>Edit Ongoing Order Details</DialogTitle>
+      </DialogHeader>
+      <div className="py-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4">
+            <FormField
+              control={form.control}
+              name="product"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Product</FormLabel>
+                  <FormControl>
+                    <Input type="text" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Status</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Status to Update" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {status_options.map((status, index) => (
+                          <SelectItem key={index} value={status.value}>
+                            <span className="flex items-center">
+                              <status.icon className="mr-2 h-5 w-5 text-muted-foreground" />
+                              {status.label}
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="customer"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Customer</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Label to Update" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {label_options.map((label, index) => (
+                          <SelectItem key={index} value={label.value}>
+                            <span className="flex items-center">
+                              <label.icon className="mr-2 h-5 w-5 text-muted-foreground" />
+                              {label.label}
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="total"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Total</FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Priority to Update" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        {priority_options.map((priority, index) => (
+                          <SelectItem key={index} value={priority.value}>
+                            <span className="flex items-center">
+                              <priority.icon className="mr-2 h-5 w-5 text-muted-foreground" />
+                              {priority.label}
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="end">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="mt-2 w-full">
+              Update Details
+            </Button>
+          </form>
+        </Form>
+      </div>
+    </>
+  );
+}
