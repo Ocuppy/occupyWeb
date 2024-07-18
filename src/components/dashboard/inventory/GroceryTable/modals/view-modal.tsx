@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { InventoryType } from "@/lib/validations/inventory.schema";
 import { Pencil } from "lucide-react";
+import { Image, X } from "lucide-react";
 
 type ViewProps = {
   data: InventoryType;

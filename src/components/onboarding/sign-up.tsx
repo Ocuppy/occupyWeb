@@ -55,7 +55,7 @@ const Signup = () => {
           <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
           <div className="flex flex-col items-start gap-3">
             <h3 className="text-[#12141A] font-medium text-2xl ">
-              Welcome, let's create an account
+              Welcome, let&apos;s create an account
             </h3>
             <p className="text-sm text-[#606778] font-medium pb-12">
               Create an account to keep track of your customers, and contributors. Once your

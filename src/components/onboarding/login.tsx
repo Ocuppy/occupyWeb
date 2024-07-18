@@ -110,7 +110,7 @@ const Login = () => {
               </div>
               <article className="inline-flex gap-3 w-full">
                 <p className="font-light text-sm text-[#7B8499]">
-                  Can't remember your password?{" "}
+                  Can&apos;t remember your password?{" "}
                   <Link
                     href={"/auth/forgot-password"}
                     className="text-[#A74E8E] font-medium underline"

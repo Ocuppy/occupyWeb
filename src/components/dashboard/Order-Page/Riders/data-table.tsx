@@ -102,10 +102,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                       alt="no value"
                     />
                     <span className="text-[#060F27] font-normal font-[Nurito sans] text-3xl">
-                      No Rider's Assigned
+                      No Rider&apos;s Assigned
                     </span>
                     <p className="text-[#AAAAAA] font-normal text-center text-sm">
-                      We’re good, No Rider's Assigned
+                      We’re good, No Rider&apos;s Assigned
                     </p>
                   </div>
                 </TableCell>
