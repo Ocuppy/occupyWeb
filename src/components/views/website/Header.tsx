@@ -9,22 +9,35 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const variants = {
-  enter: () => {
-    return {
-      y: -20,
-      opacity: 0,
-    };
+  // enter: () => {
+  //   return {
+  //     y: -20,
+  //     opacity: 0,
+  //   };
+  // },
+  // center: {
+  //   zIndex: 1,
+  //   y: 0,
+  //   opacity: 1,
+  // },
+  // exit: () => {
+  //   return {
+  //     zIndex: 0,
+  //     opacity: 0,
+  //   };
+  // },
+  enter: {
+    y: -20,
+    opacity: 0,
   },
   center: {
     zIndex: 1,
     y: 0,
     opacity: 1,
   },
-  exit: () => {
-    return {
-      zIndex: 0,
-      opacity: 0,
-    };
+  exit: {
+    zIndex: 0,
+    opacity: 0,
   },
 };
 
@@ -32,25 +45,24 @@ const Header = () => {
   const blackText = ["Grocery Delivery just got", "Grocery shopping just made"];
   const texts = ["better", "easier"];
   const [index, setIndex] = useState(0);
+
   useEffect(() => {
-    setTimeout(() => {
-      let next = index + 1;
-      if (next === texts.length) {
-        next = 0;
-      }
-      setIndex(next);
-    }, 3 * 1000);
-  }, [index, setIndex, texts.length]);
+    const textInterval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % texts.length);
+    }, 4e3);
+
+    return () => clearInterval(textInterval);
+  }, [texts.length]);
 
   return (
-    <header className="w-full pt-12 lg:pt-0 items-center grid gap-4 lg:grid-cols-2">
+    <header className="grid w-full items-center gap-4 pt-12 lg:grid-cols-2 lg:pt-0">
       <div className="lg:pb-12">
-        <p className="text-[54px] lg:text-[66px] font-bold">
-          <span>{blackText[index]}&nbsp; </span>
+        <p className="text-[54px] font-bold lg:text-[66px]">
+          <span>{blackText[index]}&nbsp;</span>
           <AnimatePresence>
             <motion.span
               style={{ position: "absolute" }}
-              variants={variants}
+              // variants={variants}
               key={index}
               initial="enter"
               animate="center"
@@ -58,7 +70,8 @@ const Header = () => {
               className="text-occupy-primary"
               transition={{
                 y: { type: "spring", stiffness: 180, damping: 10 },
-                opacity: { duration: 0.3 },
+                opacity: { duration: 0.2 },
+                delay: 0.1,
               }}
             >
               {texts[index]}
@@ -71,26 +84,30 @@ const Header = () => {
           dolorum provident nostrum sint natus, sapiente non quisquam ad
           corporis nihil!
         </p>
-        <Button
+        {/* <Button onClick={() => Router.push("/auth/login")} className="rounded-full" size={"lg"}>
+          Go Shopping
+        </Button> */}
+        <button
           onClick={() => Router.push("/auth/login")}
-          className=" rounded-full"
+          className="rounded-full bg-occupy-primary px-16 py-4 text-sm font-medium text-white"
         >
           Go Shopping
-        </Button>
+        </button>
+
         <Flex className="mt-4">
           {[
             { desc: "App Store", onClick: () => {}, imgSrc: AppStoreIcon },
-            { desc: "Google play", onClick: () => {}, imgSrc: PlayStoreIcon },
+            { desc: "Google Play", onClick: () => {}, imgSrc: PlayStoreIcon },
           ].map((data, idx) => (
             <Flex
-              key={idx}
+              key={data.desc}
               onClick={data.onClick}
-              className="bg-[#333333] rounded-lg cursor-pointer text-white  p-4"
+              className="cursor-pointer rounded-lg bg-[#333333] p-4 text-white"
             >
               <Image
                 className="w-[24px]"
                 src={data.imgSrc}
-                alt={data.desc + "-icon"}
+                alt={`${data.desc} icon`}
               />
               <div>
                 <p className="text-[11px] text-[#B3B3B3]">Download on the</p>
