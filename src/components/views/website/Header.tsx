@@ -52,27 +52,27 @@ const Header = () => {
     }, 4e3);
 
     return () => clearInterval(textInterval);
-  }, [texts.length]);
+  }, [index, texts.length]);
 
   return (
-    <header className="grid w-full items-center gap-4 pt-12 lg:grid-cols-2 lg:pt-0">
+    <header className="grid w-full items-center gap-4 px-5 pt-12 lg:grid-cols-2 lg:pt-0">
       <div className="lg:pb-12">
         <p className="mb-4 text-[3.375rem] font-bold leading-snug lg:text-[4.125rem]">
           <span>{blackText[index]}&nbsp;</span>
           <AnimatePresence>
             <motion.span
               style={{ position: "absolute" }}
-              // variants={variants}
+              variants={variants}
               key={index}
               initial="enter"
               animate="center"
               exit="exit"
               className="text-occupy-primary"
-              transition={{
-                y: { type: "spring", stiffness: 180, damping: 10 },
-                opacity: { duration: 0.2 },
-                delay: 0.1,
-              }}
+              // transition={{
+              //   y: { type: "spring", stiffness: 180, damping: 10 },
+              //   opacity: { duration: 0.1 },
+              //   delay: 0.1,
+              // }}
             >
               {texts[index]}
             </motion.span>

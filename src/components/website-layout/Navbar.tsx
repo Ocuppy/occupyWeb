@@ -9,7 +9,7 @@ import Router from "next/router";
 
 const Navbar = () => {
   return (
-    <nav className="w-full">
+    <nav className="w-full pr-5">
       <SpaceBetween>
         <Image className="w-[7.5rem]" src={OccupyLogo} alt="logo" />
 
