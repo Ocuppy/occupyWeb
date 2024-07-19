@@ -11,18 +11,18 @@ const Navbar = () => {
   return (
     <nav className="w-full">
       <SpaceBetween>
-        <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
+        <Image className="w-[7.5rem]" src={OccupyLogo} alt="logo" />
 
         <Flex>
           <IconButton
             variant={"ghost"}
             onClick={() => {}}
             Icon={<ShoppingCartIcon />}
-            className="rounded-full px-8 py-6 "
+            className="rounded-full px-8 py-6"
           />
           <Button
             onClick={() => Router.push("/auth/login")}
-            className="bg-occupy-primary px-8 py-6  text-white font-bold text-[16px] rounded-full"
+            className="rounded-full bg-occupy-primary px-8 py-7 text-[1rem] font-bold text-white md:py-6"
           >
             Log in
           </Button>

@@ -57,7 +57,7 @@ const Header = () => {
   return (
     <header className="grid w-full items-center gap-4 pt-12 lg:grid-cols-2 lg:pt-0">
       <div className="lg:pb-12">
-        <p className="text-[54px] font-bold lg:text-[66px]">
+        <p className="mb-4 text-[3.375rem] font-bold leading-snug lg:text-[4.125rem]">
           <span>{blackText[index]}&nbsp;</span>
           <AnimatePresence>
             <motion.span
@@ -79,7 +79,7 @@ const Header = () => {
           </AnimatePresence>
         </p>
 
-        <p className="mb-4 text-[24px]">
+        <p className="mb-4 text-[1.5rem]">
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum
           dolorum provident nostrum sint natus, sapiente non quisquam ad
           corporis nihil!
@@ -102,7 +102,7 @@ const Header = () => {
             <Flex
               key={data.desc}
               onClick={data.onClick}
-              className="cursor-pointer rounded-lg bg-[#333333] p-4 text-white"
+              className="cursor-pointer rounded-lg bg-[#333333] px-5 py-3 text-white md:px-4 md:py-2"
             >
               <Image
                 className="w-[24px]"
