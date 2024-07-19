@@ -72,10 +72,10 @@ const MockupSlider = () => {
         <div className="mt-8 grid items-center gap-4 pb-12 md:grid-cols-2 md:pb-0">
           <Image src={mockupObj.image} alt={"mockup-image"} />
           <div className="w-full md:w-[90%]">
-            <p className="mb-4 text-[31px] font-bold leading-tight text-[#090335] lg:text-[36px]">
+            <p className="mb-4 text-4xl font-bold leading-tight text-[#090335] lg:text-[36px]">
               {mockupObj.title}
             </p>
-            <p className="text-[21px] leading-tight text-[#9A9797]">
+            <p className="text-2xl leading-tight text-[#9A9797] lg:text-[21px]">
               {mockupObj.description}
             </p>
           </div>
