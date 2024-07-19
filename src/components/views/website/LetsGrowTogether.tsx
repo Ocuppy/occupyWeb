@@ -32,35 +32,36 @@ const LetsGrowTogether = () => {
     },
   ];
   return (
-    <Container className="bg-[#F9FBFD]">
-      <div className="py-12">
-        <p className="text-center font-semibold text-[40px] mb-8">
+    <Container className="bg-[#F9FBFD] px-5">
+      <div className="py-7">
+        {/* <p className="text-center font-semibold text-[40px] mb-8"> */}
+        <p className="mb-8 text-center text-4xl font-semibold">
           Let’s Grow Together
         </p>
-        <div className="grid md:grid-cols-3 justify-center gap-4 ">
+        <div className="grid justify-center gap-4 md:grid-cols-3">
           {DataList.map((data, index) => (
             <div
               key={index}
-              className="p-4 pt-10 pb-4 flex-[0_0_100%] md:flex-[0_0_calc(50%-32px)] flex flex-col gap-2 rounded-md bg-white"
+              className="flex flex-[0_0_100%] flex-col gap-2 rounded-md bg-white p-4 py-10 md:flex-[0_0_calc(50%-32px)]"
             >
-              <div className="w-full flex flex-col justify-between  h-full">
-                <div className="mb-4">
-                  <div className="mx-auto w-[120px]">
+              <div className="flex h-full w-full flex-col justify-between">
+                <div className="mb-4 space-y-3 text-center">
+                  <div className="mx-auto w-36">
                     <Image alt="icon" src={data.image} />
                   </div>
-                  <p className="text-[27px] text-[#090335] font-[600]">
+                  <p className="text-3xl font-semibold text-[#090335] lg:text-2xl">
                     {data.title}
                   </p>
-                  <p className="text-[18px] mt-2 text-[#090335]">
+                  <p className="mt-2 text-[18px] text-[#090335]">
                     {data.description}
                   </p>
                 </div>
                 <Button
                   onClick={data.onclick}
-                  className="bg-occupy-primary px-6 text-white rounded-full w-fit gap-4"
+                  className="mx-auto w-fit gap-4 rounded-full bg-occupy-primary px-7 py-8 text-white lg:py-7"
                 >
                   <span>{data.btnText}</span>
-                  <ArrowRight />
+                  <ArrowRight size={20} />
                 </Button>
               </div>
             </div>
