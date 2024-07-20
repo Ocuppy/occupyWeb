@@ -5,7 +5,7 @@ import Container from "@/components/shared/Container";
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div>
-      <Container
+      {/* <Container
         style={{
           backgroundImage: `url(/header-bg.jpg)`,
           backgroundRepeat: "no-repeat",
@@ -14,7 +14,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
         }}
       >
         <Navbar />
-      </Container>
+      </Container> */}
       <main>{children}</main>
     </div>
   );
