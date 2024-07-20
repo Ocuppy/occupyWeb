@@ -5,7 +5,7 @@ import Container from "../../shared/Container";
 
 const WhyUs = () => {
   return (
-    <Container className="bg-white">
+    <Container className="bg-white pb-16">
       <section className="flex flex-col gap-6 pt-20">
         <div className="mx-auto w-fit gap-4 space-y-5 px-6 text-center lg:px-0">
           <h1 className="text-4xl font-bold uppercase text-[#232233]">
