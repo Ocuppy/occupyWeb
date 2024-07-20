@@ -26,7 +26,10 @@ const VerifyOtp: React.FC = () => {
       .required("OTP is required"),
   });
 
-  const handleSubmit = (values: FormValues, actions: FormikHelpers<FormValues>) => {
+  const handleSubmit = (
+    values: FormValues,
+    actions: FormikHelpers<FormValues>,
+  ) => {
     console.log("OTP entered:", values.otp);
     router.push("/dashboard");
   };
@@ -48,36 +51,39 @@ const VerifyOtp: React.FC = () => {
   };
 
   return (
-    <section className="lg:relative font-[inter] w-full min-h-screen flex lg:items-center lg:justify-center">
-      <div className="lg:absolute hidden lg:block top-0 left-0 w-full h-full">
-        <Image
-          src={"/images/onboarding.png"}
-          alt=""
-          layout="fill"
-          objectFit="cover"
-          className="w-full h-full"
-        />
-      </div>
-
-      <div className="lg:relative lg:z-10 flex items-center gap-20 justify-start w-full lg:py-20 lg:px-8">
-        <h1 className="text-[#EBF7FB] hidden lg:block font-bold text-5xl w-full max-w-2xl">
-          Manage your Supermarket Operations with ease using our intuitive Dashboard
+    <section
+      className="flex min-h-screen w-full lg:relative lg:items-center lg:justify-center"
+      style={{
+        backgroundImage: `url('/images/onboarding.png')`,
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="flex w-full flex-col items-center justify-start gap-20 py-20 lg:relative lg:z-10 lg:flex-row lg:px-8">
+        <h1 className="hidden w-full max-w-2xl text-5xl font-bold text-[#EBF7FB] lg:block">
+          Manage your Supermarket Operations with ease using our intuitive
+          Dashboard
         </h1>
 
-        <div className="lg:bg-white px-6 lg:px-8 py-12 w-full max-w-lg rounded-lg lg:shadow-lg flex flex-col gap-8 items-center">
+        <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg bg-white px-6 py-12 lg:px-8 lg:shadow-lg">
           <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
-          <div className="flex flex-col items-start gap-3 w-full">
-            <h3 className="text-[#12141A] font-medium text-2xl">OTP verification</h3>
-            <p className="text-sm text-[#606778] font-medium pb-12">
-              Please enter the 6-digit verification code that was sent to your mail. It’s valid
-              for 30 minutes
+          <div className="flex w-full flex-col items-start gap-3">
+            <h3 className="text-2xl font-medium text-[#12141A]">
+              OTP verification
+            </h3>
+            <p className="pb-12 text-sm font-medium text-[#606778]">
+              Please enter the 6-digit verification code that was sent to your
+              mail. It’s valid for 30 minutes
             </p>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={handleSubmit}
             >
-              {({ setFieldValue, errors, touched }: FormikProps<FormValues>) => (
+              {({
+                setFieldValue,
+                errors,
+                touched,
+              }: FormikProps<FormValues>) => (
                 <Form className="w-full">
                   <InputOTP
                     maxLength={6}
@@ -95,15 +101,20 @@ const VerifyOtp: React.FC = () => {
                     </InputOTPGroup>
                   </InputOTP>
                   {errors.otp && touched.otp && (
-                    <div className="text-red-500 text-sm mt-2">{errors.otp}</div>
+                    <div className="mt-2 text-sm text-red-500">
+                      {errors.otp}
+                    </div>
                   )}
-                  <div className="text-end w-full md:mt-4 mt-8">
-                    <Button type="submit" className="w-full lg:w-32 rounded-md">
+                  <div className="mt-8 w-full text-end md:mt-4">
+                    <button
+                      type="submit"
+                      className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
+                    >
                       Proceed
-                    </Button>
-                    <p className="text-sm text-[#7B8499] text-center lg:text-end pt-4">
+                    </button>
+                    <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
                       Didn’t receive Code?{" "}
-                      <span className="text-[#A74E8E] font-medium underline">
+                      <span className="font-medium text-[#A74E8E] underline">
                         {formatTime(timeLeft)}
                       </span>
                     </p>
@@ -112,7 +123,7 @@ const VerifyOtp: React.FC = () => {
               )}
             </Formik>
           </div>
-          <div className="flex items-center text-sm font-light text-center text-black justify-center gap-3 w-full">
+          <div className="flex w-full items-center justify-center gap-3 text-center text-sm font-light text-black">
             <Link href="#">Help</Link>
             <Link href="#">Privacy</Link>
             <Link href="#">Terms</Link>
