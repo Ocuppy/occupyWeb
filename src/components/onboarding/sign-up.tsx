@@ -34,38 +34,42 @@ const Signup = () => {
   });
 
   return (
-    <section className="lg:relative font-[inter] w-full min-h-screen flex lg:items-center lg:justify-center">
-      <div className="lg:absolute hidden lg:block top-0 left-0 w-full h-full">
-        <Image
-          src={"/images/onboarding.png"}
-          alt=""
-          layout="fill"
-          objectFit="cover"
-          className="w-full h-full"
-        />
-      </div>
-
-      <div className="lg:relative lg:z-10 flex items-center gap-20 justify-start w-full lg:py-20 lg:px-8">
-        <h1 className="text-[#EBF7FB] hidden lg:block font-bold text-5xl w-full max-w-2xl">
-          Manage your Supermarket Operations with ease using our intuitive Dashboard
+    <section
+      className="flex min-h-screen w-full lg:relative lg:items-center lg:justify-center"
+      style={{
+        backgroundImage: `url('/images/onboarding.png')`,
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="flex w-full flex-col items-center justify-start gap-20 py-20 lg:relative lg:z-10 lg:flex-row lg:px-8 lg:py-10">
+        <h1 className="hidden w-full max-w-2xl text-5xl font-bold text-[#EBF7FB] lg:block">
+          Manage your Supermarket Operations with ease using our intuitive
+          Dashboard
         </h1>
 
         {/* signup form */}
-        <div className="lg:bg-white px-6 lg:px-8 py-20 w-full max-w-lg rounded-lg lg:shadow-lg flex flex-col gap-8 items-center">
+        <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg bg-white px-6 py-10 lg:px-8 lg:py-14 lg:shadow-lg">
           <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
           <div className="flex flex-col items-start gap-3">
-            <h3 className="text-[#12141A] font-medium text-2xl ">
+            <h3 className="text-2xl font-medium text-[#12141A]">
               Welcome, let&apos;s create an account
             </h3>
-            <p className="text-sm text-[#606778] font-medium pb-12">
-              Create an account to keep track of your customers, and contributors. Once your
-              account has been created then don’t forget to verify your account through mail.
+            <p className="pb-12 text-sm font-medium text-[#606778]">
+              Create an account to keep track of your customers, and
+              contributors. Once your account has been created then don’t forget
+              to verify your account through mail.
             </p>
             {/* input form  */}
-            <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
-              <div className="lg:flex lg:gap-6 items-center">
-                <div className="flex flex-col gap-2 mb-4 lg:mb-0">
-                  <label htmlFor="firstName" className="font-medium text-sm text-[#606778]">
+            <form
+              className="flex flex-col gap-4"
+              onSubmit={formik.handleSubmit}
+            >
+              <div className="items-center lg:flex lg:gap-6">
+                <div className="mb-4 flex flex-col gap-2 lg:mb-0">
+                  <label
+                    htmlFor="firstName"
+                    className="text-sm font-medium text-[#606778]"
+                  >
                     First Name
                   </label>
                   <Input
@@ -83,11 +87,16 @@ const Signup = () => {
                     }
                   />
                   {formik.touched.firstName && formik.errors.firstName ? (
-                    <div className="text-red-500 text-sm">{formik.errors.firstName}</div>
+                    <div className="text-sm text-red-500">
+                      {formik.errors.firstName}
+                    </div>
                   ) : null}
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="lastName" className="font-medium text-sm text-[#606778]">
+                  <label
+                    htmlFor="lastName"
+                    className="text-sm font-medium text-[#606778]"
+                  >
                     Last Name
                   </label>
                   <Input
@@ -99,18 +108,25 @@ const Signup = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.lastName}
                     className={
-                      formik.touched.lastName && formik.errors.lastName ? "border-red-700" : ""
+                      formik.touched.lastName && formik.errors.lastName
+                        ? "border-red-700"
+                        : ""
                     }
                   />
                   {formik.touched.lastName && formik.errors.lastName ? (
-                    <div className="text-red-500 text-sm">{formik.errors.lastName}</div>
+                    <div className="text-sm text-red-500">
+                      {formik.errors.lastName}
+                    </div>
                   ) : null}
                 </div>
               </div>
               {/* second input */}
-              <div className="lg:flex lg:gap-6 items-center">
-                <div className="flex flex-col gap-2 mb-4 lg:mb-0">
-                  <label htmlFor="email" className="font-medium text-sm text-[#606778]">
+              <div className="items-center lg:flex lg:gap-6">
+                <div className="mb-4 flex flex-col gap-2 lg:mb-0">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-medium text-[#606778]"
+                  >
                     Email
                   </label>
                   <Input
@@ -122,15 +138,22 @@ const Signup = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
                     className={
-                      formik.touched.email && formik.errors.email ? "border-red-700" : ""
+                      formik.touched.email && formik.errors.email
+                        ? "border-red-700"
+                        : ""
                     }
                   />
                   {formik.touched.email && formik.errors.email ? (
-                    <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                    <div className="text-sm text-red-500">
+                      {formik.errors.email}
+                    </div>
                   ) : null}
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="phone" className="font-medium text-sm text-[#606778]">
+                  <label
+                    htmlFor="phone"
+                    className="text-sm font-medium text-[#606778]"
+                  >
                     Phone Number
                   </label>
                   <Input
@@ -142,17 +165,24 @@ const Signup = () => {
                     onBlur={formik.handleBlur}
                     value={formik.values.phone}
                     className={
-                      formik.touched.phone && formik.errors.phone ? "border-red-700" : ""
+                      formik.touched.phone && formik.errors.phone
+                        ? "border-red-700"
+                        : ""
                     }
                   />
                   {formik.touched.phone && formik.errors.phone ? (
-                    <div className="text-red-500 text-sm">{formik.errors.phone}</div>
+                    <div className="text-sm text-red-500">
+                      {formik.errors.phone}
+                    </div>
                   ) : null}
                 </div>
               </div>
               {/* third input */}
-              <div className="flex flex-col gap-2 relative">
-                <label htmlFor="password" className="font-medium text-sm text-[#606778]">
+              <div className="relative flex flex-col gap-2">
+                <label
+                  htmlFor="password"
+                  className="text-sm font-medium text-[#606778]"
+                >
                   Password
                 </label>
                 <Input
@@ -164,27 +194,37 @@ const Signup = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                   className={
-                    formik.touched.password && formik.errors.password ? "border-red-700" : ""
+                    formik.touched.password && formik.errors.password
+                      ? "border-red-700"
+                      : ""
                   }
                 />
                 <div
-                  className="absolute top-10 right-4 cursor-pointer"
+                  className="absolute right-4 top-[2.85rem] cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                 </div>
                 {formik.touched.password && formik.errors.password ? (
-                  <div className="text-red-500 text-sm">{formik.errors.password}</div>
+                  <div className="text-sm text-red-500">
+                    {formik.errors.password}
+                  </div>
                 ) : null}
               </div>
               <article className="inline-flex gap-3">
-                <p className="font-light text-sm text-[#7B8499]">
+                <p className="text-sm font-light text-[#7B8499]">
                   By continuing you agree to the Occupy{" "}
-                  <Link href={"#"} className="text-[#A74E8E] font-medium underline">
+                  <Link
+                    href={"#"}
+                    className="font-medium text-[#A74E8E] underline"
+                  >
                     terms of service{" "}
                   </Link>{" "}
                   and{" "}
-                  <Link href={"#"} className="text-[#A74E8E] font-medium underline">
+                  <Link
+                    href={"#"}
+                    className="font-medium text-[#A74E8E] underline"
+                  >
                     privacy policy
                   </Link>
                   .
@@ -192,19 +232,25 @@ const Signup = () => {
               </article>
 
               <div className="text-end">
-                <Button type="submit" className="w-full lg:w-32 rounded-md">
+                <button
+                  type="submit"
+                  className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
+                >
                   Continue
-                </Button>
-                <p className="text-sm text-[#7B8499] text-center lg:text-end pt-4">
+                </button>
+                <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
                   Already registered?{" "}
-                  <Link href="/auth/login" className="text-[#A74E8E] font-medium underline">
+                  <Link
+                    href="/auth/login"
+                    className="font-medium text-[#A74E8E] underline"
+                  >
                     Sign In
                   </Link>
                 </p>
               </div>
             </form>
           </div>
-          <div className="flex items-center text-sm font-light text-center text-black justify-center gap-3">
+          <div className="flex items-center justify-center gap-3 text-center text-sm font-light text-black">
             <Link href="#">Help</Link>
             <Link href="#">Privacy</Link>
             <Link href="#">Terms</Link>
