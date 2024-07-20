@@ -79,14 +79,14 @@ const LetsGrowTogether = () => {
           </div>
         </div>
       </Container>
-      <Container>
+      <Container className="md:hidden">
         <p className="mb-8 text-center text-3xl font-semibold">
           Let’s Grow Together
         </p>
         <Carousel
           opts={{ loop: true }}
           orientation="horizontal"
-          className="mx-auto block w-4/5 md:hidden"
+          className="mx-auto w-4/5"
         >
           <CarouselPrevious className="bg-[#FDE5F9]" />
           <CarouselContent>
