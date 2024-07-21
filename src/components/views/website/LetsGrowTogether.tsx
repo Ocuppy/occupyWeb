@@ -37,7 +37,7 @@ const LetsGrowTogether = () => {
       title: "Find a Career Path",
       description: "Grow your Brand and business with Cloud",
       btnText: "Career Page",
-      onclick: () => {},
+      onclick: () => Router.push("/career"),
     },
   ];
 
