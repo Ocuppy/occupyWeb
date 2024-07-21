@@ -85,21 +85,23 @@ const VerifyOtp: React.FC = () => {
                 touched,
               }: FormikProps<FormValues>) => (
                 <Form className="w-full">
-                  <InputOTP
-                    maxLength={6}
-                    pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
-                    onChange={(value: string) => setFieldValue("otp", value)}
-                  >
-                    <InputOTPGroup>
-                      {[...Array(6)].map((_, index) => (
-                        <InputOTPSlot
-                          key={index}
-                          index={index}
-                          error={!!(touched.otp && errors.otp)}
-                        />
-                      ))}
-                    </InputOTPGroup>
-                  </InputOTP>
+                  <div className="mx-auto w-fit">
+                    <InputOTP
+                      maxLength={6}
+                      pattern={REGEXP_ONLY_DIGITS_AND_CHARS}
+                      onChange={(value: string) => setFieldValue("otp", value)}
+                    >
+                      <InputOTPGroup>
+                        {[...Array(6)].map((_, index) => (
+                          <InputOTPSlot
+                            key={index}
+                            index={index}
+                            error={!!(touched.otp && errors.otp)}
+                          />
+                        ))}
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </div>
                   {errors.otp && touched.otp && (
                     <div className="mt-2 text-sm text-red-500">
                       {errors.otp}
