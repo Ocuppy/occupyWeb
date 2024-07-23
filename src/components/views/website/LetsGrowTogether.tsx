@@ -30,7 +30,7 @@ const LetsGrowTogether = () => {
       title: "Join Occupy riders",
       description: "Grow your Brand and business with Cloud",
       btnText: "Register",
-      onclick: () => Router.push("/auth/signup"),
+      onclick: () => Router.push("/auth/rider-signup"),
     },
     {
       image: CareerPath,
