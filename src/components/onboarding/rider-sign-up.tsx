@@ -227,62 +227,7 @@ const RiderSignup = () => {
                   ) : null}
                 </div>
               </div>
-              {/* fourth input */}
-              <div className="relative flex flex-col gap-2">
-                <label
-                  htmlFor="country"
-                  className="text-sm font-medium text-[#606778]"
-                >
-                  Country
-                </label>
-                <Input
-                  type="text"
-                  id="country"
-                  name="country"
-                  placeholder="Select Country"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.country}
-                  className={
-                    formik.touched.country && formik.errors.country
-                      ? "border-red-700"
-                      : ""
-                  }
-                />
-                {formik.touched.country && formik.errors.country ? (
-                  <div className="text-sm text-red-500">
-                    {formik.errors.country}
-                  </div>
-                ) : null}
-              </div>
-              {/* fifth input */}
-              <div className="relative flex flex-col gap-2">
-                <label
-                  htmlFor="state"
-                  className="text-sm font-medium text-[#606778]"
-                >
-                  State
-                </label>
-                <Input
-                  type="text"
-                  id="state"
-                  name="state"
-                  placeholder="Select State"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.state}
-                  className={
-                    formik.touched.state && formik.errors.state
-                      ? "border-red-700"
-                      : ""
-                  }
-                />
-                {formik.touched.state && formik.errors.state ? (
-                  <div className="text-sm text-red-500">
-                    {formik.errors.state}
-                  </div>
-                ) : null}
-              </div>
+
               {/* sixth input */}
               <div className="relative flex flex-col gap-2">
                 <label
@@ -291,7 +236,7 @@ const RiderSignup = () => {
                 >
                   Select Estate Closest to you
                 </label>
-                <Input
+                {/* <Input
                   type="text"
                   id="estate"
                   name="estate"
@@ -309,7 +254,15 @@ const RiderSignup = () => {
                   <div className="text-sm text-red-500">
                     {formik.errors.estateCloseBy}
                   </div>
-                ) : null}
+                ) : null} */}
+                <select name="" id="" className="border bg-white px-1 py-4">
+                  <option value="" selected disabled>
+                    Select estate
+                  </option>
+                  <option value="one">Estate One</option>
+                  <option value="two">Estate Two</option>
+                  <option value="three">Estate Three</option>
+                </select>
               </div>
               <article className="inline-flex gap-3">
                 <p className="text-sm font-light text-[#7B8499]">
