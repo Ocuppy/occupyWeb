@@ -2,6 +2,7 @@ import Image from "next/image";
 import Container from "../../shared/Container";
 
 import React from "react";
+import Router from "next/router";
 
 const WhyJoinUsCard = (props: {
   title: string;
@@ -103,7 +104,12 @@ const WhyJoinUs = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <button className="rounded-lg bg-occupy-primary px-5 py-2 text-white">
+            <button
+              onClick={() => {
+                Router.push("/career/apply");
+              }}
+              className="rounded-lg bg-occupy-primary px-5 py-2 text-white"
+            >
               APPLY NOW
             </button>
             <button className="rounded-lg border border-black px-5 py-2 text-black">
