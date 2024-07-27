@@ -53,3 +53,22 @@ header {
 .hideScroll::-webkit-scrollbar {
   display: none !important;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+input[type="search"] {
+  background: url("/icons/search-dark.svg") no-repeat left;
+  background-size: 3%;
+  background-position: 5% 50%;
+  background-color: #f9fafb;
+  padding: 0.8rem 3%;
+  width: clamp(20rem, 100%, 30rem);
+  outline: none;
+  border: none;
+}
