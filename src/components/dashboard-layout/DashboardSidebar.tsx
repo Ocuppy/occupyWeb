@@ -26,15 +26,12 @@ const DashboardSidebar = () => {
 
   return (
     <aside
-      className={`sticky top-0 z-30 h-screen w-[270px] rounded-r-lg bg-occupy-primary p-4 text-white`}
+      className={`sticky top-0 z-30 h-screen w-[270px] overflow-y-auto rounded-r-lg bg-occupy-primary p-4 text-white`}
       // className={`sticky top-0 z-30 h-screen w-screen rounded-r-lg bg-occupy-primary p-4 text-white`}
     >
       <div className="relative flex items-center gap-4 pt-4">
         <Avatar>
-          <AvatarImage
-            src={"../../../assets/images/avatar.png"}
-            alt="profile-avatar"
-          />
+          <AvatarImage src={"images/avatar.png"} alt="profile-avatar" />
           <AvatarFallback className="bg-slate-400">CN</AvatarFallback>
         </Avatar>
 
@@ -43,10 +40,6 @@ const DashboardSidebar = () => {
             Live Well Supermarket
           </p>
           <p className="text-[14px] font-medium opacity-[80%]">Andrew Smith</p>
-        </div>
-
-        <div className="ml-auto pr-4">
-          <Menu className="text-white" />
         </div>
       </div>
       <Separator className="my-8 h-[2px]" />
@@ -66,14 +59,15 @@ const DashboardSidebar = () => {
                           : "bg-transparent text-white"
                       }`}
                     >
-                      <Link
+                      <ParentLinkComponent link={link} />
+                      {/* <Link
                         href={link.url}
                         onClick={(e) => {
                           e.stopPropagation();
                         }}
                       >
                         <ParentLinkComponent link={link} />
-                      </Link>
+                      </Link> */}
                     </AccordionTrigger>
                     <AccordionContent>
                       <div className="mth-4 ml-8">

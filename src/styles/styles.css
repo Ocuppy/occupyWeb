@@ -64,11 +64,13 @@ header {
 
 input[type="search"] {
   background: url("/icons/search-dark.svg") no-repeat left;
-  background-size: 3%;
+  background-size: clamp(1rem, 3%, 2rem);
   background-position: 5% 50%;
   background-color: #f9fafb;
-  padding: 0.8rem 3%;
-  width: clamp(20rem, 100%, 30rem);
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: clamp(3rem, 3%, 3rem);
+  width: clamp(17rem, 100%, 30rem);
   outline: none;
   border: none;
 }

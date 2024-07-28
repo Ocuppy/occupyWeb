@@ -8,7 +8,8 @@ interface Product {
   price: string;
   date: string;
   description: string;
-  status: "Available" | "Out of Stock";
+  //   status: "Available" | "Out of Stock";
+  status: "Available" | "Unavailable";
 }
 
 const products: Product[] = [
@@ -26,7 +27,7 @@ const products: Product[] = [
     price: "NGN3,000.00",
     date: "2 Jun, 2022",
     description: "Description for Product B",
-    status: "Out of Stock",
+    status: "Unavailable",
   },
   {
     name: "Product C",

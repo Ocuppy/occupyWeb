@@ -94,7 +94,7 @@ const Page: NextPageWithLayout = () => {
     //   )}
     // </div>
     <>
-      <div className="mb-7 flex items-center gap-6">
+      <div className="mb-7 flex w-full items-center gap-6 overflow-x-scroll xl:overflow-x-visible">
         <section className="flex items-center gap-6">
           <div className="relative h-[9.5rem] w-[19rem] rounded-lg border border-[#E0E0E0] bg-white p-4">
             <header>
@@ -236,7 +236,7 @@ const Page: NextPageWithLayout = () => {
           </div>
         </section>
         <section>
-          <header className="mb-2">
+          <header className="mb-2 w-fit">
             <h6
               className={`text-xl font-medium text-[#1C2A53] ${inter.className}`}
             >
@@ -258,7 +258,7 @@ const Page: NextPageWithLayout = () => {
           </h5>
           <button className="flex items-center gap-2 font-medium text-[#00B207]">
             View all
-            <MoveRight />
+            <ArrowRight size={17} />
           </button>
         </header>
 

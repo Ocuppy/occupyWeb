@@ -15,10 +15,11 @@ const Layout = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>
+    // <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>
+    <div className={cn("bg-[#F9FBFD]", className)}>
       <Toaster />
-      <div className="flex min-w-0 flex-auto gap-10">
-        <div className="">
+      <div className="min-w-0 flex-auto gap-10 xl:flex">
+        <div className="hidden xl:block">
           <DashboardSidebar />
         </div>
         <div className="relative mb-12 flex min-h-screen min-w-0 max-w-[100vw] flex-auto flex-col overflow-y-auto overflow-x-hidden">
@@ -26,7 +27,7 @@ const Layout = ({
 
           <main
             className={cn(
-              "mt-[120px] h-full flex-1 grow py-4 pr-4",
+              "mt-32 h-full flex-1 grow py-4 pr-4",
               inter.className,
             )}
           >

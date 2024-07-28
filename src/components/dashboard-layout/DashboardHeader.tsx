@@ -1,7 +1,7 @@
 import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
-import { BellIcon } from "lucide-react";
+import { BellIcon, Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { AngleLeftIcon, UserClockIcon } from "@/assets/icon/icons";
 import {
@@ -14,8 +14,8 @@ import Flex from "../shared/Flex";
 
 const DashboardHeader = () => {
   return (
-    <header className="fixed right-0 z-10 flex h-[100px] w-full items-center bg-white pl-[270px] pr-4">
-      <Flex className="w-full justify-between pl-10">
+    <header className="fixed right-0 z-10 flex w-screen items-center bg-white py-5 xl:w-full xl:pl-[270px] xl:pr-4">
+      <Flex className="w-full justify-between px-4 xl:pl-10">
         <input
           type="search"
           name=""
@@ -27,7 +27,11 @@ const DashboardHeader = () => {
           className=""
           placeholder="Search your grocery products etc . . . "
         /> */}
-        <div className="flex items-center gap-8">
+
+        <div className="xl:hidden">
+          <Menu className="text-black" />
+        </div>
+        <div className="hidden items-center gap-8 xl:flex">
           <div className="flex items-center space-x-2">
             <Label htmlFor="online-mode">Online</Label>
             <Switch id="online-mode" />
@@ -46,20 +50,21 @@ const DashboardHeader = () => {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <div className="relative flex items-center gap-8 rounded-md border p-2">
-                <div className="flex flex-col">
-                  <p className="text-[14px] font-medium opacity-[80%]">
+              <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
+                <img src="/images/profile.png" alt="Profile Picture" />
+                <div className="text-left">
+                  <p className="text-sm font-medium text-black/80">
                     Andrew Smith
                   </p>
-                  <p className="text-[10px] uppercase opacity-[40%]">
+                  <p className="text-[0.625rem] uppercase text-black/30">
                     Supermarket
                   </p>
                 </div>
-                <AngleLeftIcon width={16} className="rotate-[-90deg]" />
+                <AngleLeftIcon width={16} className="ml-auto rotate-[-90deg]" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Something</DropdownMenuItem>
+              <DropdownMenuItem>Option</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
