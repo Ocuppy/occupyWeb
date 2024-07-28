@@ -9,7 +9,7 @@ import WorkTimeActivities from "@/components/dashboard/settings/WorkTimeActiviti
 import Flex from "@/components/shared/Flex";
 import { Form } from "@/components/ui/form";
 import { daysOfWeek } from "@/constants";
-import { withSteppedFormContextProvider } from "@/context/SteppedFormContext";
+import { withSteppedFormContextProvider } from "@/contexts/SteppedFormContext";
 import { IFieldValue } from "@/types";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -84,12 +84,12 @@ const Index = () => {
     console.log(data);
   };
   return (
-    <div className="p-6 rounded-md h-full bg-white">
-      <Flex className="items-start h-full gap-8">
-        <div className="border w-full h-full border-dashed rounded-md p-6 flex justify-center items-center">
+    <div className="h-full rounded-md bg-white p-6">
+      <Flex className="h-full items-start gap-8">
+        <div className="flex h-full w-full items-center justify-center rounded-md border border-dashed p-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-              <div className="max-w-[600px] mx-auto">
+              <div className="mx-auto max-w-[600px]">
                 {stepState[currentStep - 1]?.component}
               </div>
             </form>

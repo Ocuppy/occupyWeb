@@ -11,8 +11,20 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Flex from "../shared/Flex";
+import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
+import { useContext } from "react";
 
 const DashboardHeader = () => {
+  const context = useContext(DashboardMenuVisibilityContext);
+
+  if (!context) {
+    throw new Error(
+      "DashbordMenuButton toggle must be used within a VisibilityProvider",
+    );
+  }
+
+  const { toggleVisibility } = context;
+
   return (
     <header className="fixed right-0 z-10 flex w-screen items-center bg-white py-5 xl:w-full xl:pl-[270px] xl:pr-4">
       <Flex className="w-full justify-between px-4 xl:pl-10">
@@ -28,9 +40,9 @@ const DashboardHeader = () => {
           placeholder="Search your grocery products etc . . . "
         /> */}
 
-        <div className="xl:hidden">
+        <button onClick={toggleVisibility} className="xl:hidden">
           <Menu className="text-black" />
-        </div>
+        </button>
         <div className="hidden items-center gap-8 xl:flex">
           <div className="flex items-center space-x-2">
             <Label htmlFor="online-mode">Online</Label>

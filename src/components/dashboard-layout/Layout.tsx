@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardHeader from "./DashboardHeader";
 import { Button } from "../ui/button";
@@ -6,6 +6,10 @@ import { AngleLeftIcon } from "@/assets/icon/icons";
 import { cn } from "@/lib/utils";
 import { inter } from "@/pages/_app";
 import { Toaster } from "../ui/toaster";
+import {
+  DashboardMenuVisibilityContext,
+  DashboardMenuVisibilityProvider,
+} from "@/contexts/DashboardMenuVisibilityContext";
 
 const Layout = ({
   children,
@@ -14,11 +18,28 @@ const Layout = ({
   children: ReactNode;
   className?: string;
 }) => {
+  const context = useContext(DashboardMenuVisibilityContext);
+
+  if (!context) {
+    throw new Error("ToggleComponent must be used within a VisibilityProvider");
+  }
+
+  const { isVisible } = context;
+
   return (
     // <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>
     <div className={cn("bg-[#F9FBFD]", className)}>
       <Toaster />
       <div className="min-w-0 flex-auto gap-10 xl:flex">
+        {isVisible ? (
+          <div className="fixed left-0 top-0 z-30 block w-screen xl:hidden">
+            <div className="">
+              <DashboardSidebar />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="hidden xl:block">
           <DashboardSidebar />
         </div>

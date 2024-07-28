@@ -3,7 +3,7 @@ import ActionButtons from "@/components/shared/form/ActionButtons";
 import {
   withSteppedFormContextProvider,
   useSteppedFormContext,
-} from "@/context/SteppedFormContext";
+} from "@/contexts/SteppedFormContext";
 import { AddStoreFormFields } from "@/data";
 import { AddStoreSchema } from "@/formValidation";
 import { NextPageWithLayout } from "@/pages/_app";
@@ -54,9 +54,9 @@ const Page: NextPageWithLayout = () => {
   ];
 
   return (
-    <div className="p-6 rounded-md h-full bg-white">
-      <Flex className="items-start h-full gap-8">
-        <div className="h-full grow overflow-auto hideScroll border-dashed border rounded-md bg-white px-6 py-6">
+    <div className="h-full rounded-md bg-white p-6">
+      <Flex className="h-full items-start gap-8">
+        <div className="hideScroll h-full grow overflow-auto rounded-md border border-dashed bg-white px-6 py-6">
           <>
             {isFirstStep ? (
               <CustomForm

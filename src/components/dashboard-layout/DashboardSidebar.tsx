@@ -10,7 +10,9 @@ import {
 import Flex from "@/components/shared/Flex";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "../ui/separator";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
+import { useContext } from "react";
 
 const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
   return (
@@ -24,9 +26,17 @@ const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
 const DashboardSidebar = () => {
   const router = useRouter();
 
+  const context = useContext(DashboardMenuVisibilityContext);
+
+  if (!context) {
+    throw new Error("ToggleComponent must be used within a VisibilityProvider");
+  }
+
+  const { toggleVisibility } = context;
+
   return (
     <aside
-      className={`sticky top-0 z-30 h-screen w-[270px] overflow-y-auto rounded-r-lg bg-occupy-primary p-4 text-white`}
+      className={`sticky top-0 z-30 h-screen w-full overflow-y-auto rounded-r-lg bg-occupy-primary p-4 text-white xl:w-[270px]`}
       // className={`sticky top-0 z-30 h-screen w-screen rounded-r-lg bg-occupy-primary p-4 text-white`}
     >
       <div className="relative flex items-center gap-4 pt-4">
@@ -41,6 +51,10 @@ const DashboardSidebar = () => {
           </p>
           <p className="text-[14px] font-medium opacity-[80%]">Andrew Smith</p>
         </div>
+
+        <button onClick={toggleVisibility} className="ml-auto xl:hidden">
+          <X className="text-white" />
+        </button>
       </div>
       <Separator className="my-8 h-[2px]" />
       <p className="pl-4 text-[12px] text-white opacity-50">MAIN</p>

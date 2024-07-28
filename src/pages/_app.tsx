@@ -5,6 +5,7 @@ import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import Layout from "@/components/dashboard-layout/Layout";
 import { Inter, Nunito_Sans } from "next/font/google";
+import { DashboardMenuVisibilityProvider } from "@/contexts/DashboardMenuVisibilityContext";
 
 export const inter = Inter({ subsets: ["latin"] });
 export const nunito = Inter({ subsets: ["latin"], variable: "--font-nunito" });
@@ -20,7 +21,12 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
   const getLayout =
     Component.getLayout ??
-    ((page) => <Layout className={`${nunito.variable}`}>{page}</Layout>);
+    ((page) => (
+      <DashboardMenuVisibilityProvider>
+        {" "}
+        <Layout className={`${nunito.variable}`}>{page}</Layout>
+      </DashboardMenuVisibilityProvider>
+    ));
 
   return getLayout(
     <>
@@ -30,6 +36,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         }
       `}</style>
       <Component {...pageProps} />
-    </>
+    </>,
+    // <DashboardMenuVisibilityProvider></DashboardMenuVisibilityProvider>,
   );
 }
