@@ -10,6 +10,7 @@ import {
   DashboardMenuVisibilityContext,
   DashboardMenuVisibilityProvider,
 } from "@/contexts/DashboardMenuVisibilityContext";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Layout = ({
   children,
@@ -24,18 +25,29 @@ const Layout = ({
     throw new Error("ToggleComponent must be used within a VisibilityProvider");
   }
 
-  const { isVisible } = context;
+  const { isVisible, toggleVisibility } = context;
 
   return (
     // <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>
     <div className={cn("bg-[#F9FBFD]", className)}>
       <Toaster />
-      <div className="min-w-0 flex-auto gap-10 xl:flex">
+      <div
+        onClick={toggleVisibility}
+        className="min-w-0 flex-auto gap-10 xl:flex"
+      >
         {isVisible ? (
-          <div className="fixed left-0 top-0 z-30 block w-screen xl:hidden">
-            <div className="">
-              <DashboardSidebar />
-            </div>
+          <div className="fixed left-0 top-0 z-30 block w-screen backdrop-blur-sm xl:hidden">
+            <AnimatePresence>
+              <motion.div
+                className="w-10/12"
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ ease: "easeInOut", duration: 0.5 }}
+              >
+                <DashboardSidebar />
+              </motion.div>
+            </AnimatePresence>
           </div>
         ) : (
           <></>
