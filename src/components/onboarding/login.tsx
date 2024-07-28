@@ -25,7 +25,7 @@ const Login = () => {
     },
     validationSchema: loginValidationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       router.push("/dashboard");
     },
   });

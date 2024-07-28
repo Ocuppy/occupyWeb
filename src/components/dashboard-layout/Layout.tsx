@@ -11,6 +11,7 @@ import {
   DashboardMenuVisibilityProvider,
 } from "@/contexts/DashboardMenuVisibilityContext";
 import { AnimatePresence, motion } from "framer-motion";
+import NotificationPopup from "../dashboard/notification/NotificationPopup";
 
 const Layout = ({
   children,
@@ -30,6 +31,7 @@ const Layout = ({
   return (
     // <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>
     <div className={cn("bg-[#F9FBFD]", className)}>
+      <NotificationPopup />
       <Toaster />
       <div
         onClick={toggleVisibility}

@@ -13,17 +13,27 @@ import {
 import Flex from "../shared/Flex";
 import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
 import { useContext } from "react";
+import { NotificationContext } from "@/contexts/NotificationContext";
 
 const DashboardHeader = () => {
-  const context = useContext(DashboardMenuVisibilityContext);
-
-  if (!context) {
+  const sideMenuContext = useContext(DashboardMenuVisibilityContext);
+  if (!sideMenuContext) {
     throw new Error(
       "DashbordMenuButton toggle must be used within a VisibilityProvider",
     );
   }
+  const { toggleVisibility } = sideMenuContext;
 
-  const { toggleVisibility } = context;
+  const notificationContext = useContext(NotificationContext);
+  if (!notificationContext) {
+    throw new Error("Home must be used within a NotificationProvider");
+  }
+  const { showNotification } = notificationContext;
+
+  const handleShowNotification = () => {
+    showNotification("This is a notification message!");
+    console.log("triggering notification");
+  };
 
   return (
     <header className="fixed right-0 z-10 flex w-screen items-center bg-white py-5 xl:w-full xl:pl-[270px] xl:pr-4">
@@ -55,7 +65,7 @@ const DashboardHeader = () => {
             <UserClockIcon width={21} />
           </Button>
           <Button
-            onClick={() => {}}
+            onClick={handleShowNotification}
             className="rounded-lg bg-[#f6f6f6] px-4 py-6 text-black"
           >
             <BellIcon width={21} />

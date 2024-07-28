@@ -1,0 +1,27 @@
+.notificationPopup {
+  /* position: fixed;
+  top: 20px;
+  left: 50%; */
+  transform: translateX(-50%);
+  background-color: white;
+  color: #333;
+  /* padding: 15px 30px; */
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  width: 32rem;
+  max-width: 98vw;
+}
+
+.notificationContainer {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
