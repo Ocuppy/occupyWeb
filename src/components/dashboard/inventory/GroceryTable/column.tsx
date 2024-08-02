@@ -14,7 +14,9 @@ export const columns: ColumnDef<InventoryType>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="text-sm font-normal text-[#555F7E]">{row.getValue("item_id")}</div>
+      <div className="text-sm font-normal text-[#555F7E]">
+        {row.getValue("item_id")}
+      </div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -29,7 +31,9 @@ export const columns: ColumnDef<InventoryType>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="text-sm font-normal text-[#555F7E]">{row.getValue("item")}</div>
+      <div className="text-sm font-normal text-[#555F7E]">
+        {row.getValue("item")}
+      </div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -78,7 +82,9 @@ export const columns: ColumnDef<InventoryType>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="text-sm font-normal text-[#555F7E]">{row.getValue("value")} Packets</div>
+      <div className="text-sm font-normal text-[#555F7E]">
+        {row.getValue("value")} Packets
+      </div>
     ),
     enableSorting: false,
     enableHiding: false,
@@ -93,7 +99,9 @@ export const columns: ColumnDef<InventoryType>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="text-sm font-normal text-[#555F7E]">{row.getValue("expiry_date")}</div>
+      <div className="text-sm font-normal text-[#555F7E]">
+        {row.getValue("expiry_date")}
+      </div>
     ),
     enableSorting: false,
     // enableHiding: false,
@@ -123,7 +131,11 @@ export const columns: ColumnDef<InventoryType>[] = [
           break;
       }
 
-      return <div className={`text-sm font-normal text-center ${textColor}`}>{status}</div>;
+      return (
+        <div className={`text-center text-sm font-normal ${textColor}`}>
+          {status}
+        </div>
+      );
     },
     enableSorting: false,
     // enableHiding: false,
@@ -143,7 +155,7 @@ export const columns: ColumnDef<InventoryType>[] = [
 
       switch (availability.toLowerCase()) {
         case "in-stock":
-          backgroundColor = "bg-[#06A561]";
+          backgroundColor = "bg-[#C3F8E2]";
           textColor = "text-[#06A561]";
           break;
         case "out of stock":
@@ -157,11 +169,11 @@ export const columns: ColumnDef<InventoryType>[] = [
       }
 
       return (
-        <div
-          className={`text-sm font-normal text-center p-1 rounded-md ${backgroundColor} ${textColor} bg-opacity-25`}
+        <p
+          className={`w-fit rounded-md p-1 px-2 text-center text-sm font-normal ${backgroundColor} ${textColor} bg-opacity-25`}
         >
           {availability}
-        </div>
+        </p>
       );
     },
     enableSorting: false,

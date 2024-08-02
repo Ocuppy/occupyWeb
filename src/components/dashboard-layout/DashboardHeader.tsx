@@ -43,7 +43,7 @@ const DashboardHeader = () => {
           name=""
           id=""
           className="h-10 w-full max-w-[500px] rounded-lg bg-[#F9FAFB] px-3 py-6 text-sm ring-offset-white file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
-          placeholder="Search your grocery products etc..."
+          placeholder="Search for products etc..."
         />
         {/* <Input
           className=""
