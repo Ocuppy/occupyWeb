@@ -22,7 +22,7 @@ function Container({
     >
       <section
         style={{ maxWidth: containerMaxWidth || "1400px" }}
-        className={`mx-auto mt-8 flex w-full flex-col items-center justify-center gap-1 p-4 ${extraChildrenClassname}`}
+        className={`mx-auto mt-8 flex w-full flex-col items-center justify-center gap-1 p-4 pb-0 ${extraChildrenClassname}`}
       >
         {children}
       </section>

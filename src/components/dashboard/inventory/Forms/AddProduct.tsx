@@ -186,7 +186,7 @@ const AddProduct = () => {
                       <FormControl className="bg-[#F9F9FC] rounded-lg border-dashed border-4 p-6">
                         <div className="flex flex-col gap-3 items-center justify-center">
                           <div className="bg-[#DEDEFA] p-2 rounded-full">
-                            <Image className="text-occupy-primary" />
+                            {/* <Image src="" alt="" className="text-occupy-primary" /> */}
                           </div>
                           <span className="text-[#858D9D] font-normal text-sm">
                             Drag and drop image here, or click add image

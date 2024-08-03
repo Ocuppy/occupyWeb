@@ -9,24 +9,37 @@ interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
-export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
+export function DataTableToolbar<TData>({
+  table,
+}: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
-    <div className="flex items-center gap-6 px-4 pb-4 justify-between">
-      <h1 className="text-[#1C2A53] w-[30%] font-medium text-xl">Grocery Inventory</h1>
-      <Input
-        placeholder="Search your grocery category etc..."
-        className="h-[38px] w-full text-black"
+    <div className="flex items-center justify-between gap-6 px-4 pb-4">
+      <h1 className="text-xl font-medium text-[#1C2A53]">Product Listing</h1>
+      <input
+        type="search"
+        name=""
+        id=""
+        className="h-10 w-full max-w-[500px] rounded-lg bg-[#F9FAFB] px-3 py-6 text-sm ring-offset-white file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
+        placeholder="Search for products etc..."
         value={(table.getColumn("item")?.getFilterValue() as string) ?? ""}
-        onChange={(event) => table.getColumn("item")?.setFilterValue(event.target.value)}
+        onChange={(event) =>
+          table.getColumn("item")?.setFilterValue(event.target.value)
+        }
       />
-      <div className="flex gap-2 items-center">
-        <Button onClick={() => Router.push("/dashboard/inventory/add")} className="py-1 px-3">
+
+      <div className="flex items-center gap-2">
+        <Button
+          onClick={() => Router.push("/dashboard/inventory/add")}
+          className="px-3 py-1"
+        >
           Add Product
         </Button>
         <DataTableViewOptions table={table} />
-        <Button className="py-1 px-3 bg-transparent border text-[#5D6679]">Download all</Button>
+        <Button className="border bg-transparent px-3 py-1 text-[#5D6679]">
+          Download all
+        </Button>
       </div>
     </div>
   );

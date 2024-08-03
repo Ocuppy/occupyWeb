@@ -1,7 +1,7 @@
 import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
-import { BellIcon } from "lucide-react";
+import { BellIcon, Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { AngleLeftIcon, UserClockIcon } from "@/assets/icon/icons";
 import {
@@ -11,48 +11,82 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import Flex from "../shared/Flex";
+import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
+import { useContext } from "react";
+import { NotificationContext } from "@/contexts/NotificationContext";
 
 const DashboardHeader = () => {
+  const sideMenuContext = useContext(DashboardMenuVisibilityContext);
+  if (!sideMenuContext) {
+    throw new Error(
+      "DashbordMenuButton toggle must be used within a VisibilityProvider",
+    );
+  }
+  const { toggleVisibility } = sideMenuContext;
+
+  const notificationContext = useContext(NotificationContext);
+  if (!notificationContext) {
+    throw new Error("Home must be used within a NotificationProvider");
+  }
+  const { showNotification } = notificationContext;
+
+  const handleShowNotification = () => {
+    showNotification("This is a notification message!");
+    console.log("triggering notification");
+  };
+
   return (
-    <header className="flex pr-4 pl-[270px] w-full right-0 z-10 fixed items-center h-[100px] bg-white">
-      <Flex className="w-full pl-10 justify-between">
-        <Input
-          className="max-w-[300px]"
-          placeholder="Search your grocery products etc . . . "
+    <header className="fixed right-0 z-10 flex w-screen items-center bg-white py-5 xl:w-full xl:pl-[270px] xl:pr-4">
+      <Flex className="w-full justify-between px-4 xl:pl-10">
+        <input
+          type="search"
+          name=""
+          id=""
+          className="h-10 w-full max-w-[500px] rounded-lg bg-[#F9FAFB] px-3 py-6 text-sm ring-offset-white file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
+          placeholder="Search for products etc..."
         />
-        <div className="flex gap-8 items-center">
+        {/* <Input
+          className=""
+          placeholder="Search your grocery products etc . . . "
+        /> */}
+
+        <button onClick={toggleVisibility} className="xl:hidden">
+          <Menu className="text-black" />
+        </button>
+        <div className="hidden items-center gap-8 xl:flex">
           <div className="flex items-center space-x-2">
-            <Switch id="online-mode" />
             <Label htmlFor="online-mode">Online</Label>
+            <Switch id="online-mode" />
           </div>
           <Button
             onClick={() => {}}
-            className="rounded-lg px-4 py-6 bg-[#f6f6f6] text-black"
+            className="rounded-lg bg-[#f6f6f6] px-4 py-6 text-black"
           >
             <UserClockIcon width={21} />
           </Button>
           <Button
-            onClick={() => {}}
-            className="rounded-lg px-4 py-6 bg-[#f6f6f6] text-black"
+            onClick={handleShowNotification}
+            className="rounded-lg bg-[#f6f6f6] px-4 py-6 text-black"
           >
             <BellIcon width={21} />
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <div className="flex gap-8 items-center relative p-2 border rounded-md ">
-                <div className="flex  flex-col">
-                  <p className="font-medium opacity-[80%] text-[14px]">
+              <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
+                <img src="/images/profile.png" alt="Profile Picture" />
+                <div className="text-left">
+                  <p className="text-sm font-medium text-black/80">
                     Andrew Smith
                   </p>
-                  <p className="uppercase opacity-[40%] text-[10px]">
+                  <p className="text-[0.625rem] uppercase text-black/30">
                     Supermarket
                   </p>
                 </div>
-                <AngleLeftIcon width={16} className="rotate-[-90deg]" />
+                <AngleLeftIcon width={16} className="ml-auto rotate-[-90deg]" />
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Something</DropdownMenuItem>
+              <DropdownMenuItem>Option</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

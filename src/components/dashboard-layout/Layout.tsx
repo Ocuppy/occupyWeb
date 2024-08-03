@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useContext, useState } from "react";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardHeader from "./DashboardHeader";
 import { Button } from "../ui/button";
@@ -6,6 +6,12 @@ import { AngleLeftIcon } from "@/assets/icon/icons";
 import { cn } from "@/lib/utils";
 import { inter } from "@/pages/_app";
 import { Toaster } from "../ui/toaster";
+import {
+  DashboardMenuVisibilityContext,
+  DashboardMenuVisibilityProvider,
+} from "@/contexts/DashboardMenuVisibilityContext";
+import { AnimatePresence, motion } from "framer-motion";
+import NotificationPopup from "../dashboard/notification/NotificationPopup";
 
 const Layout = ({
   children,
@@ -14,20 +20,50 @@ const Layout = ({
   children: ReactNode;
   className?: string;
 }) => {
+  const context = useContext(DashboardMenuVisibilityContext);
+
+  if (!context) {
+    throw new Error("ToggleComponent must be used within a VisibilityProvider");
+  }
+
+  const { isVisible, toggleVisibility } = context;
+
   return (
-    <div className={cn("flex bg-[#F9FBFD] flex-auto flex-col", className)}>
+    // <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>
+    <div className={cn("bg-[#F9FBFD]", className)}>
+      <NotificationPopup />
       <Toaster />
-      <div className="flex gap-10  flex-auto min-w-0">
-        <div className="">
+      <div
+        onClick={toggleVisibility}
+        className="min-w-0 flex-auto gap-10 xl:flex"
+      >
+        {isVisible ? (
+          <div className="fixed left-0 top-0 z-30 block w-screen backdrop-blur-sm xl:hidden">
+            <AnimatePresence>
+              <motion.div
+                className="w-10/12"
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ ease: "easeInOut", duration: 0.5 }}
+              >
+                <DashboardSidebar />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className="hidden xl:block">
           <DashboardSidebar />
         </div>
-        <div className="flex mb-12 flex-col flex-auto overflow-y-auto min-h-screen min-w-0 relative w-full ">
+        <div className="relative mb-12 flex min-h-screen min-w-0 max-w-[100vw] flex-auto flex-col overflow-y-auto overflow-x-hidden">
           <DashboardHeader />
 
           <main
             className={cn(
-              "pr-4 py-4 mt-[120px] flex-1 h-full grow",
-              inter.className
+              "mt-32 h-full flex-1 grow py-4 pr-4",
+              inter.className,
             )}
           >
             {children}

@@ -14,7 +14,7 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
   return (
     <div className="flex items-center px-4 pb-4 justify-between">
       <div className="flex gap-2 items-center ">
-        <span>Rider's Assigning</span>
+        <span>Rider&apos;s Assigning</span>
         <div className="bg-[#0D894F] bg-opacity-25 text-[#0D894F] py-1 px-2 rounded-full">
           +2 Orders
         </div>

@@ -1,5 +1,5 @@
 import AddProduct from "@/components/dashboard/inventory/Forms/AddProduct";
-import { withSteppedFormContextProvider } from "@/context/SteppedFormContext";
+import { withSteppedFormContextProvider } from "@/contexts/SteppedFormContext";
 import { NextPageWithLayout } from "@/pages/_app";
 
 const Page: NextPageWithLayout = () => {

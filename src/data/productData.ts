@@ -1,5 +1,7 @@
 import { InventoryType } from "@/lib/validations/inventory.schema";
 
+const formerProducts: InventoryType[] = [];
+
 const products: InventoryType[] = [
   {
     id: "1",

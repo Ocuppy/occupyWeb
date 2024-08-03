@@ -5,21 +5,24 @@ import Container from "../shared/Container";
 
 const Footer = () => {
   return (
-    <Container className="bg-occupy-primary">
-      <footer>
-        <div className="md:px-20 pl-6 pt-20 flex flex-col md:flex-row justify-start items-start md:gap-40 gap-8">
+    <div className="mt-8 w-full items-center justify-center gap-1 bg-occupy-primary">
+      <footer className="mx-auto max-w-[1440px]">
+        <div className="flex flex-col items-start justify-start gap-8 gap-y-20 pl-6 pt-20 md:flex-row md:gap-40 md:px-20">
           {/* first section */}
           <section className="flex flex-col gap-4">
             <Image src="/footerLogo.svg" alt="logo" width={75} height={75} />
-            <p className="text-[16px] text-white font-medium font-[inter] w-[312px]">
-              We build readymade websites, mobile applications, and elaborate online business
-              services.
+            <p className="w-[312px] font-[inter] text-xl text-white md:text-base">
+              We build readymade websites, mobile applications, and elaborate
+              online business services.
             </p>
           </section>
           {/* second section */}
-          <section className="flex gap-16 text-[16px] text-white font-medium">
-            <div className="flex flex-col gap-4 grow">
-              <p>- Account</p>
+          <section className="flex gap-16 text-xl font-medium text-white md:text-base">
+            <div className="flex grow flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <div className="h-0.5 w-5 rounded-full bg-white"></div>
+                <p>Account</p>
+              </div>
               <div className="flex flex-col gap-3">
                 <Link href={"/#"}>My Account</Link>
                 <Link href={"/#"}>FAQs</Link>
@@ -27,7 +30,7 @@ const Footer = () => {
                 <Link href={"/#"}>Privacy Policy</Link>
               </div>
             </div>
-            <div className="flex flex-col gap-4 grow">
+            <div className="flex grow flex-col gap-4">
               <p>Help</p>
               <div className="flex flex-col gap-3">
                 <Link href={"/#"}>Contact</Link>
@@ -36,8 +39,10 @@ const Footer = () => {
           </section>
           {/* third section */}
           <section className="flex flex-col gap-4">
-            <span className="text-2xl text-white font-medium">info@golio.com</span>
-            <p className="text-lg text-white font-normal">
+            <span className="text-2xl font-medium text-white">
+              info@golio.com
+            </span>
+            <p className="text-lg font-normal text-white">
               901 N Pitt Str., Suite 170 <br />
               Alexandria, VA 22314, USA
             </p>
@@ -58,25 +63,47 @@ const Footer = () => {
           </section>
         </div>
 
-        <div className="bg-[#6E1C47] flex justify-between items-center md:mx-20 mt-20 py-6 px-4">
-          <div className="flex flex-row  gap-2 items-start">
-            <Link href={""} className="hover:scale-105 transform">
-              <Image src={"/icons/facebook.svg"} alt="icon" width={40} height={40} />
+        <div className="mt-20 flex w-full items-center justify-between bg-[#6E1C47] px-4 py-6">
+          <div className="flex flex-row items-start gap-2">
+            <Link href={""} className="transform hover:scale-105">
+              <Image
+                src={"/icons/facebook.svg"}
+                alt="icon"
+                width={40}
+                height={40}
+              />
             </Link>
             <Link href={""}>
-              <Image src={"/icons/twitter.svg"} alt="icon" width={40} height={40} />
+              <Image
+                src={"/icons/twitter.svg"}
+                alt="icon"
+                width={40}
+                height={40}
+              />
             </Link>
             <Link href={""}>
-              <Image src={"/icons/linkedin.svg"} alt="icon" width={40} height={40} />
+              <Image
+                src={"/icons/linkedin.svg"}
+                alt="icon"
+                width={40}
+                height={40}
+              />
             </Link>
             <Link href={""}>
-              <Image src={"/icons/instagram.svg"} alt="icon" width={40} height={40} />
+              <Image
+                src={"/icons/instagram.svg"}
+                alt="icon"
+                width={40}
+                height={40}
+              />
             </Link>
           </div>
-          <span className="text-lg text-white">© {new Date().getFullYear()} - occupy</span>
+          <span className="text-lg text-white">
+            © {new Date().getFullYear()} - occupy
+          </span>
         </div>
       </footer>
-    </Container>
+    </div>
   );
 };
 

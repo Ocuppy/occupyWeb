@@ -8,8 +8,8 @@ import React from "react";
 const PriceManagement: NextPageWithLayout = () => {
   return (
     <div>
-      <InventoryCard />
-      <DataTable data={products} columns={columns} />
+      {/* <InventoryCard /> */}
+      {/* <DataTable data={products} columns={columns} /> */}
     </div>
   );
 };

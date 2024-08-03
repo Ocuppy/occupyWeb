@@ -6,9 +6,13 @@ interface CardProps {
 }
 
 const CheckAppCard: React.FC<CardProps> = ({ data }) => (
-  <div className="flex flex-col justify-center items-center gap-6  md:px-0 pt-20">
-    <h1 className="font-bold text-[#232233] text-2xl md:text-3xl">{data.header}</h1>
-    <p className="font-normal text-[#6C6C72] text-sm md:text-lg text-center md:w-[601px]">{data.text}</p>
+  <div className="gap-6 space-y-5 pt-20 text-center">
+    <h1 className="text-4xl font-bold uppercase text-[#232233]">
+      {data.header}
+    </h1>
+    <p className="text-center text-lg font-normal text-[#6C6C72] md:w-[601px]">
+      {data.text}
+    </p>
     <Image src={data.image} alt={`images`} width={900} height={20} />
   </div>
 );

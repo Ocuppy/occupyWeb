@@ -14,14 +14,14 @@ const CategoryItem = ({
   return (
     <div
       onClick={onClick}
-      className="w-full group 2xl:w-fit cursor-pointer bg-white h-[213px] flex flex-col items-center nunito justify-center gap-6 p-6 rounded-md hover:transition-all hover:duration-700 hover:shadow-[0px_0px_12px_rgba(32,181,38,0.32)] border hover:border-occupy-primary border-[#e6e6e6] hover:border"
+      className="nunito group flex h-[213px] w-44 cursor-pointer flex-col items-center justify-center gap-6 rounded-md border border-[#e6e6e6] bg-white p-3 hover:border hover:border-occupy-primary hover:shadow-[0px_0px_12px_rgba(32,181,38,0.32)] hover:transition-all hover:duration-700 2xl:w-fit"
     >
       <Image
         className="w-[120px]"
         src={imgSrc || DiabeticFood}
         alt="category-image"
       />
-      <p className="text-center group-hover:text-occupy-primary text-[#1A1A1A] text-[18px]">
+      <p className="text-center text-[18px] text-[#1A1A1A] group-hover:text-occupy-primary">
         {title}
       </p>
     </div>

@@ -12,6 +12,22 @@ body {
   box-sizing: border-box;
 }
 
+html {
+  font-size: 100%;
+}
+
+html {
+  @media screen and (max-width: 1600px) {
+    font-size: 80%;
+  }
+}
+
+html {
+  @media screen and (max-width: 1366px) {
+    font-size: 65%;
+  }
+}
+
 body,
 header {
   @apply w-screen overflow-x-hidden;
@@ -36,4 +52,29 @@ header {
 
 .hideScroll::-webkit-scrollbar {
   display: none !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+input[type="search"] {
+  background: url("/icons/search-dark.svg") no-repeat left;
+  background-size: clamp(1rem, 3%, 2rem);
+  background-position: 5% 50%;
+  background-color: #f9fafb;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: clamp(3rem, 3%, 3rem);
+  width: clamp(17rem, 100%, 30rem);
+  outline: none;
+  border: none;
+}
+
+.occupy-shadow {
+  box-shadow: 0px 8px 32px 0px #3326ae14;
 }
