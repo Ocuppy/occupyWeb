@@ -42,8 +42,8 @@ const variants = {
 };
 
 const Header = () => {
-  const blackText = ["Grocery Delivery just got", "Grocery shopping just made"];
-  const texts = ["better", "easier"];
+  const blackText = ["Your estate's Supermarket got", "You want? We Deliver!"];
+  const texts = ["Closer", "You Smile😃"];
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -80,9 +80,7 @@ const Header = () => {
         </p>
 
         <p className="mb-4 text-[1.5rem]">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsum
-          dolorum provident nostrum sint natus, sapiente non quisquam ad
-          corporis nihil!
+        Experience the convenience of shopping from the comfort of your home. We bring your estate's supermarket right to you, delivering your order directly to your doorstep.
         </p>
         {/* <Button onClick={() => Router.push("/auth/login")} className="rounded-full" size={"lg"}>
           Go Shopping
@@ -91,7 +89,7 @@ const Header = () => {
           onClick={() => Router.push("/auth/login")}
           className="rounded-full bg-occupy-primary px-16 py-4 text-sm font-medium text-white"
         >
-          Go Shopping
+          Login
         </button>
 
         <Flex className="mt-4">

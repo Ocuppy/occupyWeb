@@ -12,10 +12,7 @@ const WhyUs = () => {
             Why Choose Us
           </h1>
           <p className="text-xl font-normal leading-normal text-[#6C6C72] md:w-[601px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra
-            nunc ante velit vitae. Est tellus vitae, nullam lobortis enim.
-            Faucibus amet etiam tincidunt rhoncus, ullamcorper velit.
-            Ullamcorper risus tempor, ac nunc libero urna, feugiat.
+          Occupy offers a comprehensive solution for estate-based shopping and delivery. For customers, we provide a convenient way to shop from your local estate supermarket with easy ordering and swift delivery. For supermarkets, we enable you to reach more customers within your estate, manage your inventory, and boost sales seamlessly. For riders, we offer an opportunity to earn consistently by delivering within the estate. Choose Occupy for a trusted and efficient local service that connects customers, supermarkets, and riders for a seamless experience.
           </p>
         </div>
 

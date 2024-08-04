@@ -15,25 +15,25 @@ interface MockupItem {
 const mockupData: Record<string, MockupItem> = {
   customer: {
     image: CustomerMockup,
-    title: "Keep your cash flow clear and keep increasing 🚀",
+    title: "Explore Your Estate's Supermarket Inventory Anytime, Conveniently",
     description:
-      "See it all at a glance when you link your cash accounts, credit cards, investment, and bills.",
+      "Browse items, add them to your cart, and enjoy fast delivery with convenient payment options like cash or card—all from your mobile device.",
   },
   rider: {
     image: RiderMockup,
-    title: "Keep your cash flow clear and keep increasing 🚀",
+    title: "Earn Weekly with Us—Ride a bicycle and Get Paid!🚀",
     description:
-      "See it all at a glance when you link your cash accounts, credit cards, investment, and bills.",
+      "Get paid weekly with a whooping 10k just for riding within the estate. Manage deliveries and routes with ease, all through our app",
   },
   supermarket: {
     image: SupermarketMockup,
-    title: "Keep your cash flow clear and keep increasing 🚀",
+    title: "You can have an online presence even within the estate",
     description:
-      "See it all at a glance when you link your cash accounts, credit cards, investment, and bills.",
+      "Manage inventory, track orders, and increase sales around the clock. Let your store never sleep.",
   },
 };
 
-const MockupSlider = () => {
+const   MockupSlider = () => {
   const TabHeads = Object.keys(mockupData);
   const [currentTab, setCurrentTab] = useState("customer");
   const mockupObj = mockupData[currentTab];

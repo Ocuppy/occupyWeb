@@ -6,15 +6,15 @@ export interface WhyUs {
 const whyUsData: WhyUs[] = [
   {
     header: "FAST DELIVERY",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra nunc ante velit vitae. Est tellus vitae, nullam lobortis enim. Faucibus amet etiam tincidunt rhoncus, ullamcorper velit.",
+    text: "With riders stationed exclusively within the estate, we ensure swift and reliable delivery straight to your doorstep. Our efficient logistics make sure your orders arrive quickly and accurately.",
   },
   {
     header: "EASY PAYMENT",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra nunc ante velit vitae. Est tellus vitae, nullam lobortis enim. Faucibus amet etiam tincidunt rhoncus, ullamcorper velit.",
+    text: "Enjoy hassle-free payment options—pay with cash or card, whichever suits you best.",
   },
   {
-    header: "RELIABLE AND SECURED GATEWAY",
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Viverra nunc ante velit vitae. Est tellus vitae, nullam lobortis enim. Faucibus amet etiam tincidunt rhoncus, ullamcorper velit.",
+    header: "Responsive Customer Support",
+    text: "We’re just a call away to resolve any issues with your order. No need for ticket escalations—your concerns are addressed in real-time.",
   },
 ];
 
