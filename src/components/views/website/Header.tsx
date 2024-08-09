@@ -56,17 +56,17 @@ const Header = () => {
 
   return (
     <header className="grid w-full items-center gap-4 px-5 pt-12 lg:grid-cols-2 lg:pt-0">
-      <div className="md:w-4/5 lg:pb-12">
+      <div className="md:w-11/12 lg:pb-12">
         <p className="mb-4 text-[3.375rem] font-bold leading-snug lg:text-[4.125rem]">
           <span>{blackText[index]}&nbsp;</span>
           <AnimatePresence>
             <motion.span
-              style={{ position: "absolute" }}
+              // style={{ position: "absolute" }}
               variants={variants}
               key={index}
-              initial="enter"
-              animate="center"
-              exit="exit"
+              // initial="enter"
+              // animate="center"
+              // exit="exit"
               className="text-occupy-primary"
               // transition={{
               //   y: { type: "spring", stiffness: 180, damping: 10 },
