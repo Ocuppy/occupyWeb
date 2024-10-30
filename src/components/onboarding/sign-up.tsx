@@ -3,12 +3,18 @@ import OccupyLogo from "../../../public/occupy-logo.png";
 import { Input } from "../ui/input";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Eye, EyeOff } from "lucide-react";
 import { signupValidationSchema } from "@/formValidation/yup.validation";
 import { useRouter } from "next/navigation";
+import { useSignUpMutation } from "@/store/redux/services/authSlice/authApiSlice";
+import { useAppDispatch } from "@/store/redux/hooks";
+import { setCredentials } from "@/store/redux/services/authSlice/authSlice";
+import { ClapSpinner } from "react-spinners-kit";
+import { useToast } from "../ui/use-toast";
+import isFetchBaseQueryErrorType from "@/store/redux/fetchErrorType";
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,11 +33,43 @@ const Signup = () => {
       password: "",
     },
     validationSchema: signupValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      router.push("/auth/verify");
+    onSubmit: async (values) => {
+      registerUser({
+        first_name: values.firstName,
+        last_name: values.lastName,
+        email: values.email,
+        password: values.password,
+        user_type: "CU",
+        current_estate: 1,
+      });
     },
   });
+
+  const dispatch = useAppDispatch();
+
+  const [registerUser, { isLoading, isSuccess, error, data }] =
+    useSignUpMutation();
+
+  if (isSuccess) {
+    dispatch(setCredentials({ token: data.password }));
+    router.push("/auth/verify");
+  }
+
+  const { toast } = useToast();
+  useEffect(() => {
+    if (error && "data" in error) {
+      if (isFetchBaseQueryErrorType(error)) {
+        const errors = Object.keys(error.data as Record<string, any>);
+        errors.forEach((item) => {
+          toast({
+            title: `${item.charAt(0).toUpperCase() + item.slice(1)}`,
+            description: `${(error.data as Record<string, any>)[item]?.[0]}`,
+            variant: "destructive",
+          });
+        });
+      }
+    }
+  }, [error, toast]);
 
   return (
     <section
@@ -41,6 +79,13 @@ const Signup = () => {
         backgroundSize: "cover",
       }}
     >
+      {isLoading && (
+        <div className="fixed right-0 top-0 z-[10000] h-screen w-screen bg-white bg-opacity-20 backdrop-blur-sm">
+          <div className="flex h-full w-full items-center justify-center">
+            <ClapSpinner />
+          </div>
+        </div>
+      )}
       <div className="flex w-full flex-col items-center justify-start gap-20 py-20 lg:relative lg:z-10 lg:flex-row lg:px-8 lg:py-10">
         <h1 className="hidden w-full max-w-2xl text-5xl font-bold text-[#EBF7FB] lg:block">
           Manage your Supermarket Operations with ease using our intuitive

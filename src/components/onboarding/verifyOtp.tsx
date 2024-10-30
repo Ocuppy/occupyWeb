@@ -8,6 +8,11 @@ import { useRouter } from "next/router";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/inputOtp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { useState, useEffect } from "react";
+import { useVerifyAccountMutation } from "@/store/redux/services/authSlice/authApiSlice";
+import { useAppDispatch } from "@/store/redux/hooks";
+import { ClapSpinner } from "react-spinners-kit";
+import { useToast } from "../ui/use-toast";
+import isFetchBaseQueryErrorType from "@/store/redux/fetchErrorType";
 
 interface FormValues {
   otp: string;
@@ -16,6 +21,8 @@ interface FormValues {
 const VerifyOtp: React.FC = () => {
   const router = useRouter();
 
+  const [verifyAccount, { isLoading, isSuccess, error, data }] =
+    useVerifyAccountMutation();
   const initialValues: FormValues = {
     otp: "",
   };
@@ -30,9 +37,31 @@ const VerifyOtp: React.FC = () => {
     values: FormValues,
     actions: FormikHelpers<FormValues>,
   ) => {
-    console.log("OTP entered:", values.otp);
-    router.push("/dashboard");
+    // console.log("OTP entered:", values.otp);
+    verifyAccount({ token: values.otp });
   };
+
+  if (isSuccess) {
+    router.push("/auth/login");
+  }
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (error) {
+      if (isFetchBaseQueryErrorType(error)) {
+        const errorData = error.data as {
+          messages: { message: string }[];
+          detail: string;
+        } & Record<string, any>;
+
+        toast({
+          description: `${errorData.messages[0].message}`,
+          title: `${errorData.detail} `,
+          variant: "destructive",
+        });
+      }
+    }
+  }, [error, toast]);
 
   const [timeLeft, setTimeLeft] = useState(30 * 60);
 
@@ -58,6 +87,13 @@ const VerifyOtp: React.FC = () => {
         backgroundSize: "cover",
       }}
     >
+      {isLoading && (
+        <div className="fixed right-0 top-0 z-[10000] h-screen w-screen bg-white bg-opacity-20 backdrop-blur-sm">
+          <div className="flex h-full w-full items-center justify-center">
+            <ClapSpinner />
+          </div>
+        </div>
+      )}
       <div className="flex w-full flex-col items-center justify-start gap-20 py-20 lg:relative lg:z-10 lg:flex-row lg:px-8">
         <h1 className="hidden w-full max-w-2xl text-5xl font-bold text-[#EBF7FB] lg:block">
           Manage your Supermarket Operations with ease using our intuitive
