@@ -6,7 +6,7 @@ myHeaders.append("Content-Type", "application/json");
 
 const profileApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBuyerProfile: builder.query({
+    getSupermarketProfile: builder.query({
       query: (id) => ({
         headers: myHeaders,
         url: `/accounts/account/user/${id}`,
@@ -24,5 +24,5 @@ const profileApiSlice = baseApiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetBuyerProfileQuery, useUpdateBuyerAccountMutation } =
+export const { useGetSupermarketProfileQuery, useUpdateBuyerAccountMutation } =
   profileApiSlice;

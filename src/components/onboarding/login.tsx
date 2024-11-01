@@ -16,13 +16,10 @@ import isFetchBaseQueryErrorType from "@/store/redux/fetchErrorType";
 import { useLoginMutation } from "@/store/redux/services/authSlice/authApiSlice";
 import { setCredentials } from "@/store/redux/services/authSlice/authSlice";
 
-
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [login, { isLoading, error, data, isSuccess }] = useLoginMutation();
-
-  console.log(data, error);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -43,7 +40,14 @@ const Login = () => {
   });
 
   if (isSuccess) {
-    dispatch(setCredentials({token:data.access }))
+    dispatch(
+      setCredentials({
+        token: data.access,
+        userType: data.user_type,
+        userID: data.user_id,
+        profileID: data.profile_id,
+      }),
+    );
     router.push("/dashboard");
   }
   const { toast } = useToast();

@@ -10,13 +10,26 @@ import { Eye, EyeOff } from "lucide-react";
 import { signupValidationSchema } from "@/formValidation/yup.validation";
 import { useRouter } from "next/navigation";
 import { useSignUpMutation } from "@/store/redux/services/authSlice/authApiSlice";
+import { useGetEstatesQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import { useAppDispatch } from "@/store/redux/hooks";
 import { setCredentials } from "@/store/redux/services/authSlice/authSlice";
 import { ClapSpinner } from "react-spinners-kit";
 import { useToast } from "../ui/use-toast";
 import isFetchBaseQueryErrorType from "@/store/redux/fetchErrorType";
+import {
+  Select,
+  SelectItem,
+  SelectTrigger,
+  SelectContent,
+  SelectValue,
+} from "../ui/select";
 
 const Signup = () => {
+  const {
+    data: estateList,
+    isLoading: loadingEstate,
+    error: estatesError,
+  } = useGetEstatesQuery("");
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
@@ -29,7 +42,7 @@ const Signup = () => {
       firstName: "",
       lastName: "",
       email: "",
-      phone: "",
+      estate: "",
       password: "",
     },
     validationSchema: signupValidationSchema,
@@ -39,8 +52,8 @@ const Signup = () => {
         last_name: values.lastName,
         email: values.email,
         password: values.password,
-        user_type: "CU",
-        current_estate: 1,
+        user_type: "SO",
+        current_estate: values.estate,
       });
     },
   });
@@ -166,63 +179,107 @@ const Signup = () => {
                 </div>
               </div>
               {/* second input */}
-              <div className="items-center lg:flex lg:gap-6">
-                <div className="mb-4 flex flex-col gap-2 lg:mb-0">
-                  <label
-                    htmlFor="email"
-                    className="text-sm font-medium text-[#606778]"
-                  >
-                    Email
-                  </label>
-                  <Input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Your email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.email}
-                    className={
-                      formik.touched.email && formik.errors.email
-                        ? "border-red-700"
-                        : ""
-                    }
-                  />
-                  {formik.touched.email && formik.errors.email ? (
-                    <div className="text-sm text-red-500">
-                      {formik.errors.email}
-                    </div>
-                  ) : null}
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label
-                    htmlFor="phone"
-                    className="text-sm font-medium text-[#606778]"
-                  >
-                    Phone Number
-                  </label>
-                  <Input
-                    type="text"
-                    id="phone"
-                    name="phone"
-                    placeholder="Your phone number"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.phone}
-                    className={
-                      formik.touched.phone && formik.errors.phone
-                        ? "border-red-700"
-                        : ""
-                    }
-                  />
-                  {formik.touched.phone && formik.errors.phone ? (
-                    <div className="text-sm text-red-500">
-                      {formik.errors.phone}
-                    </div>
-                  ) : null}
-                </div>
+              {/* <div className="items-center lg:flex lg:gap-6"> */}
+              <div className="mb-4 flex flex-col gap-2 lg:mb-0">
+                <label
+                  htmlFor="email"
+                  className="text-sm font-medium text-[#606778]"
+                >
+                  Email
+                </label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Your email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  className={
+                    formik.touched.email && formik.errors.email
+                      ? "border-red-700"
+                      : ""
+                  }
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="text-sm text-red-500">
+                    {formik.errors.email}
+                  </div>
+                ) : null}
               </div>
+              {/* </div> */}
+
               {/* third input */}
+              {/* <div className="relative flex flex-col gap-2"> */}
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="phone"
+                  className="text-sm font-medium text-[#606778]"
+                >
+                  Current Estate
+                </label>
+                <Select
+                  name="estate"
+                  onValueChange={(val) => {
+                    formik.setFieldValue("estate", val);
+                  }}
+                  defaultValue={formik.values.estate}
+                  required={true}
+                >
+                  <SelectTrigger className="bg-[#F9F9FC]">
+                    <SelectValue placeholder="Select Estate" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {estateList &&
+                      estateList.map(
+                        (
+                          item: {
+                            id: number;
+                            address: string;
+                            name: string;
+                          },
+                          // index,
+                        ) => (
+                          <SelectItem
+                            key={`${item.address}-${item.id}- `}
+                            value={`${item.id}`}
+                            onBlur={(e) =>
+                              formik.setFieldTouched("estate", true)
+                            }
+                          >
+                            {item.name} - {item.address}
+                          </SelectItem>
+                        ),
+                      )}
+                  </SelectContent>
+                </Select>
+                {formik.errors.estate ? (
+                  <div className="text-sm text-red-500">
+                    {formik.errors.estate}
+                  </div>
+                ) : null}
+                {/* <Input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  placeholder="Your phone number"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.phone}
+                  className={
+                    formik.touched.phone && formik.errors.phone
+                      ? "border-red-700"
+                      : ""
+                  }
+                /> */}
+                {/* {formik.touched.phone && formik.errors.phone ? (
+                  <div className="text-sm text-red-500">
+                    {formik.errors.phone}
+                  </div>
+                ) : null} */}
+              </div>
+              {/* </div> */}
+              {/* fourth input */}
               <div className="relative flex flex-col gap-2">
                 <label
                   htmlFor="password"

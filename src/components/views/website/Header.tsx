@@ -80,7 +80,7 @@ const Header = () => {
         </p>
 
         <p className="mb-4 text-[1.5rem]">
-        Experience the convenience of shopping from the comfort of your home. We bring your estate's supermarket right to you, delivering your order directly to your doorstep.
+        Experience the convenience of shopping from the comfort of your home. We bring your estate&apos;s supermarket right to you, delivering your order directly to your doorstep.
         </p>
         {/* <Button onClick={() => Router.push("/auth/login")} className="rounded-full" size={"lg"}>
           Go Shopping

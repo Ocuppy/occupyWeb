@@ -14,6 +14,7 @@ import CategoryItem from "@/components/dashboard/dashboard/CategoryItem";
 import { ArrowLeft, ArrowRight, MoveLeft, MoveRight } from "lucide-react";
 import CategoryBar from "@/components/dashboard/dashboard/CategoryBar";
 import TransactionsTable from "@/components/dashboard/dashboard/TransactionsTable";
+import { useGetSupermarketProfileQuery } from "@/store/redux/services/buyerSlice/profileSlice/profileApiSlice";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -66,6 +67,8 @@ const SortCard = (props: { name: string }) => {
 const Page: NextPageWithLayout = () => {
   const [showMarketDet, setShowMarketDet] = useState(false);
   const toggleMarketDet = () => setShowMarketDet(!showMarketDet);
+
+  
 
   return (
     // <div className="h-full px-4 rounded-md bg-white py-6">

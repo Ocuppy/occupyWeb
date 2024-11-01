@@ -3,8 +3,10 @@ import { RootState } from "../../store";
 
 const initialState = {
   token: "",
-  // userType: "",
-  is_active: false,
+  userType: "",
+  userID: "",
+  profileID: "",
+  // is_active: false,
 };
 
 const authSlice = createSlice({
@@ -12,21 +14,31 @@ const authSlice = createSlice({
   name: "auth slice",
   reducers: {
     setCredentials: (state, action) => {
-      const { token } = action.payload;
+      const { token, userType, userID, profileID } = action.payload;
       state.token = token;
-      // state.userType = userType;
+      state.userID = userID;
+      state.profileID = profileID;
+      state.userType = userType;
       sessionStorage.setItem("token", token);
-      // sessionStorage.setItem("userType", userType);
+      sessionStorage.setItem("userType", userType);
+      sessionStorage.setItem("userID", userID);
+      sessionStorage.setItem("profileID", profileID);
     },
 
     getCredentials: (state) => {
-      const token = sessionStorage.getItem("token");
-      // const user = sessionStorage.getItem("userType");
+      const keys: Array<keyof typeof state> = [
+        "token",
+        "userType",
+        "userID",
+        "profileID",
+      ];
 
-      if (token) {
-        state.token = token;
-        // state.userType = user;
-      }
+      keys.forEach((key) => {
+        const value = sessionStorage.getItem(key);
+        if (!state[key] && value) {
+          state[key] = value;
+        }
+      });
     },
 
     logOut: (state) => {

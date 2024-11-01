@@ -32,18 +32,21 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       </DashboardMenuVisibilityProvider>
     ));
 
-  return getLayout(
-    <>
-      <style jsx global>{`
-        html {
-          font-family: ${inter.style.fontFamily};
-        }
-      `}</style>
-      <Providers>
-      <Toaster />
-        <Component {...pageProps} />
-      </Providers>
-    </>,
-    // <DashboardMenuVisibilityProvider></DashboardMenuVisibilityProvider>,
+  return (
+    <Providers>
+      {getLayout(
+        <>
+          <style jsx global>{`
+            html {
+              font-family: ${inter.style.fontFamily};
+            }
+          `}</style>
+          <Toaster />
+          <Component {...pageProps} />
+        </>,
+      )}
+    </Providers>
   );
 }
+
+// <DashboardMenuVisibilityProvider></DashboardMenuVisibilityProvider>,
