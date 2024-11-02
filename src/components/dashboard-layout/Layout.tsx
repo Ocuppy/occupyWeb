@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardHeader from "./DashboardHeader";
 import { Button } from "../ui/button";
@@ -12,6 +12,11 @@ import {
 } from "@/contexts/DashboardMenuVisibilityContext";
 import { AnimatePresence, motion } from "framer-motion";
 import NotificationPopup from "../dashboard/notification/NotificationPopup";
+import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
+import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
+import { selectAuthToken } from "@/store/redux/services/authSlice/authSlice";
+import { useRouter } from "next/router";
+// import { useRouter } from "next/navigation";
 
 const Layout = ({
   children,
@@ -27,6 +32,22 @@ const Layout = ({
   }
 
   const { isVisible, toggleVisibility } = context;
+
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    dispatch(getCredentials());
+  }, [dispatch]);
+
+  // const token = useAppSelector(selectAuthToken);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      router.push("./auth/login");
+    }
+  }, [router]);
 
   return (
     // <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>

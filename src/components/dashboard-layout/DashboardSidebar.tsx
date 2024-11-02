@@ -14,7 +14,7 @@ import { Menu, X } from "lucide-react";
 import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
 import { useContext, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
-import { useGetSupermarketProfileQuery } from "@/store/redux/services/buyerSlice/profileSlice/profileApiSlice";
+import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 
 const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {

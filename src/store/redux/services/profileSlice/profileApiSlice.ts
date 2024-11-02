@@ -1,4 +1,4 @@
-import { baseApiSlice } from "../../baseApiSlice";
+import { baseApiSlice } from "../baseApiSlice";
 
 const myHeaders = new Headers();
 myHeaders.append("Accept", "application/json");

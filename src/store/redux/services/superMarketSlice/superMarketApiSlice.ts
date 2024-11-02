@@ -8,7 +8,13 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getCategories: builder.query({
+      query: () => ({
+        url: "/admin/list-categories",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetEstatesQuery } = superMarketApiSlice;
+export const { useGetEstatesQuery, useGetCategoriesQuery } = superMarketApiSlice;

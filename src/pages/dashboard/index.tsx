@@ -5,16 +5,20 @@ import SpaceBetween from "@/components/shared/SpaceBetween";
 import { Button } from "@/components/ui/button";
 import Router from "next/router";
 import StoreItem from "@/components/dashboard/dashboard/StoreItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SupermarketDetails from "@/components/dashboard/dashboard/SupermarketDetails";
 import Image from "next/image";
 import illustration from "../../../public/images/illustration.png";
 import { Inter } from "next/font/google";
 import CategoryItem from "@/components/dashboard/dashboard/CategoryItem";
 import { ArrowLeft, ArrowRight, MoveLeft, MoveRight } from "lucide-react";
+import NoSupermarkets from "@/components/dashboard/dashboard/NoSupermarkets";
 import CategoryBar from "@/components/dashboard/dashboard/CategoryBar";
 import TransactionsTable from "@/components/dashboard/dashboard/TransactionsTable";
-import { useGetSupermarketProfileQuery } from "@/store/redux/services/buyerSlice/profileSlice/profileApiSlice";
+import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
+import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
+import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -68,7 +72,34 @@ const Page: NextPageWithLayout = () => {
   const [showMarketDet, setShowMarketDet] = useState(false);
   const toggleMarketDet = () => setShowMarketDet(!showMarketDet);
 
-  
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCredentials());
+  }, [dispatch]);
+
+  const userID = useAppSelector((state) => state.auth.userID);
+  const {
+    data: userData,
+    error,
+    isLoading,
+  } = useGetSupermarketProfileQuery(userID, {
+    skip: userID ? false : true,
+  });
+
+  const getTimeOfDay = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour >= 5 && currentHour < 12) {
+      return "morning";
+    } else if (currentHour >= 12 && currentHour < 17) {
+      return "afternoon";
+    } else if (currentHour > 17 && currentHour < 21) {
+      return "evening";
+    } else {
+      return "night";
+    }
+  };
 
   return (
     // <div className="h-full px-4 rounded-md bg-white py-6">
@@ -101,8 +132,12 @@ const Page: NextPageWithLayout = () => {
         <section className="flex items-center gap-6">
           <div className="relative h-[9.5rem] w-[19rem] rounded-lg border border-[#E0E0E0] bg-white p-4">
             <header>
-              <h5 className="font-bold text-[#333333]">Good Afternoon 🌤</h5>
-              <h6 className="font-bold text-[#333333]">Adam</h6>
+              <h5 className="font-bold text-[#333333]">
+                Good {getTimeOfDay()} 🌤
+              </h5>
+              <h6 className="font-bold text-[#333333]">
+                {userData?.first_name}
+              </h6>
             </header>
             <div className="absolute bottom-0 right-1">
               <Image src={illustration} alt="Illustration" />

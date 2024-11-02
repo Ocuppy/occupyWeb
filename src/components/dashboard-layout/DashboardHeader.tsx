@@ -14,7 +14,7 @@ import Flex from "../shared/Flex";
 import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
 import { useContext, useEffect } from "react";
 import { NotificationContext } from "@/contexts/NotificationContext";
-import { useGetSupermarketProfileQuery } from "@/store/redux/services/buyerSlice/profileSlice/profileApiSlice";
+import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { useAppSelector, useAppDispatch } from "@/store/redux/hooks";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 

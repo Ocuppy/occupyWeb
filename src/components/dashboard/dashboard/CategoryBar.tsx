@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import CategoryCard from "./CategoryCard";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useGetCategoriesQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 
 export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -16,6 +17,8 @@ export default function Home() {
       scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
     }
   };
+
+  const { data: categoriesData, error, isLoading } = useGetCategoriesQuery("");
 
   const categories = [
     {
@@ -94,9 +97,19 @@ export default function Home() {
         ref={scrollContainerRef}
         className="scrollbar-hide flex overflow-x-auto"
       >
-        {categories.map((category, index) => (
-          <CategoryCard key={index} {...category} />
-        ))}
+        {categoriesData &&
+          categoriesData.map(
+            (
+              category: { category_image: string; category_name: string },
+              index: number,
+            ) => (
+              <CategoryCard
+                key={`${index}-${category.category_name}`}
+                image={category.category_image}
+                title={category.category_name}
+              />
+            ),
+          )}
       </div>
       <button
         className="absolute right-0 z-10 grid size-10 place-items-center rounded-full border border-[#E0E0E0] bg-white text-black shadow-md hover:bg-gray-100"
