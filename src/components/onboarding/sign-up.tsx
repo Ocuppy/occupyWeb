@@ -72,13 +72,22 @@ const Signup = () => {
   useEffect(() => {
     if (error && "data" in error) {
       if (isFetchBaseQueryErrorType(error)) {
-        const errors = Object.keys(error.data as Record<string, any>);
-        errors.forEach((item) => {
-          toast({
-            title: `${item.charAt(0).toUpperCase() + item.slice(1)}`,
-            description: `${(error.data as Record<string, any>)[item]?.[0]}`,
-            variant: "destructive",
-          });
+        // const errors = Object.keys(error.data as Record<string, any>);
+        // errors.forEach((item) => {
+        //   toast({
+        //     // title: `${item.charAt(0).toUpperCase() + item.slice(1)}`,
+        //     // description: `${(error.data as Record<string, any>)[item]?.[0]}`,
+        //     title: `Error`,
+        //     description: `Error signing up`,
+        //     variant: "destructive",
+        //   });
+        // });
+        toast({
+          // title: `${item.charAt(0).toUpperCase() + item.slice(1)}`,
+          // description: `${(error.data as Record<string, any>)[item]?.[0]}`,
+          title: `Error`,
+          description: `Error signing up`,
+          variant: "destructive",
         });
       }
     }

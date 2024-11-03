@@ -46,14 +46,16 @@ const ForgotPassword = () => {
   useEffect(() => {
     if (error) {
       if (isFetchBaseQueryErrorType(error)) {
-        const errorData = error.data as {
-          messages: { message: string }[];
-          detail: string;
-        } & Record<string, any>;
+        // const errorData = error.data as {
+        //   messages: { message: string }[];
+        //   detail: string;
+        // } & Record<string, any>;
 
         toast({
-          description: `${errorData.messages[0].message}`,
-          title: `${errorData.detail} `,
+          // description: `${errorData.messages[0].message}`,
+          // title: `${errorData.detail} `,
+          title: `Error`,
+          description: `Error sending email`,
           variant: "destructive",
         });
       }
