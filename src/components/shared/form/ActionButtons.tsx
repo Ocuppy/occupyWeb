@@ -10,7 +10,7 @@ const ActionButtons = () => {
   return (
     <div className="flex w-full justify-center">
       <Flex>
-        <Button type="submit">{isFirstStep ? "Proceed" : "Submit"}</Button>
+        <Button type="submit">{isFirstStep ? "Submit" : "Submit"}</Button>
         <Button
           onClick={() => {
             if (isFirstStep) {

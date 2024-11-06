@@ -15,7 +15,7 @@ import { useSendOtpToResetPwdMutation } from "@/store/redux/services/authSlice/a
 
 const ForgotPassword = () => {
   const router = useRouter();
-  const [isComplete, setIsComplete] = useState(true);
+  const [isComplete, setIsComplete] = useState(false);
 
   const [resetPassword, { isLoading, error, isSuccess, data }] =
     useSendOtpToResetPwdMutation();

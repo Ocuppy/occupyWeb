@@ -14,7 +14,7 @@ const WorkTimeActivities = ({
   addNewField?: () => void;
 }) => {
   return (
-    <Flex className="h-full flex items-center justify-center">
+    <Flex className="flex h-full items-center justify-center">
       <div className="w-full">
         <Flex className="flex-col gap-4">
           {step2FormField.map((field, index) => (
@@ -26,6 +26,9 @@ const WorkTimeActivities = ({
                       key={idx}
                       closeMenuOnSelect={false}
                       // components={animatedComponents}
+                      onChange={(e) => {
+                        console.log(e, "eeeee");
+                      }}
                       defaultValue={""}
                       isMulti
                       options={item.options}
@@ -34,6 +37,9 @@ const WorkTimeActivities = ({
                   ) : (
                     <Input
                       key={idx}
+                      onChange={(e) => {
+                        console.log(e, "eeeee");
+                      }}
                       className="w-1/4"
                       placeholder="hh:mm"
                       type="time"
@@ -44,10 +50,10 @@ const WorkTimeActivities = ({
             </Flex>
           ))}
         </Flex>
-        <div className="mt-4 mb-12">
+        <div className="mb-12 mt-4">
           <Button
             onClick={addNewField}
-            className="text-occupy-primary gap-4 px-0 font-semibold"
+            className="gap-4 px-0 font-semibold text-occupy-primary"
             variant={"ghost"}
           >
             <PlusIcon />

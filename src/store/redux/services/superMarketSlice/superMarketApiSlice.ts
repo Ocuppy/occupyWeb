@@ -14,7 +14,18 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    addSupermarket: builder.mutation({
+      query: (data) => ({
+        url: `/store/supermarket/`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetEstatesQuery, useGetCategoriesQuery } = superMarketApiSlice;
+export const {
+  useGetEstatesQuery,
+  useGetCategoriesQuery,
+  useAddSupermarketMutation,
+} = superMarketApiSlice;

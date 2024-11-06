@@ -8,6 +8,9 @@ export const AddStoreSchema = z
     supermarketAddress: z.string().min(1, {
       message: "Address must be added",
     }),
+    email: z.string().email({
+      message: "Email must be added",
+    }),
     phoneNumber: z
       .string()
       .min(10, {

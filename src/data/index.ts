@@ -20,6 +20,12 @@ export const AddStoreFormFields: IFieldValue[] = [
     type: "number",
   },
   {
+    name: "email",
+    label: "Sales Person Email",
+    placeholder: "Email",
+    type: "email",
+  },
+  {
     name: "supermarketLocation",
     label: "Select Estate Supermarket is Located in",
     placeholder: "Select an option...",
