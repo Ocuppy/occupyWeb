@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { MouseEventHandler, useRef } from "react";
 import CategoryCard from "./CategoryCard";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useGetCategoriesQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
@@ -6,13 +6,16 @@ import { useGetCategoriesQuery } from "@/store/redux/services/superMarketSlice/s
 export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const scrollLeft = () => {
+  const scrollLeft: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
     }
   };
 
-  const scrollRight = () => {
+  const scrollRight: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
     }

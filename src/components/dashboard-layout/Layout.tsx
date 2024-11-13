@@ -83,7 +83,7 @@ const Layout = ({
 
           <main
             className={cn(
-              "mt-32 h-full flex-1 grow py-4 pr-4",
+              "mt-32 h-full flex-1 grow py-4 px-4",
               inter.className,
             )}
           >

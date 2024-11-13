@@ -85,7 +85,11 @@ const DashboardSidebar = () => {
           return (
             <div key={link.url}>
               {link.subLinks ? (
-                <Accordion type="single" collapsible>
+                <Accordion
+                  onClick={(e) => e.stopPropagation()}
+                  type="single"
+                  collapsible
+                >
                   <AccordionItem value={link.url}>
                     <AccordionTrigger
                       className={`rounded-lg p-2 py-[12px] pl-4 ${
@@ -124,6 +128,9 @@ const DashboardSidebar = () => {
                               ></div>
                               <Link
                                 href={linkToClick}
+                                onClick={() => {
+                                  toggleVisibility();
+                                }}
                                 className={`flex w-full items-center rounded-lg px-4 py-2 font-semibold ${
                                   isCurrentPath
                                     ? "bg-white text-occupy-primary"

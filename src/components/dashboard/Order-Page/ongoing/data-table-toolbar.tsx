@@ -8,27 +8,31 @@ interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
 
-export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>) {
+export function DataTableToolbar<TData>({
+  table,
+}: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
-    <div className="flex items-center px-4 pb-4 justify-between">
-      <div className="flex gap-2 items-center ">
-        <span>Recent Orders</span>
-        <div className="bg-[#0D894F] bg-opacity-25 text-[#0D894F] py-1 px-2 rounded-full">
+    <div className="flex items-center justify-between px-4 pb-4 text-sm sm:text-base">
+      <div className="flex items-center gap-2">
+        <span className="whitespace-nowrap">Recent Orders</span>
+        <div className="rounded-full bg-[#0D894F] text-xs sm:text-base bg-opacity-25 px-2 py-1 text-[#0D894F]">
           +2 Orders
         </div>
       </div>
 
-      <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-2">
         <Input
           placeholder="Search your grocery category etc..."
           value={(table.getColumn("product")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => table.getColumn("product")?.setFilterValue(event.target.value)}
-          className="h-[38px] w-[150px] lg:w-[250px] text-black"
+          onChange={(event) =>
+            table.getColumn("product")?.setFilterValue(event.target.value)
+          }
+          className="h-[38px] w-[150px] text-black lg:w-[250px]"
         />
         <DataTableViewOptions table={table} />
-        <Button className="py-1 px-3">See More</Button>
+        <Button className="px-3 py-1 text-sm sm:text-base">See More</Button>
       </div>
     </div>
   );
