@@ -35,7 +35,7 @@ const DatePicker = ({
               {field.value ? (
                 format(field.value, "PPP")
               ) : (
-                <span>{fieldValue.placeholder || "Pick a date"}</span>
+                <span className="text-sm">{fieldValue.placeholder || "Pick a date"}</span>
               )}
               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
             </Button>

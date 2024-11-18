@@ -1,32 +1,59 @@
-import { InformationIcon } from "@/assets/icon/icons";
+import { useState } from "react";
 import Flex from "@/components/shared/Flex";
 import { cn } from "@/lib/utils";
-
+import { ArrowLeftSquare, ArrowLeft } from "lucide-react";
+import SideMenu from "./SideMenu";
+import { AnimatePresence } from "framer-motion";
+// AngleLeftIcon
 const FormSteps = ({
   stepState,
   currentStep,
   onClickElement,
 }: {
-  stepState: { title: string; desc: string }[];
+  stepState: {
+    title: string;
+    desc: string;
+    icon: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element;
+  }[];
   currentStep: number;
   onClickElement?: (val: number) => void;
 }) => {
+  const [showSteps, setshowSteps] = useState(false);
+
   return (
-    <div className="flex-col bg-white min-w-[250px] rounded-md border-dashed border p-4 flex">
+    <div className="relative flex h-full flex-col justify-center rounded-md border border-dashed bg-white p-4 sm:min-w-[250px]">
+      <ArrowLeftSquare
+        className="mb-8 w-8 sm:hidden"
+        onClick={(e) => {
+          e.stopPropagation();
+          setshowSteps(true);
+        }}
+      />
+      <AnimatePresence>
+        {showSteps && (
+          <SideMenu
+            onClickElement={onClickElement}
+            currentStep={currentStep}
+            stepState={stepState}
+            hideMenu={() => setshowSteps(false)}
+          />
+        )}
+      </AnimatePresence>
       {stepState.map((item, idx) => (
         <div className="w-full" key={idx}>
           <Flex
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation()
               onClickElement && onClickElement(idx + 1);
             }}
             className={cn("gap-4", onClickElement && "hover:cursor-pointer")}
           >
-            <InformationIcon />
-            <div className="flex-col justify-start items-start">
+            <item.icon  />
+            <div className="hidden flex-col items-start justify-start sm:block">
               <p
                 className={cn(
-                  "text-[#212330] font-medium",
-                  idx === currentStep - 1 && "text-occupy-primary"
+                  "font-medium text-[#212330]",
+                  idx === currentStep - 1 && "text-occupy-primary",
                 )}
               >
                 {item.title}
@@ -35,7 +62,7 @@ const FormSteps = ({
             </div>
           </Flex>
           {idx !== stepState.length - 1 && (
-            <div className="my-4 h-[1px] bg-[#D0D5DD] w-full" />
+            <div className="my-4 h-[1px] w-full bg-[#D0D5DD]" />
           )}
         </div>
       ))}

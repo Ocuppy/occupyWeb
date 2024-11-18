@@ -128,7 +128,8 @@ export const SupermarketInformationFields = [
     {
       name: "inspectiondate",
       label: "Date of Inspection",
-      placeholder: "Select a preferred date for Physical Inspection",
+      placeholder: "Select a date...",
+      // placeholder: "Select a preferred date for Physical Inspection",
       type: "date",
     },
   ],
