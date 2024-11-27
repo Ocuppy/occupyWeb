@@ -37,6 +37,7 @@ const Page: NextPageWithLayout = () => {
   } = useGetEstatesQuery("");
 
   const userID = useAppSelector((state) => state.auth.userID);
+  const profileID = useAppSelector((state) => state.auth.profileID);
   const {
     data: userData,
     error,
@@ -104,10 +105,12 @@ const Page: NextPageWithLayout = () => {
     {
       title: "Supermarket Information",
       desc: "Supermarket/Partners Information",
+      icon: InformationIcon,
     },
     {
       title: "Work Time Activities",
       desc: "You can set up the supermarket activity period",
+      icon: InformationIcon,
     },
   ];
 
@@ -122,7 +125,7 @@ const Page: NextPageWithLayout = () => {
                 defaultValues={
                   savedFormValues || {
                     inspectionDate: "",
-                    phoneNumber: null,
+                    phoneNumber: "",
                     supermarketAddress: "",
                     supermarketLocation: "",
                     supermarketName: "",
@@ -132,25 +135,26 @@ const Page: NextPageWithLayout = () => {
                   !estateLoaded ? AddStoreFormFields : modifiedStoreFormFields
                 }
                 onSubmit={(data) => {
-                  // addSupermarket({
-                  //   name: "string",
-                  //   business_name: data.supermarketName,
-                  //   business_reg_number: "",
-                  //   contact_person_name: `${userData.first_name} ${userData.last_name}`,
-                  //   contact_person_email: data.email,
-                  //   contact_person_phone_number: data.phoneNumber,
-                  //   can_run_online_store: true,
-                  //   has_internet_access: true,
-                  //   alternate_power_supply: true,
-                  //   inspection_date: data.inspectionDate.toISOString(),
-                  //   is_online: true,
-                  //   supermarket_photo: "",
-                  //   estate: data.supermarketLocation,
-                  //   shop_owner: userID,
-                  // });
-                  // console.log("data", data.inspectionDate.toISOString());
                   onSaveFormValues(data);
-                  goNext();
+                  addSupermarket({
+                    contact_person_name: data.salesName,
+                    business_name: data.supermarketName,
+                    business_reg_number: data.regNumber,
+                    name: `${userData.first_name} ${userData.last_name}`,
+                    contact_person_email: data.email,
+                    contact_person_phone_number: data.phoneNumber,
+                    can_run_online_store: true,
+                    has_internet_access: true,
+                    alternate_power_supply: true,
+                    inspection_date: data.inspectionDate.toISOString(),
+                    is_online: true,
+                    supermarket_photo: "",
+                    estate: data.supermarketLocation,
+                    shop_owner: profileID,
+                  });
+                  if (addSuccess) {
+                    goNext();
+                  }
                 }}
               >
                 <ActionButtons />

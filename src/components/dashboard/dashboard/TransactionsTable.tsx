@@ -52,7 +52,10 @@ const TransactionsTable: FC = () => {
     <div className="w-full rounded-lg bg-white p-4 shadow">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-xl font-semibold">Transaction History</h2>
-        <a href="#" className="text-purple-600">
+        <a
+          href="#"
+          className="text-purple-600"
+        >
           See All
         </a>
       </div>

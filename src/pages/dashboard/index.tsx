@@ -19,7 +19,6 @@ import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSli
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 const SortCard = (props: { name: string }) => {
@@ -101,32 +100,33 @@ const Page: NextPageWithLayout = () => {
     }
   };
 
-  return (
-    // <div className="h-full px-4 rounded-md bg-white py-6">
-    //   {!showMarketDet ? (
-    //     <>
-    //       <SpaceBetween>
-    //         <p className="text-[20px] font-medium">Manage Store</p>
-    //         <Button onClick={() => Router.push("/dashboard/store/add")}>
-    //           Add Store
-    //         </Button>
-    //       </SpaceBetween>
+  return !showMarketDet ? (
+    <div className="h-full rounded-md bg-white px-4 py-6">
+      {!showMarketDet ? (
+        <>
+          <SpaceBetween>
+            <p className="text-[20px] font-medium">Manage Store</p>
+            <Button onClick={() => Router.push("/dashboard/store/add")}>
+              Add Store
+            </Button>
+          </SpaceBetween>
 
-    //       {/* Component for when no store has been added */}
-    //       {/* <Flex className="justify-center">
-    //     <NoSupermarkets />
-    //   </Flex> */}
+          {/* Component for when no store has been added */}
+          {/* <Flex className="justify-center">
+      <NoSupermarkets />
+    </Flex> */}
 
-    //       <div className="mt-8 max-w-[900px] mx-auto flex flex-col gap-8">
-    //         <StoreItem onClickStore={toggleMarketDet} />
-    //         <StoreItem onClickStore={toggleMarketDet} />
-    //         <StoreItem onClickStore={toggleMarketDet} />
-    //       </div>
-    //     </>
-    //   ) : (
-    //     <SupermarketDetails onBack={toggleMarketDet} />
-    //   )}
-    // </div>
+          <div className="mx-auto mt-8 flex max-w-[900px] flex-col gap-8">
+            <StoreItem onClickStore={toggleMarketDet} />
+            <StoreItem onClickStore={toggleMarketDet} />
+            <StoreItem onClickStore={toggleMarketDet} />
+          </div>
+        </>
+      ) : (
+        <SupermarketDetails onBack={toggleMarketDet} />
+      )}
+    </div>
+  ) : (
     <>
       <div className="mb-7 flex w-full items-center gap-6 overflow-x-scroll xl:overflow-x-visible">
         <section className="flex items-center gap-6">

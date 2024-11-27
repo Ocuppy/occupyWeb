@@ -21,8 +21,9 @@ export const RenderFormType = ({
       return <TextInput form={form} field={field} fieldValue={fieldValue} />;
     case "select":
       return <SelectPicker field={field} fieldValue={fieldValue} />;
-
     case "date":
       return <DatePicker field={field} fieldValue={fieldValue} />;
+    case "file":
+      return <TextInput form={form} field={field} fieldValue={fieldValue} />;
   }
 };

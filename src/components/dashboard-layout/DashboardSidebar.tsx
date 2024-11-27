@@ -86,7 +86,9 @@ const DashboardSidebar = () => {
             <div key={link.url}>
               {link.subLinks ? (
                 <Accordion
-                  onClick={(e) => e.stopPropagation()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
                   type="single"
                   collapsible
                 >

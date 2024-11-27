@@ -45,7 +45,7 @@ const Layout = ({
   useEffect(() => {
     const token = sessionStorage.getItem("token");
     if (!token) {
-      router.push("./auth/login");
+      router.push("/auth/login");
     }
   }, [router]);
 
@@ -55,11 +55,16 @@ const Layout = ({
       <NotificationPopup />
       <Toaster />
       <div
-        onClick={toggleVisibility}
+        onClick={() => {
+          console.log("layout");
+        }}
         className="min-w-0 flex-auto gap-10 xl:flex"
       >
         {isVisible ? (
-          <div className="fixed left-0 top-0 z-30 block w-screen backdrop-blur-sm xl:hidden">
+          <div
+            onClick={toggleVisibility}
+            className="fixed left-0 top-0 z-30 block w-screen backdrop-blur-sm xl:hidden"
+          >
             <AnimatePresence>
               <motion.div
                 className="w-10/12"
@@ -83,7 +88,7 @@ const Layout = ({
 
           <main
             className={cn(
-              "mt-32 h-full flex-1 grow py-4 px-4",
+              "mt-32 h-full flex-1 grow px-4 py-4",
               inter.className,
             )}
           >
