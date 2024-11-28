@@ -22,6 +22,8 @@ export const DashboardMenuVisibilityProvider: FC<
     setIsVisible(!isVisible);
   };
 
+  console.log(isVisible, "isvisibleee");
+
   return (
     <DashboardMenuVisibilityContext.Provider
       value={{ isVisible, toggleVisibility }}

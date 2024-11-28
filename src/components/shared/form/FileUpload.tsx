@@ -1,3 +1,35 @@
+import React from "react";
+
+// <FormField
+// control={form.control}
+// name="photo"
+// render={({ field }) => (
+//   <FormItem>
+//     <FormLabel>Photo</FormLabel>
+//     <FormControl className="rounded-lg border-4 border-dashed bg-[#F9F9FC] p-6">
+//       <div className="flex flex-col items-center justify-center gap-3">
+//         <div className="rounded-full bg-[#DEDEFA] p-2">
+//           {/* <Image src="" alt="" className="text-occupy-primary" /> */}
+//         </div>
+//         <span className="text-sm font-normal text-[#858D9D]">
+//           Drag and drop image here, or click add image
+//         </span>
+//         <Button className="bg-[#DEDEFA] font-semibold text-occupy-primary">
+//           Add Image
+//         </Button>
+//       </div>
+//     </FormControl>
+//     <FormMessage />
+//   </FormItem>
+// )}
+// />
+
+const FileUpload = () => {
+  return <div>FileUpload</div>;
+};
+
+export default FileUpload;
+
 import { useState } from "react";
 import { FormControl, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -49,5 +81,3 @@ const TextInput = ({
     </>
   );
 };
-
-export default TextInput;

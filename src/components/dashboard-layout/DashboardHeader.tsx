@@ -12,8 +12,11 @@ import {
 } from "../ui/dropdown-menu";
 import Flex from "../shared/Flex";
 import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { NotificationContext } from "@/contexts/NotificationContext";
+import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
+import { useAppSelector, useAppDispatch } from "@/store/redux/hooks";
+import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 
 const DashboardHeader = () => {
   const sideMenuContext = useContext(DashboardMenuVisibilityContext);
@@ -22,6 +25,21 @@ const DashboardHeader = () => {
       "DashbordMenuButton toggle must be used within a VisibilityProvider",
     );
   }
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCredentials());
+  }, [dispatch]);
+
+  const userID = useAppSelector((state) => state.auth.userID);
+  const {
+    data: userData,
+    error,
+    isLoading,
+  } = useGetSupermarketProfileQuery(userID, {
+    skip: userID ? false : true,
+  });
   const { toggleVisibility } = sideMenuContext;
 
   const notificationContext = useContext(NotificationContext);
@@ -76,7 +94,8 @@ const DashboardHeader = () => {
                 <img src="/images/profile.png" alt="Profile Picture" />
                 <div className="text-left">
                   <p className="text-sm font-medium text-black/80">
-                    Andrew Smith
+                    {userData?.first_name ?? "John"}{" "}
+                    {userData?.last_name ?? "Doe"}
                   </p>
                   <p className="text-[0.625rem] uppercase text-black/30">
                     Supermarket

@@ -16,7 +16,7 @@ const CardBox: FC<CardBoxProps> = ({ title, count, percentage }) => {
         // boxShadow: "0px 9px 17px rgba(0, 0, 0, 0.07)",
       }}
       className="
-        bg-white w-[243px] h-[111px] translate-y-0 
+        bg-white w-[120px] sm:w-[243px] h-[80px] sm:h-[111px] translate-y-0 
         rounded-xl border
       "
     >

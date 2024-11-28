@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import DashboardSidebar from "./DashboardSidebar";
 import DashboardHeader from "./DashboardHeader";
 import { Button } from "../ui/button";
@@ -12,6 +12,11 @@ import {
 } from "@/contexts/DashboardMenuVisibilityContext";
 import { AnimatePresence, motion } from "framer-motion";
 import NotificationPopup from "../dashboard/notification/NotificationPopup";
+import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
+import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
+import { selectAuthToken } from "@/store/redux/services/authSlice/authSlice";
+import { useRouter } from "next/router";
+// import { useRouter } from "next/navigation";
 
 const Layout = ({
   children,
@@ -28,17 +33,38 @@ const Layout = ({
 
   const { isVisible, toggleVisibility } = context;
 
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    dispatch(getCredentials());
+  }, [dispatch]);
+
+  // const token = useAppSelector(selectAuthToken);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      router.push("/auth/login");
+    }
+  }, [router]);
+
   return (
     // <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>
     <div className={cn("bg-[#F9FBFD]", className)}>
       <NotificationPopup />
       <Toaster />
       <div
-        onClick={toggleVisibility}
+        onClick={() => {
+          console.log("layout");
+        }}
         className="min-w-0 flex-auto gap-10 xl:flex"
       >
         {isVisible ? (
-          <div className="fixed left-0 top-0 z-30 block w-screen backdrop-blur-sm xl:hidden">
+          <div
+            onClick={toggleVisibility}
+            className="fixed left-0 top-0 z-30 block w-screen backdrop-blur-sm xl:hidden"
+          >
             <AnimatePresence>
               <motion.div
                 className="w-10/12"
@@ -62,7 +88,7 @@ const Layout = ({
 
           <main
             className={cn(
-              "mt-32 h-full flex-1 grow py-4 pr-4",
+              "mt-32 h-full flex-1 grow px-4 py-4",
               inter.className,
             )}
           >

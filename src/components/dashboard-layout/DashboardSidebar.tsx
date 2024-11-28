@@ -12,7 +12,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "../ui/separator";
 import { Menu, X } from "lucide-react";
 import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
+import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
+import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 
 const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
   return (
@@ -34,6 +37,21 @@ const DashboardSidebar = () => {
 
   const { toggleVisibility } = context;
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getCredentials());
+  }, [dispatch]);
+
+  const userID = useAppSelector((state) => state.auth.userID);
+  const {
+    data: userData,
+    error,
+    isLoading,
+  } = useGetSupermarketProfileQuery(userID, {
+    skip: userID ? false : true,
+  });
+
   return (
     <aside
       className={`sticky top-0 z-30 h-screen w-full overflow-y-auto rounded-r-lg bg-occupy-primary p-4 text-white xl:w-[270px]`}
@@ -49,7 +67,10 @@ const DashboardSidebar = () => {
           <p className="text-[10px] uppercase opacity-[40%]">
             Live Well Supermarket
           </p>
-          <p className="text-[14px] font-medium opacity-[80%]">Andrew Smith</p>
+          <p className="text-[14px] font-medium opacity-[80%]">
+            {" "}
+            {userData?.first_name ?? "John"} {userData?.last_name ?? "Doe"}
+          </p>
         </div>
 
         <button onClick={toggleVisibility} className="ml-auto xl:hidden">
@@ -64,7 +85,13 @@ const DashboardSidebar = () => {
           return (
             <div key={link.url}>
               {link.subLinks ? (
-                <Accordion type="single" collapsible>
+                <Accordion
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  type="single"
+                  collapsible
+                >
                   <AccordionItem value={link.url}>
                     <AccordionTrigger
                       className={`rounded-lg p-2 py-[12px] pl-4 ${
@@ -103,6 +130,9 @@ const DashboardSidebar = () => {
                               ></div>
                               <Link
                                 href={linkToClick}
+                                onClick={() => {
+                                  toggleVisibility();
+                                }}
                                 className={`flex w-full items-center rounded-lg px-4 py-2 font-semibold ${
                                   isCurrentPath
                                     ? "bg-white text-occupy-primary"

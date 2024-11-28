@@ -13,6 +13,15 @@ import { withSteppedFormContextProvider } from "@/contexts/SteppedFormContext";
 import { IFieldValue } from "@/types";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { InformationIcon } from "@/assets/icon/icons";
+import {
+  UserIcon,
+  BillingIcon,
+  DeactivateIcon,
+  SecurityIcon,
+  NotificationIcon,
+  ContactIcon,
+} from "@/assets/icon/settingsIcon";
 
 const Index = () => {
   const form = useForm<any>({
@@ -38,11 +47,13 @@ const Index = () => {
       title: "General Information",
       desc: "Profile Photo, Name and Location",
       component: <GeneralInformation {...form} />,
+      icon: UserIcon,
     },
     {
       title: "Supermarket Information",
       desc: "Supermarket/Partners Information",
       component: <SupermarketInformation {...form} />,
+      icon: InformationIcon,
     },
     {
       title: "Work Time Activities",
@@ -53,30 +64,36 @@ const Index = () => {
           step2FormField={step2FormField}
         />
       ),
+      icon: InformationIcon,
     },
     {
       title: "Security",
       desc: "Password & Security questions",
       component: <SecurityForm {...form} />,
+      icon: SecurityIcon,
     },
     {
       title: "Billing",
       desc: "Setup Payment Methods",
       component: <BillingForm {...form} />,
+      icon: BillingIcon,
     },
     {
       title: "Notification",
       desc: "Set your email notification",
       component: <NotificationSettings />,
+      icon: NotificationIcon,
     },
     {
       title: "Contact Center",
       desc: "Help and Raise Ticket",
       component: <ContactCenter />,
+      icon: ContactIcon,
     },
     {
       title: "Deactivate Account",
       desc: "Hide & disable current account",
+      icon: DeactivateIcon,
     },
   ];
 
@@ -85,7 +102,7 @@ const Index = () => {
   };
   return (
     <div className="h-full rounded-md bg-white p-6">
-      <Flex className="h-full items-start gap-8">
+      <Flex className="h-full items-center gap-8 sm:items-start">
         <div className="flex h-full w-full items-center justify-center rounded-md border border-dashed p-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">

@@ -17,11 +17,13 @@ export const RenderFormType = ({
     case "text":
     case "password":
     case "number":
+    case "email":
       return <TextInput form={form} field={field} fieldValue={fieldValue} />;
     case "select":
       return <SelectPicker field={field} fieldValue={fieldValue} />;
-
     case "date":
       return <DatePicker field={field} fieldValue={fieldValue} />;
+    case "file":
+      return <TextInput form={form} field={field} fieldValue={fieldValue} />;
   }
 };

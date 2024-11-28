@@ -30,7 +30,10 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Image, X } from "lucide-react";
-import { productSchema, productSchemaType } from "@/lib/validations/addProductSchema";
+import {
+  productSchema,
+  productSchemaType,
+} from "@/lib/validations/addProductSchema";
 import { MultiSelect } from "@/components/ui/multiSelect";
 
 const AddProduct = () => {
@@ -80,7 +83,9 @@ const AddProduct = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-6">
           <Flex className="justify-between">
             <div className="flex flex-col gap-3">
-              <h1 className="text-2xl font-medium text-[#333843] font-inter">Add Product</h1>
+              <h1 className="font-inter text-2xl font-medium text-[#333843]">
+                Add Product
+              </h1>
               <Breadcrumb>
                 <BreadcrumbList>
                   <BreadcrumbItem>
@@ -88,7 +93,9 @@ const AddProduct = () => {
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
-                    <BreadcrumbLink href="/dashboard/inventory">Product List</BreadcrumbLink>
+                    <BreadcrumbLink href="/dashboard/inventory">
+                      Product List
+                    </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
@@ -100,20 +107,22 @@ const AddProduct = () => {
             <Flex>
               <Button
                 onClick={() => Router.push("/dashboard/inventory")}
-                className="py-1 px-3 bg-transparent border text-[#5D6679]"
+                className="border bg-transparent px-3 py-1 text-[#5D6679]"
               >
                 Cancel
               </Button>
-              <Button className="py-1 px-3" type="submit">
+              <Button className="px-3 py-1" type="submit">
                 Save Product
               </Button>
             </Flex>
           </Flex>
 
-          <Flex className="gap-6 items-start">
-            <div className="flex flex-col gap-4 flex-1">
-              <div className="flex flex-col gap-3 shadow-md bg-white border border-slate-200 rounded-lg px-4 py-6">
-                <h1 className="text-[#1A1C21] font-medium text-lg">General Information</h1>
+          <Flex className="items-start gap-6">
+            <div className="flex flex-1 flex-col gap-4">
+              <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white px-4 py-6 shadow-md">
+                <h1 className="text-lg font-medium text-[#1A1C21]">
+                  General Information
+                </h1>
 
                 <FormField
                   control={form.control}
@@ -121,7 +130,10 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Supermarket Name</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger className="bg-[#F9F9FC]">
                             <SelectValue placeholder="Select supermarket" />
@@ -174,8 +186,8 @@ const AddProduct = () => {
                   )}
                 />
               </div>
-              <div className="flex flex-col gap-3 shadow-md bg-white border border-slate-200 rounded-lg px-4 py-6">
-                <h1 className="text-[#1A1C21] font-medium text-lg">Media</h1>
+              <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white px-4 py-6 shadow-md">
+                <h1 className="text-lg font-medium text-[#1A1C21]">Media</h1>
 
                 <FormField
                   control={form.control}
@@ -183,15 +195,15 @@ const AddProduct = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Photo</FormLabel>
-                      <FormControl className="bg-[#F9F9FC] rounded-lg border-dashed border-4 p-6">
-                        <div className="flex flex-col gap-3 items-center justify-center">
-                          <div className="bg-[#DEDEFA] p-2 rounded-full">
+                      <FormControl className="rounded-lg border-4 border-dashed bg-[#F9F9FC] p-6">
+                        <div className="flex flex-col items-center justify-center gap-3">
+                          <div className="rounded-full bg-[#DEDEFA] p-2">
                             {/* <Image src="" alt="" className="text-occupy-primary" /> */}
                           </div>
-                          <span className="text-[#858D9D] font-normal text-sm">
+                          <span className="text-sm font-normal text-[#858D9D]">
                             Drag and drop image here, or click add image
                           </span>
-                          <Button className="text-occupy-primary bg-[#DEDEFA] font-semibold">
+                          <Button className="bg-[#DEDEFA] font-semibold text-occupy-primary">
                             Add Image
                           </Button>
                         </div>
@@ -201,8 +213,8 @@ const AddProduct = () => {
                   )}
                 />
               </div>
-              <div className="flex flex-col gap-3 shadow-md bg-white border border-slate-200 rounded-lg px-4 py-6">
-                <h1 className="text-[#1A1C21] font-medium text-lg">Pricing</h1>
+              <div className="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white px-4 py-6 shadow-md">
+                <h1 className="text-lg font-medium text-[#1A1C21]">Pricing</h1>
 
                 <Flex>
                   <FormField
@@ -246,8 +258,8 @@ const AddProduct = () => {
             </div>
 
             {/* Category form  */}
-            <div className="flex flex-col gap-3 shadow-md bg-white border w-[264px] border-slate-200 rounded-lg px-4 py-6">
-              <h1 className="text-[#1A1C21] font-medium text-lg">Category</h1>
+            <div className="flex w-[264px] flex-col gap-3 rounded-lg border border-slate-200 bg-white px-4 py-6 shadow-md">
+              <h1 className="text-lg font-medium text-[#1A1C21]">Category</h1>
 
               <FormField
                 control={form.control}
@@ -255,7 +267,10 @@ const AddProduct = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Product Category</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger className="bg-[#F9F9FC]">
                           <SelectValue placeholder="Select a category" />

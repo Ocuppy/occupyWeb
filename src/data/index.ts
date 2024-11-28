@@ -14,10 +14,34 @@ export const AddStoreFormFields: IFieldValue[] = [
     type: "text",
   },
   {
+    name: "supermarketImg",
+    label: "Supermarket Image",
+    placeholder: "Enter Supermarket Address",
+    type: "file",
+  },
+  {
+    name: "regNumber",
+    label: "Supermarket Registration Number",
+    placeholder: "Enter Supermarket Registration Number",
+    type: "text",
+  },
+  {
+    name: "salesName",
+    label: "Sales Person Name",
+    placeholder: "John Doe",
+    type: "text",
+  },
+  {
     name: "phoneNumber",
     label: "Sales Person Phone Number",
-    placeholder: "Phone Number",
-    type: "number",
+    placeholder: "+234 80 555 33 854",
+    type: "text",
+  },
+  {
+    name: "email",
+    label: "Sales Person Email",
+    placeholder: "Email",
+    type: "email",
   },
   {
     name: "supermarketLocation",
@@ -122,7 +146,8 @@ export const SupermarketInformationFields = [
     {
       name: "inspectiondate",
       label: "Date of Inspection",
-      placeholder: "Select a preferred date for Physical Inspection",
+      placeholder: "Select a date...",
+      // placeholder: "Select a preferred date for Physical Inspection",
       type: "date",
     },
   ],

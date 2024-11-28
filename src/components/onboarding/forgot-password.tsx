@@ -3,17 +3,24 @@ import OccupyLogo from "../../../public/occupy-logo.png";
 import { Input } from "../ui/input";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { forgotPasswordValidationSchema } from "@/formValidation/yup.validation";
 import { useRouter } from "next/navigation";
 import ForgotResponse from "./forgotResponse";
+import { ClapSpinner } from "react-spinners-kit";
+import { useToast } from "../ui/use-toast";
+import isFetchBaseQueryErrorType from "@/store/redux/fetchErrorType";
+import { useSendOtpToResetPwdMutation } from "@/store/redux/services/authSlice/authApiSlice";
 
 const ForgotPassword = () => {
   const router = useRouter();
   const [isComplete, setIsComplete] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [resetPassword, { isLoading, error, isSuccess, data }] =
+    useSendOtpToResetPwdMutation();
+
+  const { toast } = useToast();
 
   const resetForm = () => {
     setIsComplete(false);
@@ -24,43 +31,83 @@ const ForgotPassword = () => {
       email: "",
     },
     validationSchema: forgotPasswordValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      setIsComplete(true);
-      //   router.push("/dashboard");
+    onSubmit: async (values) => {
+      // console.log(values);
+      resetPassword({ email: values.email });
     },
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      setIsComplete(true);
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (error) {
+      if (isFetchBaseQueryErrorType(error)) {
+        // const errorData = error.data as {
+        //   messages: { message: string }[];
+        //   detail: string;
+        // } & Record<string, any>;
+
+        toast({
+          // description: `${errorData.messages[0].message}`,
+          // title: `${errorData.detail} `,
+          title: `Error`,
+          description: `Error sending email`,
+          variant: "destructive",
+        });
+      }
+    }
+  }, [error, toast]);
+
   return (
-    <section className="lg:relative w-full min-h-screen flex lg:items-center lg:justify-center">
-      <div className="lg:absolute hidden lg:block top-0 left-0 w-full h-full">
+    <section className="flex min-h-screen w-full lg:relative lg:items-center lg:justify-center">
+      {isLoading && (
+        <div className="fixed right-0 top-0 z-[10000] h-screen w-screen bg-white bg-opacity-20 backdrop-blur-sm">
+          <div className="flex h-full w-full items-center justify-center">
+            <ClapSpinner />
+          </div>
+        </div>
+      )}
+      <div className="left-0 top-0 hidden h-full w-full lg:absolute lg:block">
         <Image
           src={"/images/onboarding.png"}
           alt=""
           layout="fill"
           objectFit="cover"
-          className="w-full h-full"
+          className="h-full w-full"
         />
       </div>
 
-      <div className="lg:relative lg:z-10 flex items-center gap-20 justify-start w-full lg:py-20 lg:px-8">
-        <h1 className="text-[#EBF7FB] hidden lg:block font-bold text-5xl w-full max-w-2xl">
-          Manage your Supermarket Operations with ease using our intuitive Dashboard
+      <div className="flex w-full items-center justify-start gap-20 lg:relative lg:z-10 lg:px-8 lg:py-20">
+        <h1 className="hidden w-full max-w-2xl text-5xl font-bold text-[#EBF7FB] lg:block">
+          Manage your Supermarket Operations with ease using our intuitive
+          Dashboard
         </h1>
 
         {/* forget password form */}
         {!isComplete ? (
-          <div className="lg:bg-white px-6 lg:px-8 py-12 w-full max-w-lg rounded-lg lg:shadow-lg flex flex-col gap-8 items-center">
+          <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg px-6 py-12 lg:bg-white lg:px-8 lg:shadow-lg">
             <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
-            <div className="flex flex-col items-start gap-3 w-full">
-              <h3 className="text-[#12141A] font-medium text-2xl">Recover Password</h3>
-              <p className="text-sm text-[#606778] font-medium pb-12">
+            <div className="flex w-full flex-col items-start gap-3">
+              <h3 className="text-2xl font-medium text-[#12141A]">
+                Recover Password
+              </h3>
+              <p className="pb-12 text-sm font-medium text-[#606778]">
                 Enter your registered email below to receive password reset code
               </p>
               {/* input form  */}
-              <form className="flex flex-col gap-4 w-full" onSubmit={formik.handleSubmit}>
-                <div className="flex flex-col gap-2 w-full">
-                  <label htmlFor="email" className="font-medium text-sm text-[#606778]">
+              <form
+                className="flex w-full flex-col gap-4"
+                onSubmit={formik.handleSubmit}
+              >
+                <div className="flex w-full flex-col gap-2">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-medium text-[#606778]"
+                  >
                     Email
                   </label>
                   <Input
@@ -73,36 +120,44 @@ const ForgotPassword = () => {
                     value={formik.values.email}
                     className={
                       formik.touched.email && formik.errors.email
-                        ? "border-red-700 w-full"
+                        ? "w-full border-red-700"
                         : "w-full"
                     }
                   />
                   {formik.touched.email && formik.errors.email ? (
-                    <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                    <div className="text-sm text-red-500">
+                      {formik.errors.email}
+                    </div>
                   ) : null}
                 </div>
 
-                <div className="text-end w-full">
-                  <Button type="submit" className="w-full lg:w-32 rounded-md">
+                <div className="w-full text-end">
+                  <Button type="submit" className="w-full rounded-md lg:w-32">
                     Send Email
                   </Button>
-                  <p className="text-sm text-[#7B8499] text-center lg:text-end pt-4">
+                  <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
                     Remembered Password?{" "}
-                    <Link href="/auth/login" className="text-[#A74E8E] font-medium underline">
+                    <Link
+                      href="/auth/login"
+                      className="font-medium text-[#A74E8E] underline"
+                    >
                       Sign In
                     </Link>
                   </p>
                 </div>
               </form>
             </div>
-            <div className="flex items-center text-sm font-light text-center text-black justify-center gap-3 w-full">
+            <div className="flex w-full items-center justify-center gap-3 text-center text-sm font-light text-black">
               <Link href="#">Help</Link>
               <Link href="#">Privacy</Link>
               <Link href="#">Terms</Link>
             </div>
           </div>
         ) : (
-          <ForgotResponse resetForm={resetForm} />
+          <ForgotResponse
+            resetForm={resetForm}
+            resendEmail={() => resetPassword({ email: formik.values.email })}
+          />
         )}
       </div>
     </section>
