@@ -14,7 +14,7 @@ const InputOTP = React.forwardRef<
     ref={ref}
     containerClassName={cn(
       "flex items-center gap-6 has-[:disabled]:opacity-50",
-      containerClassName
+      containerClassName,
     )}
     className={cn("disabled:cursor-not-allowed", className)}
     {...props}
@@ -26,7 +26,11 @@ const InputOTPGroup = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div">
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex items-center gap-3", className)} {...props} />
+  <div
+    ref={ref}
+    className={cn("flex items-center gap-3", className)}
+    {...props}
+  />
 ));
 InputOTPGroup.displayName = "InputOTPGroup";
 
@@ -41,17 +45,17 @@ const InputOTPSlot = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "relative flex h-12 w-12 md:h-16 md:w-16 bg-[#F9FBFD] items-center justify-center text-4xl transition-all",
+        "relative flex h-12 w-12 items-center justify-center border border-purple-300 bg-[#F9FBFD] text-4xl transition-all md:h-16 md:w-16",
         isActive && "z-10 ring-2 ring-occupy-primary",
         error && "border border-red-500",
-        className
+        className,
       )}
       {...props}
     >
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+          <div className="bg-foreground h-4 w-px animate-caret-blink duration-1000" />
         </div>
       )}
     </div>
