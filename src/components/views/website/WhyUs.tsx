@@ -17,7 +17,7 @@ const WhyUs = () => {
         </div>
 
         <div className="flex flex-col items-center gap-6 px-6 lg:flex-row lg:gap-20 lg:px-20">
-          <Image src={"/images/whyUs.png"} alt="img" width={600} height={300} />
+          <Image src={"/images/whyUs.png"} alt="img" width={600} height={1000} />
 
           {/* Map and display card */}
           <div className="flex flex-col gap-6">
