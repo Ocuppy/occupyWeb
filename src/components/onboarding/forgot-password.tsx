@@ -300,7 +300,7 @@ const ForgotPassword = () => {
                 </div>
 
                 <div className="w-full">
-                  <Button type="submit" className="w-full rounded-md lg:w-32">
+                  <Button type="submit" className="w-full rounded-md">
                     Send Email
                   </Button>
                   <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">

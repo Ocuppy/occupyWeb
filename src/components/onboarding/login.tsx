@@ -256,18 +256,32 @@ const Login = () => {
     },
   });
 
-  if (isSuccess) {
-    dispatch(
-      setCredentials({
-        token: data.access,
-        userType: data.user_type,
-        userID: data.user_id,
-        profileID: data.profile_id,
-      }),
-    );
-    router.push("/dashboard");
-  }
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (isSuccess) {
+      if (data.user_type !== "SO") {
+        toast({
+          title: "Access Denied",
+          description:
+            "Only Supermarket Owners are allowed to access this platform.",
+          variant: "destructive",
+        });
+        return; // Prevent further actions
+      }
+
+      dispatch(
+        setCredentials({
+          token: data.access,
+          userType: data.user_type,
+          userID: data.user_id,
+          profileID: data.profile_id,
+        }),
+      );
+
+      router.push("/dashboard");
+    }
+  }, [isSuccess, data, dispatch, router, toast]);
 
   useEffect(() => {
     if (error) {

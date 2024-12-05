@@ -390,6 +390,7 @@ import {
 const baseUrl = "http://35.238.25.33";
 
 const Signup = () => {
+  const [formType, setFormType] = useState("signup"); // Define formType state
   const [formValues, setFormValues] = useState({
     firstName: "",
     lastName: "",
@@ -496,6 +497,66 @@ const Signup = () => {
     return await response.json();
   };
 
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   const validationErrors = validateForm();
+  //   if (Object.keys(validationErrors).length > 0) {
+  //     setErrors(validationErrors);
+  //     return;
+  //   }
+
+  //   setErrors({});
+  //   setIsLoading(true);
+
+  //   try {
+  //     const response = await fetch(
+  //       `${baseUrl}/api/accounts/account/register/`,
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           first_name: formValues.firstName,
+  //           last_name: formValues.lastName,
+  //           email: formValues.email,
+  //           password: formValues.password,
+  //           user_type: "SO", // Supermarket Owner
+  //           current_estate: formValues.estate, // Keep as string for now
+  //         }),
+  //       },
+  //     );
+
+  //     // Log the full response for debugging
+  //     const responseText = await response.text();
+  //     console.log("Response status:", response.status);
+  //     console.log("Response text:", responseText);
+
+  //     if (!response.ok) {
+  //       throw new Error(responseText || "Registration failed");
+  //     }
+
+  //     const data = await JSON.parse(responseText);
+
+  //     toast({
+  //       title: "Success",
+  //       description: "Account created successfully. Please verify your email.",
+  //       variant: "default",
+  //     });
+
+  //     router.push("/auth/verify");
+  //   } catch (error: any) {
+  //     console.error("Full registration error:", error);
+
+  //     toast({
+  //       title: "Error",
+  //       description: error.message || "An unexpected error occurred",
+  //       variant: "destructive",
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -509,42 +570,58 @@ const Signup = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        `${baseUrl}/api/accounts/account/register/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            first_name: formValues.firstName,
-            last_name: formValues.lastName,
-            email: formValues.email,
-            password: formValues.password,
-            user_type: "CU",
-            current_estate: formValues.estate, // Keep as string for now
-          }),
-        },
-      );
+      const endpoint =
+        formType === "signup"
+          ? `${baseUrl}/api/accounts/account/register/`
+          : `${baseUrl}/api/accounts/account/login/`;
 
-      // Log the full response for debugging
+      const payload =
+        formType === "signup"
+          ? {
+              first_name: formValues.firstName,
+              last_name: formValues.lastName,
+              email: formValues.email,
+              password: formValues.password,
+              user_type: "SO", // Enforce "SO" user type on signup
+              current_estate: formValues.estate,
+            }
+          : {
+              email: formValues.email,
+              password: formValues.password,
+            };
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
       const responseText = await response.text();
       console.log("Response status:", response.status);
       console.log("Response text:", responseText);
 
       if (!response.ok) {
-        throw new Error(responseText || "Registration failed");
+        throw new Error(responseText || "Operation failed");
       }
 
-      const data = await JSON.parse(responseText);
+      const data = JSON.parse(responseText);
+
+      if (formType === "login" && data.user_type !== "SO") {
+        throw new Error("Access denied: Only Supermarket Owners are allowed.");
+      }
 
       toast({
         title: "Success",
-        description: "Account created successfully. Please verify your email.",
+        description:
+          formType === "signup"
+            ? "Account created successfully. Please verify your email."
+            : "Logged in successfully!",
         variant: "default",
       });
 
-      router.push("/auth/verify");
+      router.push(formType === "signup" ? "/auth/verify" : "/dashboard");
     } catch (error: any) {
-      console.error("Full registration error:", error);
+      console.error("Error:", error);
 
       toast({
         title: "Error",
@@ -555,6 +632,7 @@ const Signup = () => {
       setIsLoading(false);
     }
   };
+
   return (
     <section
       className="flex min-h-screen w-full lg:relative lg:items-center lg:justify-center"
@@ -719,7 +797,7 @@ const Signup = () => {
                   className={errors.password ? "border-red-700" : ""}
                 />
                 <div
-                  className="absolute right-4 top-[2.85rem] cursor-pointer"
+                  className="absolute right-4 top-[3.50rem] cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <Eye /> : <EyeOff />}

@@ -221,7 +221,7 @@ const ResetPassword = () => {
               </div>
 
               <div className="mt-8 w-full text-end">
-                <Button type="submit" className="w-full rounded-md lg:w-40">
+                <Button type="submit" className="w-full rounded-md">
                   Reset Password
                 </Button>
               </div>
