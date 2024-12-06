@@ -757,7 +757,7 @@ const Signup = () => {
                   }
                   value={formValues.estate}
                 >
-                  <SelectTrigger className="h-[37px] bg-[#F9F9FC]">
+                  <SelectTrigger className="h-[37px] bg-[#F9F9FC] font-semibold">
                     <SelectValue placeholder="Select Estate" />
                   </SelectTrigger>
                   <SelectContent>
@@ -770,6 +770,7 @@ const Signup = () => {
                         <SelectItem
                           key={estate.id}
                           value={estate.id.toString()}
+                          className="font-semibold"
                         >
                           {estate.name} - {estate.address}
                         </SelectItem>
