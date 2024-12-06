@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const baseApiUrl = "http://ec2-34-239-249-147.compute-1.amazonaws.com/api";
 
-const baseApiUrl = "https://backend.occupymart.com";
+const baseApiUrl = "https://backend.occupymart.com/api";
 
 const noAuthEndPoints = [
   "signUp",
