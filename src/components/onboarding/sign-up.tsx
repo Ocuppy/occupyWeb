@@ -757,7 +757,7 @@ const Signup = () => {
                   }
                   value={formValues.estate}
                 >
-                  <SelectTrigger className="bg-[#F9F9FC]">
+                  <SelectTrigger className="h-[37px] bg-[#F9F9FC]">
                     <SelectValue placeholder="Select Estate" />
                   </SelectTrigger>
                   <SelectContent>
