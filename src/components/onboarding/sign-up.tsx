@@ -387,9 +387,9 @@ import {
   SelectValue,
 } from "../ui/select";
 
-// const baseUrl = "http://35.238.25.33";
+const baseUrl = "https://backend.occupymart.com";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://35.238.25.33";
+// const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://35.238.25.33";
 
 const Signup = () => {
   const [formType, setFormType] = useState("signup"); // Define formType state
@@ -757,7 +757,7 @@ const Signup = () => {
                   }
                   value={formValues.estate}
                 >
-                  <SelectTrigger className="bg-[#F9F9FC]">
+                  <SelectTrigger className="h-[37px] bg-[#F9F9FC] font-semibold">
                     <SelectValue placeholder="Select Estate" />
                   </SelectTrigger>
                   <SelectContent>
@@ -770,6 +770,7 @@ const Signup = () => {
                         <SelectItem
                           key={estate.id}
                           value={estate.id.toString()}
+                          className="font-semibold"
                         >
                           {estate.name} - {estate.address}
                         </SelectItem>
