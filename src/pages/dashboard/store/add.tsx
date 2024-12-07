@@ -175,7 +175,6 @@
 
 // export default withSteppedFormContextProvider(Page);
 
-import CustomForm from "@/components/shared/CustomForm";
 import ActionButtons from "@/components/shared/form/ActionButtons";
 import {
   withSteppedFormContextProvider,
@@ -201,6 +200,7 @@ import WorkTimeActivities from "@/components/dashboard/settings/WorkTimeActiviti
 import { daysOfWeek } from "@/constants";
 import { useAppSelector } from "@/store/redux/hooks";
 import { useForm } from "react-hook-form";
+import { useAddSupermarketMutation } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 
 const baseUrl = "https://backend.occupymart.com/api";
 
@@ -211,15 +211,19 @@ const Page: NextPageWithLayout = () => {
   const [addSuccess, setAddSuccess] = useState(false);
 
   const userID = useAppSelector((state) => state.auth.userID);
-  const profileID = useAppSelector((state) => state.auth.profileID);
+  const profileID = useAppSelector(
+    (state: { auth: { profileID: string } }) => state.auth.profileID,
+  );
+
+  const userData = useAppSelector((state) => state.auth);
 
   // const toast = useToast();
   const { savedFormValues, onSaveFormValues, currentStep, goNext } =
     useSteppedFormContext();
 
-  const { register, handleSubmit, setValue, watch } = useForm({
-    defaultValues: savedFormValues || {},
-  });
+  // const { register, handleSubmit, setValue, watch } = useForm({
+  //   defaultValues: savedFormValues || {},
+  // });
   const isFirstStep = currentStep === 1;
 
   const [step2FormField, setFormField] = useState<IFieldValue[][]>([
@@ -295,171 +299,110 @@ const Page: NextPageWithLayout = () => {
     setFormField((prevFields) => [...prevFields, step2FormField[0]]);
   };
 
-  // const submitForm = async (data: any) => {
-  //   setAddLoading(true);
-  //   try {
-  //     const response = await fetch(`${baseUrl}/store/supermarket`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         contact_person_name: data.salesName,
-  //         business_name: data.supermarketName,
-  //         business_reg_number: data.regNumber,
-  //         name: "string",
-  //         contact_person_email: data.email,
-  //         contact_person_phone_number: data.phoneNumber,
-  //         can_run_online_store: true,
-  //         has_internet_access: true,
-  //         alternate_power_supply: true,
-  //         inspection_date: data.inspectionDate.toISOString(),
-  //         is_online: true,
-  //         supermarket_photo: "",
-  //         estate: data.supermarketLocation,
-  //         shop_owner: profileID,
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to add supermarket");
-  //     }
-
-  //     const result = await response.json();
-  //     console.log("Supermarket added:", result);
-  //     setAddSuccess(true);
-  //     goNext();
-  //   } catch (error) {
-  //     console.error("Error adding supermarket:", error);
-  //     setAddSuccess(false);
-  //   } finally {
-  //     setAddLoading(false);
-  //   }
-  // };
-
   const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: savedFormValues || {},
+  });
 
-  const submitForm = async (data: any) => {
-    setAddLoading(true);
-    try {
-      // Ensure inspectionDate is a valid Date object
-      const inspectionDate =
-        data.inspectionDate instanceof Date
-          ? data.inspectionDate
-          : new Date(data.inspectionDate);
-
-      if (isNaN(inspectionDate.getTime())) {
-        throw new Error("Invalid date selected for inspection");
-      }
-
-      const payload = {
-        contact_person_name: data.salesName,
-        business_name: data.supermarketName,
-        business_reg_number: data.regNumber,
-        name: "string",
-        contact_person_email: data.email,
-        contact_person_phone_number: data.phoneNumber,
-        can_run_online_store: true,
-        has_internet_access: true,
-        alternate_power_supply: true,
-        inspection_date: inspectionDate.toISOString(), // Convert to ISO string
-        is_online: true,
-        supermarket_photo: "",
-        estate: data.supermarketLocation,
-        shop_owner: profileID,
-      };
-
-      const response = await fetch(`${baseUrl}/store/supermarket`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add supermarket");
-      }
-
-      // if (!response.ok) {
-      //   const errorDetails = await response.text(); // This will get the raw response body
-      //   throw new Error(`Failed to add supermarket: ${errorDetails}`);
-      // }
-
-      const result = await response.json();
-      console.log("Supermarket added:", result);
-
-      // Show success toast and proceed to the next step
-      toast.toast({
-        title: "Success",
-        description: "Supermarket added successfully!",
-        variant: "default",
-      });
-      setAddSuccess(true);
-      goNext();
-    } catch (error: any) {
-      console.error("Error adding supermarket:", error);
-
-      // Show error toast with detailed message
+  const inspectionDateRaw = watch("inspectionDate");
+  const [addSupermarket] = useAddSupermarketMutation();
+  const onSubmit = async (data: any) => {
+    // Validate inspection date
+    const inspectionDate = new Date(data.inspectionDate);
+    if (isNaN(inspectionDate.getTime())) {
       toast.toast({
         title: "Error",
-        description:
-          error.message || "Failed to add supermarket. Please try again.",
+        description: "Please provide a valid inspection date.",
         variant: "destructive",
       });
-      setAddSuccess(false);
+      return;
+    }
+
+    // const phoneRegex = /^(\+?234|0)?[7][0-9]{8}$/; // Example for Kenyan phone numbers
+
+    // if (!phoneRegex.test(data.phoneNumber)) {
+    //   toast.toast({
+    //     title: "Error",
+    //     description:
+    //       "Please enter a valid phone number (e.g., +234712345678 or 0712345678)",
+    //     variant: "destructive",
+    //   });
+    //   return;
+    // }
+
+    // // Normalize phone number
+    // let normalizedPhoneNumber = data.phoneNumber;
+
+    // // If it doesn't start with +254, add the country code
+    // if (!normalizedPhoneNumber.startsWith("+254")) {
+    //   // Remove any leading 0 and prepend +254
+    //   normalizedPhoneNumber = "+254" + normalizedPhoneNumber.replace(/^0/, "");
+    // }
+
+    // Prepare payload
+    const payload = {
+      contact_person_name: data.salesName,
+      business_name: data.supermarketName,
+      business_reg_number: data.regNumber,
+
+      name: userData.userID,
+      contact_person_email: data.email,
+      contact_person_phone_number: data.phoneNumber,
+      // contact_person_phone_number: normalizedPhoneNumber,
+      can_run_online_store: true,
+      has_internet_access: true,
+      alternate_power_supply: true,
+      inspection_date: inspectionDate.toISOString(),
+      is_online: true,
+      estate: data.supermarketLocation,
+      shop_owner: profileID,
+    };
+
+    // Handle file upload separately
+    const formData = new FormData();
+    Object.entries(payload).forEach(([key, value]) => {
+      formData.append(key, String(value));
+    });
+
+    if (data.supermarketPhoto && data.supermarketPhoto[0]) {
+      formData.append("supermarket_photo", data.supermarketPhoto[0]);
+    }
+
+    try {
+      setAddLoading(true);
+      const result = await addSupermarket(formData);
+
+      if (result.data) {
+        toast.toast({
+          title: "Success",
+          description: "Supermarket added successfully",
+          variant: "default",
+        });
+        setAddSuccess(true);
+      } else {
+        toast.toast({
+          title: "Error",
+          description: "Failed to add supermarket",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error adding supermarket:", error);
+      toast.toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
     } finally {
       setAddLoading(false);
     }
   };
-
-  // const submitForm = async (data: any) => {
-  //   setAddLoading(true);
-  //   try {
-  //     const response = await fetch(`${baseUrl}/store/supermarket`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         contact_person_name: data.salesName,
-  //         business_name: data.supermarketName,
-  //         business_reg_number: data.regNumber,
-  //         name: "string",
-  //         contact_person_email: data.email,
-  //         contact_person_phone_number: data.phoneNumber,
-  //         can_run_online_store: true,
-  //         has_internet_access: true,
-  //         alternate_power_supply: true,
-  //         inspection_date: data.inspectionDate.toISOString(),
-  //         is_online: true,
-  //         supermarket_photo: "",
-  //         estate: data.supermarketLocation,
-  //         shop_owner: profileID,
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to add supermarket");
-  //     }
-
-  //     const result = await response.json();
-  //     console.log("Supermarket added:", result);
-  //     setAddSuccess(true);
-  //     goNext();
-  //   } catch (error) {
-  //     console.error("Error adding supermarket:", error);
-  //     setAddSuccess(false);
-  //     toast.toast({
-  //       title: "Error",
-  //       description: "Failed to add supermarket",
-  //       variant: "destructive",
-  //       duration: 5000,
-  //     });
-  //   } finally {
-  //     setAddLoading(false);
-  //   }
-  // };
 
   const stepState = [
     {
@@ -488,7 +431,8 @@ const Page: NextPageWithLayout = () => {
           <>
             {isFirstStep ? (
               <form
-                onSubmit={handleSubmit(submitForm)}
+                onSubmit={handleSubmit(onSubmit)}
+                encType="multipart/form-data" // Ensure correct encoding type for file uploads
                 className="flex flex-col gap-5"
               >
                 <div>
@@ -499,6 +443,7 @@ const Page: NextPageWithLayout = () => {
                     {...register("email", { required: true })}
                   />
                 </div>
+
                 <div>
                   <label htmlFor="phoneNumber">Phone Number</label>
                   <Input
@@ -507,6 +452,7 @@ const Page: NextPageWithLayout = () => {
                     {...register("phoneNumber", { required: true })}
                   />
                 </div>
+
                 <div>
                   <label htmlFor="supermarketAddress">
                     Supermarket Address
@@ -517,6 +463,7 @@ const Page: NextPageWithLayout = () => {
                     {...register("supermarketAddress", { required: true })}
                   />
                 </div>
+
                 <div>
                   <label htmlFor="supermarketPhoto">Supermarket Photo</label>
                   <Input
@@ -526,6 +473,7 @@ const Page: NextPageWithLayout = () => {
                     {...register("supermarketPhoto", { required: true })}
                   />
                 </div>
+
                 <div>
                   <label htmlFor="supermarketName">Supermarket Name</label>
                   <Input
@@ -534,6 +482,7 @@ const Page: NextPageWithLayout = () => {
                     {...register("supermarketName", { required: true })}
                   />
                 </div>
+
                 <div>
                   <label htmlFor="supermarketLocation">
                     Supermarket Location
@@ -547,6 +496,7 @@ const Page: NextPageWithLayout = () => {
                     }}
                   />
                 </div>
+
                 <div>
                   <label htmlFor="inspectionDate">Date of Inspection</label>
                   <Input
@@ -556,6 +506,7 @@ const Page: NextPageWithLayout = () => {
                     {...register("inspectionDate", { required: true })}
                   />
                 </div>
+
                 <div>
                   <label htmlFor="salesName">Sales Name</label>
                   <Input
@@ -564,6 +515,7 @@ const Page: NextPageWithLayout = () => {
                     {...register("salesName", { required: true })}
                   />
                 </div>
+
                 <div>
                   <label htmlFor="regNumber">Registration Number</label>
                   <Input
@@ -573,12 +525,109 @@ const Page: NextPageWithLayout = () => {
                   />
                 </div>
 
-                {/* Repeat for other fields */}
                 <div className="py-4">
                   <ActionButtons isLoading={addLoading} />
                 </div>
               </form>
             ) : (
+              // <form
+              //   onSubmit={handleSubmit(onSubmit)}
+              //   className="flex flex-col gap-5"
+              // >
+              //   <div>
+              //     <label htmlFor="email">Email</label>
+              //     <Input
+              //       id="email"
+              //       placeholder="Enter email"
+              //       {...register("email", { required: true })}
+              //     />
+              //   </div>
+              //   <div>
+              //     <label htmlFor="phoneNumber">Phone Number</label>
+              //     <Input
+              //       id="phoneNumber"
+              //       placeholder="Enter phone number"
+              //       {...register("phoneNumber", { required: true })}
+              //     />
+              //   </div>
+              //   <div>
+              //     <label htmlFor="supermarketAddress">
+              //       Supermarket Address
+              //     </label>
+              //     <Input
+              //       id="supermarketAddress"
+              //       placeholder="Enter supermarket address"
+              //       {...register("supermarketAddress", { required: true })}
+              //     />
+              //   </div>
+              //   <div>
+              //     <label htmlFor="supermarketPhoto">Supermarket Photo</label>
+              //     <Input
+              //       id="supermarketPhoto"
+              //       type="file"
+              //       accept="image/*"
+              //       {...register("supermarketPhoto", { required: true })}
+              //     />
+              //   </div>
+              //   <div>
+              //     <label htmlFor="supermarketName">Supermarket Name</label>
+              //     <Input
+              //       id="supermarketName"
+              //       placeholder="Enter supermarket name"
+              //       {...register("supermarketName", { required: true })}
+              //     />
+              //   </div>
+              //   <div>
+              //     <label htmlFor="supermarketLocation">
+              //       Supermarket Location
+              //     </label>
+              //     <Select
+              //       id="supermarketLocation"
+              //       options={estateList}
+              //       placeholder="Select supermarket location"
+              //       onChange={(selectedOption: { value: string } | null) => {
+              //         setValue("supermarketLocation", selectedOption?.value);
+              //       }}
+              //     />
+              //   </div>
+              //   <div>
+              //     <label htmlFor="inspectionDate">Date of Inspection</label>
+              //     {/* <Input
+              //       id="inspectionDate"
+              //       type="date"
+              //       placeholder="Select date of inspection"
+              //       {...register("inspectionDate", { required: true })}
+              //     /> */}
+              //     <Input
+              //       id="inspectionDate"
+              //       type="date" // Ensure type is "date"
+              //       placeholder="Select date of inspection"
+              //       {...register("inspectionDate", { required: true })}
+              //     />
+              //     ``
+              //   </div>
+              //   <div>
+              //     <label htmlFor="salesName">Sales Name</label>
+              //     <Input
+              //       id="salesName"
+              //       placeholder="Enter sales name"
+              //       {...register("salesName", { required: true })}
+              //     />
+              //   </div>
+              //   <div>
+              //     <label htmlFor="regNumber">Registration Number</label>
+              //     <Input
+              //       id="regNumber"
+              //       placeholder="Enter registration number"
+              //       {...register("regNumber", { required: true })}
+              //     />
+              //   </div>
+
+              //   {/* Repeat for other fields */}
+              //   <div className="py-4">
+              //     <ActionButtons isLoading={addLoading} />
+              //   </div>
+              // </form>
               <WorkTimeActivities
                 addNewField={addNewField}
                 step2FormField={step2FormField}
