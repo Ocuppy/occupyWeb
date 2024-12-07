@@ -329,6 +329,7 @@ import TransactionsTable from "@/components/dashboard/dashboard/TransactionsTabl
 import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
+import AccountStatus from "@/components/dashboard/dashboard/AccountStatus";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -397,6 +398,22 @@ const Page: NextPageWithLayout = () => {
     skip: userID ? false : true,
   });
 
+  // const [showAccountStatus, setShowAccountStatus] = useState(false);
+  // // You might want to check for a condition to show account status
+  // // For example, if the user's account is not fully set up
+  // useEffect(() => {
+  //   // Check if account status should be shown
+  //   // This could be based on user data, profile completeness, etc.
+  //   if (userData && !userData.isAccountFullySetup) {
+  //     setShowAccountStatus(true);
+  //   }
+  // }, [userData]);
+
+  // // If account status should be shown, render it first
+  // if (showAccountStatus) {
+  //   return <AccountStatus onClose={() => setShowAccountStatus(false)} />;
+  // }
+
   const getTimeOfDay = () => {
     const currentHour = new Date().getHours();
 
@@ -411,6 +428,14 @@ const Page: NextPageWithLayout = () => {
     }
   };
 
+  // Determine if account is fully verified
+  const isAccountVerified = userData?.is_verified || false;
+
+  // If account is not verified, show AccountStatus
+  if (!isAccountVerified) {
+    return <AccountStatus />;
+  }
+
   return !showMarketDet ? (
     <div className="h-full rounded-md bg-white px-4 py-6">
       {!showMarketDet ? (
@@ -422,16 +447,13 @@ const Page: NextPageWithLayout = () => {
             </Button>
           </SpaceBetween>
 
-          {/* Component for when no store has been added */}
-          {/* <Flex className="justify-center">
-      <NoSupermarkets />
-    </Flex> */}
-
           <div className="mx-auto mt-8 flex max-w-[900px] flex-col gap-8">
             <StoreItem onClickStore={toggleMarketDet} />
             <StoreItem onClickStore={toggleMarketDet} />
             <StoreItem onClickStore={toggleMarketDet} />
           </div>
+
+          <AccountStatus />
         </>
       ) : (
         <SupermarketDetails onBack={toggleMarketDet} />
@@ -451,7 +473,7 @@ const Page: NextPageWithLayout = () => {
               </h6>
             </header>
             <div className="absolute bottom-0 right-1">
-              <Image src={illustration} alt="Illustration" />
+              <Image src="/images/illustration.png" alt="Illustration" />
             </div>
           </div>
           <div className="h-[7.6875rem] w-[15.625rem] rounded-lg border border-[#E0E0E0] bg-white p-3">
