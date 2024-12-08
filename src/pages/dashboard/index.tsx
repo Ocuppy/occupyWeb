@@ -453,7 +453,7 @@ const Page: NextPageWithLayout = () => {
             <StoreItem onClickStore={toggleMarketDet} />
           </div>
 
-          <AccountStatus />
+          {/* <AccountStatus /> */}
         </>
       ) : (
         <SupermarketDetails onBack={toggleMarketDet} />
