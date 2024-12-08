@@ -2,31 +2,33 @@ import Flex from "@/components/shared/Flex";
 import { Button } from "@/components/ui/button";
 import React from "react";
 
-const StoreItem = ({
-  onEdit,
-  onClickStore,
-}: {
+interface StoreItemProps {
+  store: any;
+
   onEdit?: () => void;
+
   onClickStore?: () => void;
-}) => {
+}
+
+const StoreItem: React.FC<StoreItemProps> = ({ onClickStore, onEdit }) => {
   return (
-    <div className="flex flex-col border rounded-md gap-8">
-      <Flex className="gap-0 w-full">
+    <div className="flex flex-col gap-8 rounded-md border">
+      <Flex className="w-full gap-0">
         <div
           onClick={onClickStore}
-          className="hover:cursor-pointer min-w-[280px] hover;cursor-pointer h-[150px] flex items-center justify-center bg-[#F0F1F3]"
+          className="hover;cursor-pointer flex h-[150px] min-w-[280px] items-center justify-center bg-[#F0F1F3] hover:cursor-pointer"
         >
           <p className="font-semibold text-[#48505e]">
             Livewell Kadokuchi, Abuja
           </p>
         </div>
-        <Flex className="justify-between items-start w-full p-4">
+        <Flex className="w-full items-start justify-between p-4">
           <div className="flex flex-col gap-2">
-            <p className="text-[#5D6679] text-[16px] font-medium">Lisy Store</p>
-            <p className="text-[14px] leading-[2] text-[#858D9D] max-w-[300px]">
+            <p className="text-[16px] font-medium text-[#5D6679]">Lisy Store</p>
+            <p className="max-w-[300px] text-[14px] leading-[2] text-[#858D9D]">
               1A/Krihnarajapuram, 3 rd street sulur Coimbatore - 6313403
             </p>
-            <p className="text-[14px] text-[#858D9D] max-w-[300px]">
+            <p className="max-w-[300px] text-[14px] text-[#858D9D]">
               044-653578
             </p>
           </div>

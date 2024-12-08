@@ -1,3 +1,33 @@
+// import { baseApiSlice } from "../baseApiSlice";
+
+// const myHeaders = new Headers();
+// myHeaders.append("Accept", "application/json");
+// myHeaders.append("Content-Type", "application/json");
+
+// const profileApiSlice = baseApiSlice.injectEndpoints({
+//   endpoints: (builder) => ({
+//     getSupermarketProfile: builder.query({
+//       query: (id) => ({
+//         headers: myHeaders,
+//         url: `/accounts/account/user/${id}`,
+//         method: "GET",
+//       }),
+//     }),
+//     updateBuyerAccount: builder.mutation({
+//       query: (data) => ({
+//         headers: myHeaders,
+//         url: "/buyer/update-profile",
+//         body: data,
+//         method: "POST",
+//       }),
+//     }),
+
+//   }),
+// });
+
+// export const { useGetSupermarketProfileQuery, useUpdateBuyerAccountMutation } =
+//   profileApiSlice;
+
 import { baseApiSlice } from "../baseApiSlice";
 
 const myHeaders = new Headers();
@@ -13,6 +43,18 @@ const profileApiSlice = baseApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getUserSupermarkets: builder.query({
+      query: (id) => ({
+        headers: myHeaders,
+        url: `/store/supermarket/my-supermarkets/${id}/`,
+        method: "GET",
+      }),
+      // Optional: Transform the response if needed
+      transformResponse: (response) => {
+        // If you want to do any data transformation before returning
+        return response || [];
+      },
+    }),
     updateBuyerAccount: builder.mutation({
       query: (data) => ({
         headers: myHeaders,
@@ -24,5 +66,8 @@ const profileApiSlice = baseApiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSupermarketProfileQuery, useUpdateBuyerAccountMutation } =
-  profileApiSlice;
+export const {
+  useGetSupermarketProfileQuery,
+  useUpdateBuyerAccountMutation,
+  useGetUserSupermarketsQuery,
+} = profileApiSlice;
