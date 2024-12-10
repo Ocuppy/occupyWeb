@@ -43,18 +43,7 @@ const profileApiSlice = baseApiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
-    getUserSupermarkets: builder.query({
-      query: (id) => ({
-        headers: myHeaders,
-        url: `/store/supermarket/my-supermarkets/${id}/`,
-        method: "GET",
-      }),
-      // Optional: Transform the response if needed
-      transformResponse: (response) => {
-        // If you want to do any data transformation before returning
-        return response || [];
-      },
-    }),
+
     updateBuyerAccount: builder.mutation({
       query: (data) => ({
         headers: myHeaders,
@@ -66,8 +55,5 @@ const profileApiSlice = baseApiSlice.injectEndpoints({
   }),
 });
 
-export const {
-  useGetSupermarketProfileQuery,
-  useUpdateBuyerAccountMutation,
-  useGetUserSupermarketsQuery,
-} = profileApiSlice;
+export const { useGetSupermarketProfileQuery, useUpdateBuyerAccountMutation } =
+  profileApiSlice;
