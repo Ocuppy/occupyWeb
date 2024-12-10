@@ -138,6 +138,7 @@ const Page: NextPageWithLayout = () => {
       const result = await addSupermarket(formData);
 
       if (result.data) {
+        localStorage.setItem("storeCreated", "true");
         toast.toast({
           title: "Success",
           description: "Supermarket added successfully",
