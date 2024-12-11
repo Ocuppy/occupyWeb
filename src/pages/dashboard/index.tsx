@@ -418,6 +418,7 @@ const Page: NextPageWithLayout = () => {
               supermarket_photo: any;
               is_online: any;
               contact_person_name: any;
+              business_address: any;
               contact_person_phone_number: any;
             }) => (
               <StoreItem
@@ -427,6 +428,7 @@ const Page: NextPageWithLayout = () => {
                   name: store.name,
                   business_name: store.business_name,
                   supermarket_photo: store.supermarket_photo,
+                  business_address: store.business_address,
                   is_online: store.is_online,
                   contact_person_name: store.contact_person_name,
                   contact_person_phone_number:

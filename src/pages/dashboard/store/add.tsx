@@ -85,10 +85,6 @@ const Page: NextPageWithLayout = () => {
       ? `+${formatted.slice(0, 3)} ${formatted.slice(3)}`
       : formatted;
   };
-  const sanitizedImageUrl = imageUrl.replace(
-    "http://backend.occupymart.com",
-    "https://backend.occupymart.com",
-  );
 
   // In your component
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
