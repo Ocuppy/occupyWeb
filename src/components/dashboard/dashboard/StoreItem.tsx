@@ -93,7 +93,7 @@ const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore }) => {
         )}
 
         {/* Store details */}
-        <div className="flex flex-col items-start justify-center pl-[20px]">
+        <div className="flex flex-col items-start justify-center pl-[40px]">
           <h3 className="text-lg font-semibold">{store.name}</h3>
           <p className="text-gray-500">{store.business_address}</p>
           <p className="text-xl text-[#5D6679]">{store.contact_person_name}</p>
