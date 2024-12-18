@@ -328,6 +328,7 @@ import {
   MoveLeft,
   MoveRight,
   Loader2,
+  Route,
 } from "lucide-react";
 import NoSupermarkets from "@/components/dashboard/dashboard/NoSupermarkets";
 import CategoryBar from "@/components/dashboard/dashboard/CategoryBar";
@@ -339,7 +340,10 @@ import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
 import AccountStatus from "@/components/dashboard/dashboard/AccountStatus";
 import store from "@/store/redux/store";
 import ActionButtons from "@/components/dashboard/settings/ActionButtons";
+// imort Router from "next/router";
 import UserDashboard from "@/components/dashboard/dashboard/UserDashboard";
+import { useRouter } from "next/router";
+
 const inter = Inter({ subsets: ["latin"] });
 const getTimeOfDay = () => {
   const currentHour = new Date().getHours();
@@ -356,6 +360,8 @@ const getTimeOfDay = () => {
 };
 
 const Page: NextPageWithLayout = () => {
+  const router = useRouter();
+
   const [showMarketDet, setShowMarketDet] = useState(false);
   const [selectedSupermarket, setSelectedSupermarket] = useState(null);
 
@@ -418,6 +424,7 @@ const Page: NextPageWithLayout = () => {
               supermarket_photo: any;
               is_online: any;
               contact_person_name: any;
+              business_address: any;
               contact_person_phone_number: any;
             }) => (
               <StoreItem
@@ -427,12 +434,16 @@ const Page: NextPageWithLayout = () => {
                   name: store.name,
                   business_name: store.business_name,
                   supermarket_photo: store.supermarket_photo,
+                  business_address: store.business_address,
                   is_online: store.is_online,
                   contact_person_name: store.contact_person_name,
                   contact_person_phone_number:
                     store.contact_person_phone_number,
                 }}
-                onClickStore={() => console.log("Store clicked:", store.id)}
+                // onClickStore={() => console.log("Store clicked:", store.id)}
+                onClickStore={() =>
+                  router.push(`dashboard/inventory/${store.id}/add`)
+                }
               />
             ),
           )}

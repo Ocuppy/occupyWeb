@@ -110,7 +110,6 @@ const Page: NextPageWithLayout = () => {
       contact_person_name: data.salesName,
       business_name: data.supermarketName,
       business_reg_number: data.regNumber,
-
       name: userData.userID,
       contact_person_email: data.email,
       contact_person_phone_number: data.phoneNumber,
@@ -211,11 +210,16 @@ const Page: NextPageWithLayout = () => {
             <div>
               <label htmlFor="supermarketPhoto">Supermarket Photo</label>
               <Input
+                {...register("photo")}
+                placeholder="Upload Image"
+                type="file"
+              />
+              {/* <Input
                 id="supermarketPhoto"
                 type="file"
                 accept="image/*"
                 {...register("supermarketPhoto", { required: true })}
-              />
+              /> */}
             </div>
 
             <div>

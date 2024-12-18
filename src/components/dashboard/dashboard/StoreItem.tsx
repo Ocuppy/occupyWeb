@@ -61,6 +61,7 @@ interface StoreItemProps {
     name: string;
     business_name: string;
     supermarket_photo?: string;
+    business_address: string;
     is_online: boolean;
     contact_person_name: string;
     contact_person_phone_number: string;
@@ -71,47 +72,60 @@ interface StoreItemProps {
 const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore }) => {
   return (
     <div
-      className="flex cursor-pointer items-center justify-between rounded-lg border p-4 hover:bg-gray-100"
+      className="flex h-[150px] cursor-pointer items-center justify-between rounded-lg border p-4 hover:bg-gray-100"
       onClick={onClickStore}
     >
-      {/* Store Photo */}
-      {store.supermarket_photo ? (
-        <Image
-          src={store.supermarket_photo}
-          alt={`${store.name} logo`}
-          width={50}
-          height={50}
-          className="rounded-full object-cover"
-        />
-      ) : (
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-          <FaStore className="text-gray-500" />
-        </div>
-      )}
-
-      {/* Store details */}
-      <div className="mx-4 flex-grow">
-        <h3 className="text-lg font-semibold">{store.name}</h3>
-        <p className="text-gray-500">{store.business_name}</p>
-        <div className="flex items-center">
-          <span
-            className={`mr-2 h-2 w-2 rounded-full ${
-              store.is_online ? "bg-green-500" : "bg-red-500"
-            }`}
+      <div className="mx-4 flex items-center justify-between">
+        {/* Store Photo */}
+        {store.supermarket_photo ? (
+          <Image
+            src={store.supermarket_photo}
+            alt={`${store.name} logo`}
+            width={100}
+            height={50}
+            // className= object-cover"
+            // className="rounded-full"
           />
-          <span className="text-sm text-gray-500">
-            {store.is_online ? "Online" : "Offline"}
-          </span>
+        ) : (
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
+            <FaStore className="text-gray-500" />
+          </div>
+        )}
+
+        {/* Store details */}
+        <div className="flex flex-col items-start justify-center pl-[40px]">
+          <h3 className="text-lg font-semibold">{store.name}</h3>
+          <p className="text-gray-500">{store.business_address}</p>
+          <p className="text-xl text-[#5D6679]">{store.contact_person_name}</p>
+          <p className="text-gray-500">{store.business_name}</p>
+          {/* <div className="text-right"> */}
+          <p className="text-sm text-[#858D9D]">
+            {store.contact_person_phone_number}
+          </p>
+          {/* </div> */}
+          <div className="flex items-center">
+            <span
+              className={`mr-2 h-2 w-2 rounded-full ${
+                store.is_online ? "bg-green-500" : "bg-red-500"
+              }`}
+            />
+            <span className="text-sm text-gray-500">
+              {store.is_online ? "Online" : "Offline"}
+            </span>
+          </div>
         </div>
+
+        {/* Edit Button */}
       </div>
+      <Button
+        onClick={onClickStore}
+        variant="outline"
+        className="text-occupy-primary"
+      >
+        Edit
+      </Button>
 
       {/* Contact Info */}
-      <div className="text-right">
-        <p className="text-sm text-gray-600">{store.contact_person_name}</p>
-        <p className="text-sm text-gray-500">
-          {store.contact_person_phone_number}
-        </p>
-      </div>
     </div>
   );
 };
