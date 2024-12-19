@@ -6,12 +6,12 @@ import Container from "../shared/Container";
 const Footer = () => {
   return (
     <div className="mt-8 w-full items-center justify-center gap-1 bg-occupy-primary">
-      <footer className="mx-auto max-w-[1440px]">
+      <footer className="mx-auto w-full xl:max-w-[1300px]">
         <div className="flex flex-col items-start justify-start gap-8 gap-y-20 pl-6 pt-20 md:flex-row md:gap-40 md:px-20">
           {/* first section */}
           <section className="flex flex-col gap-4">
             <Image src="/footerLogo.svg" alt="logo" width={75} height={75} />
-            <p className="w-[312px] font-[inter] text-xl text-white md:text-base">
+            <p className="w-full font-[inter] text-xl text-white md:text-base xl:w-[312px]">
               Occupy Technologies Limited
             </p>
           </section>
@@ -19,8 +19,8 @@ const Footer = () => {
           <section className="flex gap-16 text-xl font-medium text-white md:text-base">
             <div className="flex grow flex-col gap-4">
               <div className="flex items-center gap-2">
-                <div className="h-0.5 w-5 rounded-full bg-white"></div>
-                <p>Account</p>
+                {/* <div className="h-0.5 w-5 rounded-full bg-white"></div> */}
+                <p className="text-2xl font-bold">Account</p>
               </div>
               <div className="flex flex-col gap-3">
                 <Link href={"/#"}>My Account</Link>
@@ -30,7 +30,7 @@ const Footer = () => {
               </div>
             </div>
             <div className="flex grow flex-col gap-4">
-              <p>Help</p>
+              <p className="text-2xl font-bold">Help</p>
               <div className="flex flex-col gap-3">
                 <Link href={"/#"}>Contact</Link>
               </div>
@@ -64,7 +64,6 @@ const Footer = () => {
 
         <div className="mt-20 flex w-full items-center justify-between bg-[#6E1C47] px-4 py-6">
           <div className="flex flex-row items-start gap-2">
-            
             <Link href={"https://x.com/vershimakelvin"}>
               <Image
                 src={"/icons/twitter.svg"}
@@ -73,7 +72,9 @@ const Footer = () => {
                 height={40}
               />
             </Link>
-            <Link href={"https://www.linkedin.com/in/vershima-kelvin-09bb0a1a0/"}>
+            <Link
+              href={"https://www.linkedin.com/in/vershima-kelvin-09bb0a1a0/"}
+            >
               <Image
                 src={"/icons/linkedin.svg"}
                 alt="icon"

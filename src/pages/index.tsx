@@ -10,7 +10,7 @@ import MockupSlider from "@/components/views/website/MockupSlider";
 
 const Page: NextPageWithLayout = () => {
   return (
-    <div className="bg-[#F9FBFD]">
+    <div className="w-full bg-[#F9FBFD]">
       <MockupSlider />
       <LetsGrowTogether />
       <WhyUs />
