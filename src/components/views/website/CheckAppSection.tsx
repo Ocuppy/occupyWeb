@@ -22,16 +22,17 @@ const CheckAppSection: React.FC = () => {
     arrows: true,
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
-    beforeChange: (oldIndex: number, newIndex: number) => setCurrentSlide(newIndex),
+    beforeChange: (oldIndex: number, newIndex: number) =>
+      setCurrentSlide(newIndex),
   };
 
   return (
     <Container>
-      <section className="flex justify-center items-center  pb-20">
-        <div className="relative w-full px-12 md:px-0 max-w-lg md:max-w-2xl">
+      <section className="flex items-center justify-center pb-20">
+        <div className="relative w-full max-w-lg px-12 md:max-w-2xl md:px-0">
           <Slider ref={sliderRef} {...settings} initialSlide={currentSlide}>
             {checkAppData.map((feature, index) => (
-              <div key={index} className="flex justify-center items-center">
+              <div key={index} className="flex items-center justify-center">
                 <CheckAppCard data={feature} />
               </div>
             ))}
