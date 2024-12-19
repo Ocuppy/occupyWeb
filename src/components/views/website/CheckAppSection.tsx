@@ -32,7 +32,10 @@ const CheckAppSection: React.FC = () => {
         <div className="relative w-full max-w-lg px-12 md:max-w-2xl md:px-0">
           <Slider ref={sliderRef} {...settings} initialSlide={currentSlide}>
             {checkAppData.map((feature, index) => (
-              <div key={index} className="flex items-center justify-center">
+              <div
+                key={index}
+                className="flex items-center justify-center text-center"
+              >
                 <CheckAppCard data={feature} />
               </div>
             ))}
