@@ -10,7 +10,7 @@ const CheckAppCard: React.FC<CardProps> = ({ data }) => (
     <h1 className="text-4xl font-bold uppercase text-[#232233]">
       {data.header}
     </h1>
-    <p className="text-center text-lg font-normal text-[#6C6C72] md:w-[601px]">
+    <p className="w-full text-center text-lg font-normal text-[#6C6C72]">
       {data.text}
     </p>
     <Image src={data.image} alt={`images`} width={900} height={20} />

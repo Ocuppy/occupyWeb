@@ -17,7 +17,7 @@ const mockupData: Record<string, MockupItem> = {
     image: CustomerMockup,
     title: "Explore Your Estate's Supermarket Inventory Anytime, Conveniently",
     description:
-      "Browse items, add them to your cart, and enjoy fast delivery with convenient payment options like cash or card—all from your mobile device.",
+      "Browse items, add them to your cart, and enjoy fast delivery with convenient payment options like cash or card all from your mobile device.",
   },
   rider: {
     image: RiderMockup,
@@ -33,7 +33,7 @@ const mockupData: Record<string, MockupItem> = {
   },
 };
 
-const   MockupSlider = () => {
+const MockupSlider = () => {
   const TabHeads = Object.keys(mockupData);
   const [currentTab, setCurrentTab] = useState("customer");
   const mockupObj = mockupData[currentTab];
