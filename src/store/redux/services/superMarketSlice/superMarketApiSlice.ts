@@ -29,10 +29,6 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
           method: "GET",
         };
       },
-      // Optionally, you can keep the transformResponse if needed
-      // transformResponse: (response: { data: any }) => {
-      //   return response.data || [];
-      // },
     }),
 
     addProduct: builder.mutation({
@@ -41,10 +37,6 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
 
         // Append supermarket_id
         formData.append("supermarket_id", supermarket_id);
-        // // Handle category specifically
-        // if (category) {
-        //   formData.append("category", category);
-        // }
 
         if (category) {
           // Choose one of these based on your exact data structure:
@@ -74,25 +66,18 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
         };
       },
     }),
-  }),
 
-  // addProduct: builder.mutation({
-  //   query: (data) => ({
-  //     url: "/store/supermarkets/{supermarket_id}/add-products",
-  //     method: "POST",
-  //     body: data,
-  //   }),
-  // }),
-  // addProduct: builder.mutation({
-  //   query: ({ supermarket_id, ...body }) => ({
-  //     url: `/store/supermarkets/${supermarket_id}/add-products`,
-  //     // url: `/store/supermarkets/YOUR SUPERMARKET ID /add-products`,
-  //     method: "POST",
-  //     body,
-  //     headers: { "Content-Type": "multipart/form-data" },
-  //   }),
-  // }),
-  // }),
+    getProducts: builder.query({
+      query: ({ supermarket_id, params = {} }) => {
+        const queryString = new URLSearchParams(params).toString();
+        return {
+          url: `/store/customers/${supermarket_id}/products${queryString ? `?${queryString}` : ""}`,
+          method: "GET",
+        };
+      },
+      // Add data transformation to handle the response
+    }),
+  }),
 });
 
 export const {
@@ -101,4 +86,5 @@ export const {
   useGetUserSupermarketsQuery,
   useAddSupermarketMutation,
   useAddProductMutation,
+  useGetProductsQuery,
 } = superMarketApiSlice;

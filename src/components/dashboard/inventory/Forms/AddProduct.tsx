@@ -30,55 +30,6 @@ import { useAddProductMutation } from "@/store/redux/services/superMarketSlice/s
 import { useGetUserSupermarketsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 // import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 
-// const productSchema = z.object({
-//   supermarket: z.string().min(1, "Supermarket is required"),
-//   productName: z.string().min(2, "Product name must be at least 2 characters"),
-//   description: z.string().optional(),
-//   photo: z.instanceof(File).optional(), // Change from z.string() to z.instanceof(File)
-//   price: z.string().refine((val) => !isNaN(parseFloat(val)), {
-//     message: "Price must be a valid number",
-//   }),
-//   quantity: z.number().min(0, "Quantity must be non-negative"),
-//   category: z.object({
-//     // Change to an object
-//     value: z.string().min(1, "Category is required"),
-//     label: z.string(),
-//   }),
-//   tag: z.array(z.string()).optional(),
-// });
-
-// const productSchema = z.object({
-//   supermarket: z.string().min(1, "Supermarket is required"),
-//   productName: z.string().min(2, "Product name must be at least 2 characters"),
-//   description: z.string().optional(),
-//   photo: z.instanceof(File).optional(),
-//   price: z.string().refine((val) => !isNaN(parseFloat(val)), {
-//     message: "Price must be a valid number",
-//   }),
-//   quantity: z.number().min(0, "Quantity must be non-negative"),
-//   category: z.object({
-//     value: z.string().min(1, "Category is required"),
-//     label: z.string(),
-//   }),
-//   tag: z.array(z.string()).optional(),
-// });
-
-// const productSchema = z.object({
-//   supermarket: z.string().min(1, "Supermarket is required"),
-//   productName: z.string().min(2, "Product name must be at least 2 characters"),
-//   description: z.string().optional(),
-//   photo: z.instanceof(File).optional(),
-//   price: z.string().refine((val) => !isNaN(parseFloat(val)), {
-//     message: "Price must be a valid number",
-//   }),
-//   quantity: z.number().min(0, "Quantity must be non-negative"),
-//   category: z.object({
-//     value: z.string().min(1, "Category is required"),
-//     label: z.string(),
-//   }),
-//   tag: z.array(z.string()).optional(),
-// });
-
 const productSchema = z.object({
   supermarket: z.string().min(1, "Supermarket is required"),
   productName: z.string().min(2, "Product name must be at least 2 characters"),
@@ -114,9 +65,9 @@ const TAGS = [
 
 const AddProduct: React.FC = () => {
   const router = useRouter();
+  const { id: supermarket_id } = router.query; // Correctly getting supermarket_id from the query
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [category, setCategory] = useState(""); // Ensure this is the primary key value
   const userID = useAppSelector((state) => state.auth.userID);
   const profileID = useAppSelector(
     (state: { auth: { profileID: string } }) => state.auth.profileID,
@@ -125,7 +76,6 @@ const AddProduct: React.FC = () => {
   const { data: supermarketsData, isLoading: isSupermarketsLoading } =
     useGetUserSupermarketsQuery(userID, { skip: !userID });
 
-  // Map fetched supermarkets to match the required format
   const SUPERMARKETS =
     supermarketsData?.map((store: { id: string; name: string }) => ({
       value: store.id,
@@ -135,7 +85,9 @@ const AddProduct: React.FC = () => {
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      supermarket: "",
+      supermarket: Array.isArray(supermarket_id)
+        ? supermarket_id[0]
+        : (supermarket_id as string) || "",
       productName: "",
       description: "",
       photo: undefined, // Change from "" to undefined
@@ -157,12 +109,14 @@ const AddProduct: React.FC = () => {
   };
 
   const [addProductMutation] = useAddProductMutation();
+
   const onSubmit = async (data: ProductFormData) => {
     console.log("Submitting Product Data:", data);
     console.log("Full category object:", data.category);
     console.log("Category value:", data.category.value);
 
     setIsSubmitting(true);
+
     try {
       const formData = new FormData();
       console.log("FormData instance:", formData);
@@ -172,18 +126,18 @@ const AddProduct: React.FC = () => {
       // Append all product details
       formData.append("name", data.productName);
       formData.append("description", data.description || "");
-      // formData.append("category", data.category.value);?
       formData.append("category", data.category.pk); // Use pk here
       formData.append("price", data.price);
       formData.append("quantity", data.quantity.toString());
+      if (data.photo) {
+        formData.append("product_image", data.photo); // Ensure this is a File object
+      }
 
       const response = await addProductMutation({
         supermarket_id: data.supermarket,
         name: data.productName,
         description: data.description || "",
         category: data.category.pk,
-        // category: data.category.value,
-        // category: category,
         price: data.price,
         quantity: data.quantity.toString(),
         product_image: data.photo, // Ensure this is a File object
@@ -195,7 +149,7 @@ const AddProduct: React.FC = () => {
           description: "Product added successfully!",
           variant: "default",
         });
-        router.push(`/dashboard/inventory/${response.data.id}`);
+        router.push(`/dashboard/inventory/${supermarket_id}`);
       } else {
         console.log(response.error);
         toast({
@@ -463,3 +417,109 @@ const AddProduct: React.FC = () => {
 };
 
 export default AddProduct;
+
+// const router = useRouter();
+// const { id: supermarket_id } = useRouter().query;
+// const { toast } = useToast();
+// const [isSubmitting, setIsSubmitting] = useState(false);
+// // const [category, setCategory] = useState(""); // Ensure this is the primary key value
+// const userID = useAppSelector((state) => state.auth.userID);
+// const profileID = useAppSelector(
+//   (state: { auth: { profileID: string } }) => state.auth.profileID,
+// );
+
+// const { data: supermarketsData, isLoading: isSupermarketsLoading } =
+//   useGetUserSupermarketsQuery(userID, { skip: !userID });
+
+// // Map fetched supermarkets to match the required format
+// const SUPERMARKETS =
+//   supermarketsData?.map((store: { id: string; name: string }) => ({
+//     value: store.id,
+//     label: store.name,
+//   })) || [];
+
+// const form = useForm<ProductFormData>({
+//   resolver: zodResolver(productSchema),
+//   defaultValues: {
+//     supermarket: Array.isArray(supermarket_id)
+//       ? supermarket_id[0]
+//       : supermarket_id || "",
+//     productName: "",
+//     description: "",
+//     photo: undefined, // Change from "" to undefined
+//     price: "",
+//     quantity: 0,
+//     category: { value: "", label: "" }, // Update to match the new category object structure
+//     tag: [],
+//   },
+// });
+
+// const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+//   const file = event.target.files?.[0];
+//   if (file) {
+//     console.log("Uploaded file:", file);
+//     form.setValue("photo", file);
+//   } else {
+//     console.log("No file selected");
+//   }
+// };
+
+// const [addProductMutation] = useAddProductMutation();
+// const onSubmit = async (data: ProductFormData) => {
+//   console.log("Submitting Product Data:", data);
+//   console.log("Full category object:", data.category);
+//   console.log("Category value:", data.category.value);
+
+//   setIsSubmitting(true);
+//   try {
+//     const formData = new FormData();
+//     console.log("FormData instance:", formData);
+//     console.log("FormData type:", typeof formData);
+//     console.log("Is FormData:", formData instanceof FormData);
+
+//     // Append all product details
+//     formData.append("name", data.productName);
+//     formData.append("description", data.description || "");
+//     // formData.append("category", data.category.value);?
+//     formData.append("category", data.category.pk); // Use pk here
+//     formData.append("price", data.price);
+//     formData.append("quantity", data.quantity.toString());
+
+//     const response = await addProductMutation({
+//       supermarket_id: data.supermarket,
+//       name: data.productName,
+//       description: data.description || "",
+//       category: data.category.pk,
+//       // category: data.category.value,
+//       // category: category,
+//       price: data.price,
+//       quantity: data.quantity.toString(),
+//       product_image: data.photo, // Ensure this is a File object
+//     });
+
+//     if (response.data) {
+//       toast({
+//         title: "Success",
+//         description: "Product added successfully!",
+//         variant: "default",
+//       });
+//       router.push(`/dashboard/inventory/${supermarket_id}`);
+//     } else {
+//       console.log(response.error);
+//       toast({
+//         title: "Error",
+//         description: "Failed to add product. Please try again.",
+//         variant: "destructive",
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Full error details:", error);
+//     toast({
+//       title: "Error",
+//       description: "Failed to add product. Please try again.",
+//       variant: "destructive",
+//     });
+//   } finally {
+//     setIsSubmitting(false);
+//   }
+// };

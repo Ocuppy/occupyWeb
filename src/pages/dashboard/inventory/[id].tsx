@@ -1,26 +1,175 @@
 import React from "react";
 import { useRouter } from "next/router";
-import products from "@/data/productData";
-import InventoryCard from "@/components/dashboard/inventory/InventoryCard";
-import { DataTable } from "@/components/dashboard/inventory/GroceryTable/data-table";
-import { columns } from "@/components/dashboard/inventory/GroceryTable/column";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { useGetProductsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
+import ProductCard from "@/components/Product";
 
-const ProductDetail = () => {
+const ProductsList = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id: supermarket_id } = router.query;
 
-  const product = products.find((product) => product.id === id);
+  console.log("Router query:", router.query);
+  console.log("Fetching products with supermarket_id:", supermarket_id);
+  console.log("Store ID:", supermarket_id);
 
-  if (!product) {
-    return <div>Product not found</div>;
+  const {
+    data: productsData,
+    error: productsError,
+    isLoading: isProductsLoading,
+  } = useGetProductsQuery({ supermarket_id }, { skip: !supermarket_id });
+
+  console.log("Products Response:", productsData);
+  const products = productsData;
+
+  if (!supermarket_id) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
+  }
+
+  if (isProductsLoading) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Loader2 className="animate-spin" />
+      </div>
+    );
+  }
+
+  if (productsError) {
+    console.error("Products Error:", productsError);
+    return (
+      <div className="flex h-full items-center justify-center text-red-500">
+        Error loading products. Please try again.
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="h-full rounded-md bg-white px-4 py-6">
+        <div className="flex items-center justify-between">
+          <p className="text-[20px] font-medium">Manage Products</p>
+          <Button
+            onClick={() =>
+              router.push(`/dashboard/inventory/${supermarket_id}/add`)
+            }
+          >
+            Add Product
+          </Button>
+        </div>
+        <div className="mx-auto mt-8 flex max-w-[540px] flex-col gap-8">
+          <div className="flex h-[250px] flex-col items-center justify-center gap-4 rounded-lg p-9 shadow-lg">
+            <Image
+              src="/icons/check.svg"
+              width={58}
+              height={58}
+              alt="empty state icon"
+            />
+            <h1 className="text-2xl font-bold">No products added</h1>
+            <p>
+              Start adding products to your inventory to manage your store
+              effectively.
+            </p>
+            <Button
+              type="submit"
+              size="lg"
+              onClick={() =>
+                router.push(`/dashboard/inventory/${supermarket_id}/add`)
+              }
+            >
+              Add First Product
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (products.length > 0) {
+    return (
+      <div className="h-full rounded-md bg-white px-4 py-6">
+        <div className="flex items-center justify-between">
+          <p className="text-[20px] font-medium">Manage Products</p>
+          <Button
+            onClick={() =>
+              router.push(`/dashboard/inventory/${supermarket_id}/add`)
+            }
+          >
+            Add Product
+          </Button>
+        </div>
+        <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {products.map(
+            (product: {
+              id: string;
+              name: string;
+              description: string;
+              product_image: string;
+              price: number;
+              supermarket_id: string;
+              category: string;
+              quantity: number;
+            }) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onClickProduct={() => {
+                  console.log("Product ID:", product.id);
+                  router.push(
+                    `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
+                  );
+                }}
+              />
+            ),
+          )}
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <InventoryCard />
-      <DataTable data={products} columns={columns} />
+    <div className="h-full rounded-md bg-white px-4 py-6">
+      <div className="flex items-center justify-between">
+        <p className="text-[20px] font-medium">Manage Products</p>
+        <Button
+          onClick={() =>
+            router.push(`/dashboard/inventory/${supermarket_id}/add`)
+          }
+        >
+          Add Product
+        </Button>
+      </div>
+      <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {products.map(
+          (product: {
+            id: string;
+            name: string;
+            description: string;
+            product_image: string;
+            price: number;
+            supermarket_id: string;
+            category: string;
+            quantity: number;
+          }) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onClickProduct={() => {
+                console.log("Product ID:", product.id);
+                router.push(
+                  `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
+                );
+              }}
+            />
+          ),
+        )}
+      </div>
     </div>
   );
 };
 
-export default ProductDetail;
+export default ProductsList;
