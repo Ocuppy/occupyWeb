@@ -45,7 +45,7 @@ const Footer = () => {
               901 N Pitt Str., Suite 170 <br />
               Alexandria, VA 22314, USA
             </p>
-            <div className="grid grid-cols-2 gap-4">
+            {/* <div className="grid grid-cols-2 gap-4">
               <DownloadBtn
                 name={"Google Play"}
                 title={"Download on the"}
@@ -58,7 +58,7 @@ const Footer = () => {
                 href={""}
                 icon={"/icons/apple.svg"}
               />
-            </div>
+            </div> */}
           </section>
         </div>
 
