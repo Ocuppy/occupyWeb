@@ -111,6 +111,7 @@ const Page: NextPageWithLayout = () => {
       business_name: data.supermarketName,
       business_reg_number: data.regNumber,
       name: data.supermarketName,
+      supermarket_photo: data.supermarketPhoto,
       // name: userData.userID,
       contact_person_email: data.email,
       contact_person_phone_number: data.phoneNumber,
@@ -129,6 +130,9 @@ const Page: NextPageWithLayout = () => {
       formData.append(key, String(value));
     });
 
+    // if (data.supermarketPhoto && data.supermarketPhoto[0]) {
+    //   formData.append("supermarket_photo", data.supermarketPhoto[0]);
+    // }
     if (data.supermarketPhoto && data.supermarketPhoto[0]) {
       formData.append("supermarket_photo", data.supermarketPhoto[0]);
     }
@@ -210,17 +214,17 @@ const Page: NextPageWithLayout = () => {
 
             <div>
               <label htmlFor="supermarketPhoto">Supermarket Photo</label>
-              <Input
+              {/* <Input
                 {...register("photo")}
                 placeholder="Upload Image"
                 type="file"
-              />
-              {/* <Input
+              /> */}
+              <Input
                 id="supermarketPhoto"
                 type="file"
                 accept="image/*"
                 {...register("supermarketPhoto", { required: true })}
-              /> */}
+              />
             </div>
 
             <div>

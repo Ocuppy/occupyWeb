@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,32 @@ const ProductsList = () => {
 
   console.log("Products Response:", productsData);
   const products = productsData;
+  // const categories = []; // Define categories array
+  const [categories, setCategories] = useState<
+    Array<{
+      id: number;
+      category_name: string;
+      category_image: string;
+    }>
+  >([]);
+
+  // Fetch categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          "https://backend.occupymart.com/api/admin/list-categories/",
+        );
+        if (!response.ok) throw new Error("Failed to fetch categories");
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   if (!supermarket_id) {
     return (
@@ -103,19 +129,20 @@ const ProductsList = () => {
           </Button>
         </div>
         <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map(
+          {/* {products.map(
             (product: {
               id: string;
               name: string;
               description: string;
               product_image: string;
-              price: number;
+              price: string;
               supermarket_id: string;
               category: string;
               quantity: number;
             }) => (
               <ProductCard
                 key={product.id}
+                // name={product.name}
                 product={product}
                 onClickProduct={() => {
                   console.log("Product ID:", product.id);
@@ -125,7 +152,20 @@ const ProductsList = () => {
                 }}
               />
             ),
-          )}
+          )} */}
+
+          {products.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              categories={categories} // Pass categories to ProductCard
+              onClickProduct={() => {
+                router.push(
+                  `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
+                );
+              }}
+            />
+          ))}
         </div>
       </div>
     );
@@ -144,13 +184,13 @@ const ProductsList = () => {
         </Button>
       </div>
       <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {products.map(
+        {/* {products.map(
           (product: {
             id: string;
             name: string;
             description: string;
             product_image: string;
-            price: number;
+            price: string;
             supermarket_id: string;
             category: string;
             quantity: number;
@@ -166,7 +206,20 @@ const ProductsList = () => {
               }}
             />
           ),
-        )}
+        )} */}
+
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            categories={categories} // Pass categories to ProductCard
+            onClickProduct={() => {
+              router.push(
+                `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
+              );
+            }}
+          />
+        ))}
       </div>
     </div>
   );
