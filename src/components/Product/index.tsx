@@ -1,8 +1,165 @@
+// import React from "react";
+// // import { useRouter } from "next/router";
+// import { FaStore } from "react-icons/fa";
+// import Image from "next/image";
+// // import { useGetProductsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
+
+// // interface ProductCardProps {
+// //   product: {
+// //     id: string;
+// //     name: string;
+// //     description: string;
+// //     product_image: string;
+// //     category: string;
+// //     supermarket_id: string;
+// //     price: string;
+// //     quantity: number;
+// //     image?: string;
+// //   };
+
+// //   onClickProduct: () => void;
+// // }
+
+// interface ProductCardProps {
+//   product: {
+//     id: string;
+//     name: string;
+//     description: string;
+//     product_image: string;
+//     category: string; // Add this field
+//     supermarket_id: string;
+//     price: string; // Add this field
+//     quantity: number;
+//     image?: string;
+//   };
+//   onClickProduct: () => void;
+// }
+
+// const ProductCard: React.FC<ProductCardProps> = ({
+//   product,
+//   onClickProduct,
+// }) => {
+//   return (
+//     <div
+//       className="flex h-[280px] cursor-pointer flex-col rounded-lg border p-4 hover:bg-gray-100"
+//       onClick={onClickProduct}
+//     >
+//       {/* Product Photo */}
+//       <div className="w-full">
+//         {product.product_image ? (
+//           <Image
+//             src={product.product_image}
+//             alt={`${product.name} logo`}
+//             width={100}
+//             height={50}
+//             priority
+//             // className= object-cover"
+//             className="h-[25vh] w-full object-cover"
+//           />
+//         ) : (
+//           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
+//             <FaStore className="text-gray-500" />
+//           </div>
+//         )}
+//       </div>
+//       <div className="p-4">
+//         <div className="ml-4 flex flex-col">
+//           <h1 className="text-2xl font-semibold">{product.name}</h1>
+//           <p className="text-lg text-gray-500">{product.description}</p>
+//           <p className="text-lg text-gray-500">{product.category}</p>
+//           {/* <p className="text-lg font-bold text-gray-700">${product.price}</p> */}
+//           {/* Display the price */}
+//           <p className="text-lg font-bold text-gray-700">
+//             $
+//             {parseFloat(product.price.replace(/,/g, "")).toLocaleString(
+//               "en-US",
+//             )}
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductCard;
+
+// import React from "react";
+// import Image from "next/image";
+// import { FaStore } from "react-icons/fa";
+
+// interface ProductCardProps {
+//   product: {
+//     id: string;
+//     name: string;
+//     description: string;
+//     product_image: string;
+//     category: string;
+//     supermarket_id: string;
+//     price: string;
+//     quantity: number;
+//     image?: string;
+//   };
+//   categories: Array<{
+//     id: number;
+//     category_name: string;
+//     category_image: string;
+//   }>;
+//   onClickProduct: () => void;
+// }
+
+// const ProductCard: React.FC<ProductCardProps> = ({
+//   product,
+//   categories,
+//   onClickProduct,
+// }) => {
+//   // Find the category name using the product's category ID
+//   const categoryName =
+//     categories.find((cat) => cat.id.toString() === product.category)
+//       ?.category_name || "Unknown Category";
+
+//   return (
+//     <div
+//       className="flex h-[280px] cursor-pointer flex-col rounded-lg border p-4 hover:bg-gray-100"
+//       onClick={onClickProduct}
+//     >
+//       <div className="w-full">
+//         {product.product_image ? (
+//           <Image
+//             src={product.product_image}
+//             alt={`${product.name} logo`}
+//             width={100}
+//             height={50}
+//             priority
+//             className="h-[25vh] w-full object-cover"
+//           />
+//         ) : (
+//           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
+//             <FaStore className="text-gray-500" />
+//           </div>
+//         )}
+//       </div>
+//       <div className="p-4">
+//         <div className="ml-4 flex flex-col">
+//           <h1 className="text-2xl font-semibold">{product.name}</h1>
+//           <p className="text-lg text-gray-500">{product.description}</p>
+//           <p className="text-lg text-gray-500">{categoryName}</p>
+//           <p className="text-lg font-bold text-gray-700">
+//             $
+//             {parseFloat(product.price.replace(/,/g, "")).toLocaleString(
+//               "en-US",
+//             )}
+//           </p>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ProductCard;
+
 import React from "react";
-// import { useRouter } from "next/router";
-import { FaStore } from "react-icons/fa";
 import Image from "next/image";
-// import { useGetProductsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
+import { FaStore } from "react-icons/fa";
 
 interface ProductCardProps {
   product: {
@@ -12,46 +169,65 @@ interface ProductCardProps {
     product_image: string;
     category: string;
     supermarket_id: string;
-    price: number;
+    price: string;
     quantity: number;
     image?: string;
   };
-
+  categories: Array<{
+    id: number;
+    category_name: string;
+    category_image: string;
+  }>;
   onClickProduct: () => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
+  categories,
   onClickProduct,
 }) => {
+  // Add debug logs
+  console.log("Product category ID:", product.category);
+  console.log("Available categories:", categories);
+
+  const categoryName =
+    categories.find((cat) => cat.id.toString() === product.category.toString())
+      ?.category_name || "Unknown Category";
+
+  console.log("Found category name:", categoryName);
+
   return (
     <div
-      className="flex h-[150px] cursor-pointer items-center justify-between rounded-lg border p-4 hover:bg-gray-100"
+      className="flex h-[300px] cursor-pointer flex-col rounded-lg border p-4 hover:bg-gray-100"
       onClick={onClickProduct}
     >
-      <div className="flex items-center justify-between">
-        <h1>{product.category}</h1>
-        <p>{product.quantity}</p>
-      </div>
-      <div className="mx-4 flex items-center justify-between">
-        {/* Product Photo */}
-        {product.image ? (
+      <div className="w-full">
+        {product.product_image ? (
           <Image
-            src={product.image}
+            src={product.product_image}
             alt={`${product.name} logo`}
             width={100}
             height={50}
-            // className= object-cover"
-            // className="rounded-full"
+            priority
+            className="h-[25vh] w-full object-cover"
           />
         ) : (
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
             <FaStore className="text-gray-500" />
           </div>
         )}
+      </div>
+      <div className="p-4">
         <div className="ml-4 flex flex-col">
-          <h1 className="text-lg font-semibold">{product.name}</h1>
-          <p className="text-sm text-gray-500">{product.description}</p>
+          <h1 className="text-2xl font-semibold">{product.name}</h1>
+          <p className="text-lg text-gray-500">{product.description}</p>
+          <p className="text-lg text-purple-500">{categoryName}</p>
+          <p className="text-lg font-bold text-gray-700">
+            $
+            {parseFloat(product.price.replace(/,/g, "")).toLocaleString(
+              "en-US",
+            )}
+          </p>
         </div>
       </div>
     </div>
@@ -59,52 +235,3 @@ const ProductCard: React.FC<ProductCardProps> = ({
 };
 
 export default ProductCard;
-
-// const ProductCard = () => {
-//   const router = useRouter();
-//   const { id, supermarket_id } = router.query;
-
-//   // Fetch the product details
-//   const {
-//     data: product,
-//     isLoading,
-//     error,
-//   } = useGetProductsQuery({
-//     supermarket_id,
-//     product_id: id,
-//   });
-
-//   if (isLoading) return <div>Loading product details...</div>;
-//   if (error) return <div>Failed to load product details</div>;
-
-//   if (!product) {
-//     return <div>Product not found</div>;
-//   }
-
-//   return (
-//     <div className="mx-auto max-w-lg rounded-lg bg-white p-6 shadow-md">
-//       <Image
-//         src={product.image || "/placeholder.png"} // Fallback to placeholder if no image
-//         alt={product.name}
-//         width={300}
-//         height={256}
-//         className="mb-4 h-64 w-full rounded-lg object-cover"
-//       />
-//       <h1 className="text-2xl font-semibold">{product.name}</h1>
-//       <p className="mt-2 text-gray-600">{product.description}</p>
-//       <div className="mt-4">
-//         <p>
-//           <strong>Category:</strong> {product.category}
-//         </p>
-//         <p>
-//           <strong>Price:</strong> ${product.price}
-//         </p>
-//         <p>
-//           <strong>Quantity:</strong> {product.quantity}
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProductCard;
