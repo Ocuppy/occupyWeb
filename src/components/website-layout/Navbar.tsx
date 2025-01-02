@@ -26,10 +26,10 @@ const Navbar = () => {
             className="rounded-full px-8 py-6"
           />
           <Button
-            onClick={() => Router.push("/auth/login")}
+            onClick={() => Router.push("/auth/signup")}
             className="rounded-full bg-occupy-primary px-8 py-7 text-[1rem] font-bold text-white md:py-6"
           >
-            Log in
+            register
           </Button>
         </Flex>
       </SpaceBetween>
