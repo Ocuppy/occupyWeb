@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useGetProductsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import ProductCard from "@/components/Product";
+import UserDashboard from "@/components/dashboard/dashboard/UserDashboard";
 
 const ProductsList = () => {
   const router = useRouter();
@@ -128,6 +129,7 @@ const ProductsList = () => {
             Add Product
           </Button>
         </div>
+        <UserDashboard />
         <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* {products.map(
             (product: {

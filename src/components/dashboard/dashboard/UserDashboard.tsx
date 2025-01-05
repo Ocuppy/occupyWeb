@@ -61,7 +61,12 @@ const UserDashboard = () => {
               </h6>
             </header>
             <div className="absolute bottom-0 right-1">
-              <Image src="/images/illustration.png" alt="Illustration" />
+              <Image
+                src="/images/illustration.png"
+                width={50}
+                height={50}
+                alt="Illustration"
+              />
             </div>
           </div>
           <div className="h-[7.6875rem] w-[15.625rem] rounded-lg border border-[#E0E0E0] bg-white p-3">
