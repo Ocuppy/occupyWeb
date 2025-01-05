@@ -78,6 +78,7 @@ const ProductsList = () => {
   if (products.length === 0) {
     return (
       <div className="h-full rounded-md bg-white px-4 py-6">
+        <UserDashboard />
         <div className="flex items-center justify-between">
           <p className="text-[20px] font-medium">Manage Products</p>
           <Button
@@ -162,9 +163,9 @@ const ProductsList = () => {
               product={product}
               categories={categories} // Pass categories to ProductCard
               onClickProduct={() => {
-                router.push(
-                  `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
-                );
+                // router.push(
+                //   `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
+                // );
               }}
             />
           ))}
@@ -216,9 +217,9 @@ const ProductsList = () => {
             product={product}
             categories={categories} // Pass categories to ProductCard
             onClickProduct={() => {
-              router.push(
-                `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
-              );
+              // router.push(
+              //   `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
+              // );
             }}
           />
         ))}

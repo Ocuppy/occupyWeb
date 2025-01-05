@@ -4,6 +4,7 @@ import InventoryCard from "@/components/dashboard/inventory/InventoryCard";
 import products from "@/data/productData";
 import { NextPageWithLayout } from "@/pages/_app";
 import { ChevronDown, X, Filter } from "lucide-react";
+import ProductsList from "./[id]";
 import React from "react";
 
 const Pending: NextPageWithLayout = () => {
@@ -33,7 +34,8 @@ const Pending: NextPageWithLayout = () => {
         </button>
       </header>
       <div className="occupy-shadow">
-        <DataTable data={products} columns={columns} />
+        {/* <DataTable data={products} columns={columns} /> */}
+        <ProductsList />
       </div>
     </section>
   );
