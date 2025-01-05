@@ -163,6 +163,7 @@ import { FaStore } from "react-icons/fa";
 
 interface ProductCardProps {
   product: {
+    in_stock: boolean;
     id: string;
     name: string;
     description: string;
@@ -198,10 +199,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div
-      className="flex h-[300px] cursor-pointer flex-col rounded-lg border p-4 hover:bg-gray-100"
+      className="flex cursor-pointer flex-col rounded-lg p-4 shadow-md hover:bg-gray-100"
       onClick={onClickProduct}
     >
-      <div className="w-full">
+      <div className="w-full rounded-md">
         {product.product_image ? (
           <Image
             src={product.product_image}
@@ -209,7 +210,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             width={100}
             height={50}
             priority
-            className="h-[25vh] w-full object-cover"
+            className="h-[25vh] w-full rounded-md object-cover"
           />
         ) : (
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
@@ -219,15 +220,35 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
       <div className="p-4">
         <div className="ml-4 flex flex-col">
-          <h1 className="text-2xl font-semibold">{product.name}</h1>
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-semibold">{product.name}</h1>
+
+            {product.in_stock ? (
+              <span className="rounded-full bg-[#a0ff8e] p-4 text-green-600">
+                In Stock
+              </span>
+            ) : (
+              <span className="w-[100px] rounded-full bg-[#e9b5b5] p-1 text-center text-red-500">
+                Out of Stock
+              </span>
+            )}
+          </div>
           <p className="text-lg text-gray-500">{product.description}</p>
-          <p className="text-lg text-purple-500">{categoryName}</p>
-          <p className="text-lg font-bold text-gray-700">
+          <div className="flex items-center justify-between">
+            <p className="text-lg font-semibold text-purple-500">
+              {categoryName}
+            </p>
+            <p className="text-lg text-gray-500">Quantity:{product.quantity}</p>
+          </div>
+          <p className="py-4 text-2xl font-bold text-gray-700">
             $
             {parseFloat(product.price.replace(/,/g, "")).toLocaleString(
               "en-US",
             )}
           </p>
+          {/* <button className="h-[50px] w-full rounded-full bg-green-500 py-2 text-xl font-semibold text-white">
+            Add to Cart
+          </button> */}
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { useGetProductsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import ProductCard from "@/components/Product";
+import UserDashboard from "@/components/dashboard/dashboard/UserDashboard";
 
 const ProductsList = () => {
   const router = useRouter();
@@ -77,6 +78,7 @@ const ProductsList = () => {
   if (products.length === 0) {
     return (
       <div className="h-full rounded-md bg-white px-4 py-6">
+        <UserDashboard />
         <div className="flex items-center justify-between">
           <p className="text-[20px] font-medium">Manage Products</p>
           <Button
@@ -128,6 +130,7 @@ const ProductsList = () => {
             Add Product
           </Button>
         </div>
+        <UserDashboard />
         <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* {products.map(
             (product: {
@@ -160,9 +163,9 @@ const ProductsList = () => {
               product={product}
               categories={categories} // Pass categories to ProductCard
               onClickProduct={() => {
-                router.push(
-                  `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
-                );
+                // router.push(
+                //   `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
+                // );
               }}
             />
           ))}
@@ -214,9 +217,9 @@ const ProductsList = () => {
             product={product}
             categories={categories} // Pass categories to ProductCard
             onClickProduct={() => {
-              router.push(
-                `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
-              );
+              // router.push(
+              //   `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
+              // );
             }}
           />
         ))}
