@@ -67,6 +67,20 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
       },
     }),
 
+    deleteProduct: builder.mutation({
+      query: ({ product_id }) => {
+        const formData = new FormData();
+
+        // Append product_id
+        formData.append("id", product_id);
+
+        return {
+          url: `/store/destroy-product/${product_id}/`,
+          method: "DELETE",
+        }
+      }
+    }),
+
     getProducts: builder.query({
       query: ({ supermarket_id, params = {} }) => {
         const queryString = new URLSearchParams(params).toString();
@@ -87,4 +101,5 @@ export const {
   useAddSupermarketMutation,
   useAddProductMutation,
   useGetProductsQuery,
+  useDeleteProductMutation,
 } = superMarketApiSlice;
