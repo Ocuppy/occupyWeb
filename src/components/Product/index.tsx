@@ -159,7 +159,9 @@
 
 import React from "react";
 import Image from "next/image";
-import { FaStore } from "react-icons/fa";
+import { FaPen, FaPencilAlt, FaStore } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useDeleteProductMutation } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 
 interface ProductCardProps {
   product: {
@@ -197,9 +199,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   console.log("Found category name:", categoryName);
 
+  const [deleteProduct, { isLoading, isError, isSuccess }] = useDeleteProductMutation();
+
+  const handleDelete = async (productId: string) => {
+    try {
+      // Trigger the mutation with the product id
+      await deleteProduct({ product_id: productId }).unwrap();
+    } catch (error) {
+      console.error('Failed to delte the product', error)
+    }
+  };
+
   return (
     <div
-      className="flex cursor-pointer flex-col rounded-lg p-4 shadow-md hover:bg-gray-100"
+      className="flex cursor-pointer flex-col rounded-lg p-4 pb-0 shadow-md hover:bg-gray-100"
       onClick={onClickProduct}
     >
       <div className="w-full rounded-md">
@@ -218,34 +231,42 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
       </div>
-      <div className="p-4">
-        <div className="ml-4 flex flex-col">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">{product.name}</h1>
+      <div className="py-4 px-2 pb-0">
+        <div className="flex flex-col">
+          <p className="text-lg font-semibold text-purple-500">
+            {categoryName}
+          </p>
+
+          <div className="flex items-center justify-between mb-3">
+            <h1 className="text-2xl font-medium">{product.name}</h1>
 
             {product.in_stock ? (
               <span className="rounded-full bg-[#a0ff8e] p-4 text-green-600">
                 In Stock
               </span>
             ) : (
-              <span className="w-[100px] rounded-full bg-[#e9b5b5] p-1 text-center text-red-500">
+              <span className="rounded-full bg-[#e9b5b5] px-3 py-1.5 text-center text-sm text-red-500">
                 Out of Stock
               </span>
             )}
           </div>
-          <p className="text-lg text-gray-500">{product.description}</p>
-          <div className="flex items-center justify-between">
-            <p className="text-lg font-semibold text-purple-500">
-              {categoryName}
-            </p>
-            <p className="text-lg text-gray-500">Quantity:{product.quantity}</p>
-          </div>
+          <p className="text-base text-gray-400">{product.description}</p>
+
+          <p className="text-lg font-semibold text-gray-500">Quantity: <span className="font-normal">{product.quantity}</span></p>
           <p className="py-4 text-2xl font-bold text-gray-700">
-            $
+            ₦
             {parseFloat(product.price.replace(/,/g, "")).toLocaleString(
               "en-US",
             )}
           </p>
+          <div className="w-full flex items-center">
+            <button className="w-1/2 p-3 hover:bg-gray-300 flex items-center justify-center">
+              <FaPencilAlt size={20} />
+            </button>
+            <button className="w-1/2 place-items-center p-3 hover:bg-red-200 flex items-center justify-center" onClick={() => handleDelete(product.id)} disabled={isLoading}>
+              <MdDelete color="red" size={20} />
+            </button>
+          </div>
           {/* <button className="h-[50px] w-full rounded-full bg-green-500 py-2 text-xl font-semibold text-white">
             Add to Cart
           </button> */}
