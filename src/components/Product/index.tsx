@@ -199,7 +199,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div
-      className="flex cursor-pointer flex-col rounded-lg p-4 shadow-md hover:bg-gray-100"
+      className="flex w-[250px] cursor-pointer flex-col rounded-lg bg-white p-4 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl xl:w-full"
+      // className="flex w-[250px] cursor-pointer flex-col rounded-lg bg-slate-50 p-4 shadow-md hover:w-[260px]"
       onClick={onClickProduct}
     >
       <div className="w-full rounded-md">
@@ -210,7 +211,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             width={100}
             height={50}
             priority
-            className="h-[25vh] w-full rounded-md object-cover"
+            className="h-[200px] w-full rounded-md object-cover"
           />
         ) : (
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">

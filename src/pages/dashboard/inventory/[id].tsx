@@ -6,6 +6,7 @@ import { Loader2 } from "lucide-react";
 import { useGetProductsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import ProductCard from "@/components/Product";
 import UserDashboard from "@/components/dashboard/dashboard/UserDashboard";
+import { ArrowLeft } from "lucide-react";
 
 const ProductsList = () => {
   const router = useRouter();
@@ -80,6 +81,10 @@ const ProductsList = () => {
       <div className="h-full rounded-md bg-white px-4 py-6">
         <UserDashboard />
         <div className="flex items-center justify-between">
+          <ArrowLeft
+            onClick={() => router.push("/dashboard")}
+            className="cursor-pointer"
+          />
           <p className="text-[20px] font-medium">Manage Products</p>
           <Button
             onClick={() =>
@@ -119,9 +124,15 @@ const ProductsList = () => {
 
   if (products.length > 0) {
     return (
-      <div className="h-full rounded-md bg-white px-4 py-6">
+      <div className="h-full rounded-md bg-gray-100 px-4 py-6">
         <div className="flex items-center justify-between">
-          <p className="text-[20px] font-medium">Manage Products</p>
+          <div className="flex items-center gap-4">
+            <ArrowLeft
+              onClick={() => router.push("/dashboard")}
+              className="cursor-pointer"
+            />
+            <p className="text-[20px] font-medium">Manage Products</p>
+          </div>
           <Button
             onClick={() =>
               router.push(`/dashboard/inventory/${supermarket_id}/add`)
@@ -175,7 +186,7 @@ const ProductsList = () => {
   }
 
   return (
-    <div className="h-full rounded-md bg-white px-4 py-6">
+    <div className="h-full rounded-md bg-gray-100 px-4 py-6">
       <div className="flex items-center justify-between">
         <p className="text-[20px] font-medium">Manage Products</p>
         <Button
