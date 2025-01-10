@@ -56,7 +56,7 @@ const Layout = ({
       <Toaster />
       <div
         onClick={() => {
-          console.log("layout");
+          // console.log("layout");
         }}
         className="min-w-0 flex-auto gap-10 xl:flex"
       >

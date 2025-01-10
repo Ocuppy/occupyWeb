@@ -159,7 +159,9 @@
 
 import React from "react";
 import Image from "next/image";
-import { FaStore } from "react-icons/fa";
+import { FaPen, FaPencilAlt, FaStore } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { useDeleteProductMutation } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 
 interface ProductCardProps {
   product: {
@@ -229,7 +231,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                 In Stock
               </span>
             ) : (
-              <span className="w-[100px] rounded-full bg-[#e9b5b5] p-1 text-center text-red-500">
+              <span className="rounded-full bg-[#e9b5b5] px-3 py-1.5 text-center text-sm text-red-500">
                 Out of Stock
               </span>
             )}
@@ -242,7 +244,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <p className="text-lg text-gray-500">Quantity:{product.quantity}</p>
           </div>
           <p className="py-4 text-2xl font-bold text-gray-700">
-            $
+            ₦
             {parseFloat(product.price.replace(/,/g, "")).toLocaleString(
               "en-US",
             )}
