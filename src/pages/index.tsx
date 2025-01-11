@@ -15,7 +15,7 @@ const Page: NextPageWithLayout = () => {
       <LetsGrowTogether />
       <WhyUs />
       <CheckAppSection />
-      <DownloadAppSection />
+      
     </div>
   );
 };

@@ -25,8 +25,7 @@ const Footer = () => {
               <div className="flex flex-col gap-3">
                 <Link href={"/#"}>My Account</Link>
                 <Link href={"/#"}>FAQs</Link>
-                <Link href={"/#"}>Terms & Condition</Link>
-                <Link href={"/#"}>Privacy Policy</Link>
+              
               </div>
             </div>
             <div className="flex grow flex-col gap-4">
@@ -39,11 +38,11 @@ const Footer = () => {
           {/* third section */}
           <section className="flex flex-col gap-4">
             <span className="text-2xl font-medium text-white">
-              info@golio.com
+              admin@occupy.com
             </span>
             <p className="text-lg font-normal text-white">
-              901 N Pitt Str., Suite 170 <br />
-              Alexandria, VA 22314, USA
+              21 442 cresent Citec vill <br />
+              Gwarimpa, Abuja, Nigeria
             </p>
             {/* <div className="grid grid-cols-2 gap-4">
               <DownloadBtn
@@ -73,7 +72,7 @@ const Footer = () => {
               />
             </Link>
             <Link
-              href={"https://www.linkedin.com/in/vershima-kelvin-09bb0a1a0/"}
+              href={"https://www.linkedin.com/company/occupy-mart/ "}
             >
               <Image
                 src={"/icons/linkedin.svg"}
@@ -82,7 +81,7 @@ const Footer = () => {
                 height={40}
               />
             </Link>
-            <Link href={"https://www.instagram.com/3_6ixtyfx/"}>
+            <Link href={"https://www.instagram.com/occupy_abuja/"}>
               <Image
                 src={"/icons/instagram.svg"}
                 alt="icon"

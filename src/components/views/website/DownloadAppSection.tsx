@@ -10,20 +10,7 @@ const DownloadAppSection = () => {
           <p className="text-5xl font-bold leading-tight text-black lg:text-7xl">
             Download now and <br /> start shopping
           </p>
-          <div className="flex flex-row gap-4">
-            <DownloadBtn
-              name={"Google Play"}
-              title={"Download on the"}
-              href={""}
-              icon={"/icons/google-play.svg"}
-            />
-            <DownloadBtn
-              name={"App Store"}
-              title={"Download on the"}
-              href={""}
-              icon={"/icons/apple.svg"}
-            />
-          </div>
+  
         </div>
         <div className="pt-6 lg:pt-0">
           <Image
