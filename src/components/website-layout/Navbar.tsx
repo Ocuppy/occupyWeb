@@ -29,7 +29,7 @@ const Navbar = () => {
             onClick={() => Router.push("/auth/signup")}
             className="rounded-full bg-occupy-primary px-8 py-7 text-[1rem] font-bold text-white md:py-6"
           >
-            register
+            Register
           </Button>
         </Flex>
       </SpaceBetween>
