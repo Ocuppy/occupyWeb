@@ -63,14 +63,14 @@ const Footer = () => {
 
         <div className="mt-20 flex w-full items-center justify-between bg-[#6E1C47] px-4 py-6">
           <div className="flex flex-row items-start gap-2">
-            <Link href={"https://x.com/vershimakelvin"}>
+            {/* <Link href={"https://x.com/vershimakelvin"}>
               <Image
                 src={"/icons/twitter.svg"}
                 alt="icon"
                 width={40}
                 height={40}
               />
-            </Link>
+            </Link> */}
             <Link
               href={"https://www.linkedin.com/company/occupy-mart/ "}
             >
