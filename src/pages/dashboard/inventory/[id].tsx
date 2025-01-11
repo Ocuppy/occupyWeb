@@ -206,7 +206,7 @@ const ProductsList = () => {
             ),
           )} */}
 
-          {products.map((product) => (
+          {products.map((product: any) => (
             <ProductCard
               key={product.id}
               product={product}
