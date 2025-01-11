@@ -26,12 +26,12 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { Image } from "lucide-react";
 import { useAppSelector } from "@/store/redux/hooks";
-import { useAddProductMutation } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
+import { useEditProductMutation } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import { useGetUserSupermarketsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 // import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 
 const productSchema = z.object({
-  supermarket: z.string().min(1, "Supermarket is required"),
+  product_id: z.string().min(1, "Product ID is required"),
   productName: z.string().min(2, "Product name must be at least 2 characters"),
   description: z.string().optional(),
   photo: z.instanceof(File).optional(),
@@ -66,21 +66,7 @@ const productSchema = z.object({
 
 type ProductFormData = z.infer<typeof productSchema>;
 
-// const CATEGORIES = [
-//   { value: "laptop", label: "Laptop", pk: "1" }, // Add a pk field
-//   { value: "fruit", label: "Fruit", pk: "2" },
-//   { value: "vegetable", label: "Vegetable", pk: "3" },
-// ];
-
 const baseUrl = "https://backend.occupymart.com/api";
-
-const TAGS = [
-  { value: "next.js", label: "Next.js" },
-  { value: "sveltekit", label: "SvelteKit" },
-  { value: "nuxt.js", label: "Nuxt.js" },
-  { value: "remix", label: "Remix" },
-  { value: "astro", label: "Astro" },
-];
 
 interface Category {
   id: number;
@@ -88,9 +74,9 @@ interface Category {
   category_name: string;
 }
 
-const AddProduct: React.FC = () => {
+const EditProduct: React.FC = () => {
   const router = useRouter();
-  const { id: supermarket_id } = router.query; // Correctly getting supermarket_id from the query
+  const { id: productId } = router.query; // Correctly getting productId from the query
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const userID = useAppSelector((state) => state.auth.userID);
@@ -98,21 +84,18 @@ const AddProduct: React.FC = () => {
     (state: { auth: { profileID: string } }) => state.auth.profileID,
   );
 
+  console.log("router query", router.query);
+  console.log("product id", productId);
+
   const { data: supermarketsData, isLoading: isSupermarketsLoading } =
     useGetUserSupermarketsQuery(userID, { skip: !userID });
-
-  const SUPERMARKETS =
-    supermarketsData?.map((store: { id: string; name: string }) => ({
-      value: store.id,
-      label: store.name,
-    })) || [];
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      supermarket: Array.isArray(supermarket_id)
-        ? supermarket_id[0]
-        : (supermarket_id as string) || "",
+      product_id: Array.isArray(productId)
+        ? productId[0]
+        : (productId as string) || "",
       productName: "",
       description: "",
       photo: undefined, // Change from "" to undefined
@@ -122,7 +105,6 @@ const AddProduct: React.FC = () => {
       tag: [],
     },
   });
-  console.log("add product form", form.getValues());
 
   const [categories, setCategories] = useState<
     Array<{
@@ -208,7 +190,7 @@ const AddProduct: React.FC = () => {
     });
   };
 
-  const [addProductMutation] = useAddProductMutation();
+  const [editProductMutation] = useEditProductMutation();
 
   const onSubmit = async (data: ProductFormData) => {
     console.log("Submitting Product Data:", data);
@@ -235,8 +217,8 @@ const AddProduct: React.FC = () => {
       }
       const numericPrice = parseFloat(data.price.replace(/,/g, ""));
 
-      const response = await addProductMutation({
-        supermarket_id: data.supermarket,
+      const response = await editProductMutation({
+        product_id: productId,
         name: data.productName,
         description: data.description || "",
         category: data.category.pk,
@@ -249,15 +231,15 @@ const AddProduct: React.FC = () => {
       if (response.data) {
         toast({
           title: "Success",
-          description: "Product added successfully!",
+          description: "Product edited successfully!",
           variant: "default",
         });
-        router.push(`/dashboard/inventory/${supermarket_id}`);
+        router.back();
       } else {
         console.log(response.error);
         toast({
           title: "Error",
-          description: "Failed to add product. Please try again.",
+          description: "Failed to edit product. Please try again.",
           variant: "destructive",
         });
       }
@@ -265,7 +247,7 @@ const AddProduct: React.FC = () => {
       console.error("Full error details:", error);
       toast({
         title: "Error",
-        description: "Failed to add product. Please try again.",
+        description: "Failed to edit product. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -280,22 +262,22 @@ const AddProduct: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="mb-2 text-2xl font-medium text-gray-700">
-                Add Product
+                Edit Product
               </h1>
               <nav aria-label="Breadcrumb" className="text-sm text-gray-500">
-                Dashboard / Product List / Add Product
+                Dashboard / Product List / Edit Product
               </nav>
             </div>
             <div className="flex space-x-2">
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => router.push("/dashboard/inventory")}
+                onClick={() => router.back()}
               >
                 Cancel
               </Button>
               <Button type="submit" disabled={isSubmitting}>
-                {isSubmitting ? "Saving..." : "Save Product"}
+                {isSubmitting ? "Saving..." : "Edit Product"}
               </Button>
             </div>
           </div>
@@ -308,39 +290,6 @@ const AddProduct: React.FC = () => {
                   General Information
                 </h2>
                 <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="supermarket"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Supermarket</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          value={field.value}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select Supermarket" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {SUPERMARKETS.map(
-                              (market: { value: string; label: string }) => (
-                                <SelectItem
-                                  key={market.value}
-                                  value={market.value}
-                                >
-                                  {market.label}
-                                </SelectItem>
-                              ),
-                            )}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
                   <FormField
                     control={form.control}
                     name="productName"
@@ -686,4 +635,4 @@ const AddProduct: React.FC = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;

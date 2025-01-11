@@ -183,6 +183,7 @@ interface ProductCardProps {
   }>;
   onClickProduct: () => void;
   onDeleteProduct: (productId: string) => void;
+  onEditProduct: (productId: string) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -190,6 +191,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   categories,
   onClickProduct,
   onDeleteProduct,
+  onEditProduct,
 }) => {
   // Add debug logs
   console.log("Product category ID:", product.category);
@@ -199,7 +201,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     categories.find((cat) => cat.id.toString() === product.category.toString())
       ?.category_name || "Unknown Category";
 
-  console.log("Found category name:", categoryName);
+  // console.log("Found category name:", categoryName);
 
   return (
     <div
@@ -253,7 +255,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
             )}
           </p>
           <div className="flex w-full items-center">
-            <button className="flex w-1/2 items-center justify-center p-3 hover:bg-gray-300">
+            <button
+              className="flex w-1/2 items-center justify-center p-3 hover:bg-gray-300"
+              onClick={() => onEditProduct(product.id)}
+            >
               <FaPencilAlt size={20} />
             </button>
             <button

@@ -37,7 +37,8 @@ const ProductsList = () => {
     }>
   >([]);
 
-  const [deleteProduct, { isLoading }] = useDeleteProductMutation();
+  const [deleteProduct, { isLoading: isDeleteLoading }] =
+    useDeleteProductMutation();
 
   useEffect(() => {
     refetch();
@@ -71,6 +72,14 @@ const ProductsList = () => {
     }
   };
 
+  /**
+   * @description Edit Product
+   * @param productId
+   */
+  const handleProductEdit = (productId: string) => {
+    router.push(`/dashboard/inventory/${productId}/edit`);
+  };
+
   if (!supermarket_id) {
     return (
       <div className="flex h-full items-center justify-center">
@@ -92,6 +101,14 @@ const ProductsList = () => {
     return (
       <div className="flex h-full items-center justify-center text-red-500">
         Error loading products. Please try again.
+      </div>
+    );
+  }
+
+  if (isDeleteLoading) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Loader2 className="animate-spin" />
       </div>
     );
   }
@@ -189,6 +206,7 @@ const ProductsList = () => {
                 // );
               }}
               onDeleteProduct={handleProductDelete}
+              onEditProduct={handleProductEdit}
             />
           ))}
         </div>

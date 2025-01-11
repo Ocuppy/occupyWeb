@@ -67,6 +67,28 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
       },
     }),
 
+    editProduct: builder.mutation({
+      query: ({ product_id, ...body }) => {
+        const formData = new FormData();
+
+        formData.append("id", product_id);
+
+        Object.keys(body).forEach((key) => {
+          if (key === "product_image" && body[key] instanceof File) {
+            formData.append("product_image", body[key]);
+          } else {
+            formData.append(key, body[key]);
+          }
+        });
+
+        return {
+          url: `/store/edit-product/${product_id}/`,
+          method: "PUT",
+          body: formData,
+        };
+      },
+    }),
+
     deleteProduct: builder.mutation({
       query: ({ product_id }) => {
         const formData = new FormData();
@@ -77,8 +99,8 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
         return {
           url: `/store/destroy-product/${product_id}/`,
           method: "DELETE",
-        }
-      }
+        };
+      },
     }),
 
     getProducts: builder.query({
@@ -102,4 +124,5 @@ export const {
   useAddProductMutation,
   useGetProductsQuery,
   useDeleteProductMutation,
+  useEditProductMutation,
 } = superMarketApiSlice;
