@@ -182,12 +182,16 @@ interface ProductCardProps {
     category_image: string;
   }>;
   onClickProduct: () => void;
+  onDeleteProduct: (productId: string) => void;
+  onEditProduct: (productId: string) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   categories,
   onClickProduct,
+  onDeleteProduct,
+  onEditProduct,
 }) => {
   // Add debug logs
   console.log("Product category ID:", product.category);
@@ -197,7 +201,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     categories.find((cat) => cat.id.toString() === product.category.toString())
       ?.category_name || "Unknown Category";
 
-  console.log("Found category name:", categoryName);
+  // console.log("Found category name:", categoryName);
 
   return (
     <div
@@ -221,11 +225,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
       </div>
-      <div className="p-4">
-        <div className="ml-4 flex flex-col">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold">{product.name}</h1>
+      <div className="px-2 py-4 pb-0">
+        <div className="flex flex-col">
+          <p className="text-lg font-semibold text-purple-500">
+            {categoryName}
+          </p>
 
+          <div className="mb-3 flex items-center justify-between">
+            <h1 className="text-2xl font-medium">{product.name}</h1>
             {product.in_stock ? (
               <span className="rounded-full bg-[#a0ff8e] p-4 text-green-600">
                 In Stock
@@ -236,19 +243,32 @@ const ProductCard: React.FC<ProductCardProps> = ({
               </span>
             )}
           </div>
-          <p className="text-lg text-gray-500">{product.description}</p>
-          <div className="flex items-center justify-between">
-            <p className="text-lg font-semibold text-purple-500">
-              {categoryName}
-            </p>
-            <p className="text-lg text-gray-500">Quantity:{product.quantity}</p>
-          </div>
+          <p className="text-base text-gray-400">{product.description}</p>
+
+          <p className="text-lg font-semibold text-gray-500">
+            Quantity: <span className="font-normal">{product.quantity}</span>
+          </p>
           <p className="py-4 text-2xl font-bold text-gray-700">
             ₦
             {parseFloat(product.price.replace(/,/g, "")).toLocaleString(
               "en-US",
             )}
           </p>
+          <div className="flex w-full items-center">
+            <button
+              className="flex w-1/2 items-center justify-center p-3 hover:bg-gray-300"
+              onClick={() => onEditProduct(product.id)}
+            >
+              <FaPencilAlt size={20} />
+            </button>
+            <button
+              className="flex w-1/2 place-items-center items-center justify-center p-3 hover:bg-red-200"
+              onClick={() => onDeleteProduct(product.id)}
+            >
+              <MdDelete color="red" size={20} />
+            </button>
+          </div>
+
           {/* <button className="h-[50px] w-full rounded-full bg-green-500 py-2 text-xl font-semibold text-white">
             Add to Cart
           </button> */}
