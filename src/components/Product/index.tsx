@@ -182,12 +182,14 @@ interface ProductCardProps {
     category_image: string;
   }>;
   onClickProduct: () => void;
+  onDeleteProduct: (productId: string) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
   product,
   categories,
   onClickProduct,
+  onDeleteProduct,
 }) => {
   // Add debug logs
   console.log("Product category ID:", product.category);
@@ -198,17 +200,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
       ?.category_name || "Unknown Category";
 
   console.log("Found category name:", categoryName);
-
-  const [deleteProduct, { isLoading, isError, isSuccess }] = useDeleteProductMutation();
-
-  const handleDelete = async (productId: string) => {
-    try {
-      // Trigger the mutation with the product id
-      await deleteProduct({ product_id: productId }).unwrap();
-    } catch (error) {
-      console.error('Failed to delte the product', error)
-    }
-  };
 
   return (
     <div
@@ -231,13 +222,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
       </div>
-      <div className="py-4 px-2 pb-0">
+      <div className="px-2 py-4 pb-0">
         <div className="flex flex-col">
           <p className="text-lg font-semibold text-purple-500">
             {categoryName}
           </p>
 
-          <div className="flex items-center justify-between mb-3">
+          <div className="mb-3 flex items-center justify-between">
             <h1 className="text-2xl font-medium">{product.name}</h1>
 
             {product.in_stock ? (
@@ -252,18 +243,23 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
           <p className="text-base text-gray-400">{product.description}</p>
 
-          <p className="text-lg font-semibold text-gray-500">Quantity: <span className="font-normal">{product.quantity}</span></p>
+          <p className="text-lg font-semibold text-gray-500">
+            Quantity: <span className="font-normal">{product.quantity}</span>
+          </p>
           <p className="py-4 text-2xl font-bold text-gray-700">
             ₦
             {parseFloat(product.price.replace(/,/g, "")).toLocaleString(
               "en-US",
             )}
           </p>
-          <div className="w-full flex items-center">
-            <button className="w-1/2 p-3 hover:bg-gray-300 flex items-center justify-center">
+          <div className="flex w-full items-center">
+            <button className="flex w-1/2 items-center justify-center p-3 hover:bg-gray-300">
               <FaPencilAlt size={20} />
             </button>
-            <button className="w-1/2 place-items-center p-3 hover:bg-red-200 flex items-center justify-center" onClick={() => handleDelete(product.id)} disabled={isLoading}>
+            <button
+              className="flex w-1/2 place-items-center items-center justify-center p-3 hover:bg-red-200"
+              onClick={() => onDeleteProduct(product.id)}
+            >
               <MdDelete color="red" size={20} />
             </button>
           </div>

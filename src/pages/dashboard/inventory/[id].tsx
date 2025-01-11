@@ -3,9 +3,13 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useGetProductsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
+import {
+  useDeleteProductMutation,
+  useGetProductsQuery,
+} from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import ProductCard from "@/components/Product";
 import UserDashboard from "@/components/dashboard/dashboard/UserDashboard";
+import products from "@/data/productData";
 
 const ProductsList = () => {
   const router = useRouter();
@@ -19,6 +23,7 @@ const ProductsList = () => {
     data: productsData,
     error: productsError,
     isLoading: isProductsLoading,
+    refetch,
   } = useGetProductsQuery({ supermarket_id }, { skip: !supermarket_id });
 
   console.log("Products Response:", productsData);
@@ -31,6 +36,12 @@ const ProductsList = () => {
       category_image: string;
     }>
   >([]);
+
+  const [deleteProduct, { isLoading }] = useDeleteProductMutation();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   // Fetch categories
   useEffect(() => {
@@ -49,6 +60,16 @@ const ProductsList = () => {
 
     fetchCategories();
   }, []);
+
+  // Delete Product
+  const handleProductDelete = async (productId: string) => {
+    try {
+      await deleteProduct({ product_id: productId }).unwrap();
+      refetch();
+    } catch (error) {
+      console.error(`${error} - Failed to delete the product`);
+    }
+  };
 
   if (!supermarket_id) {
     return (
@@ -167,65 +188,13 @@ const ProductsList = () => {
                 //   `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
                 // );
               }}
+              onDeleteProduct={handleProductDelete}
             />
           ))}
         </div>
       </div>
     );
   }
-
-  return (
-    <div className="h-full rounded-md bg-white px-4 py-6">
-      <div className="flex items-center justify-between">
-        <p className="text-[20px] font-medium">Manage Products</p>
-        <Button
-          onClick={() =>
-            router.push(`/dashboard/inventory/${supermarket_id}/add`)
-          }
-        >
-          Add Product
-        </Button>
-      </div>
-      <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {/* {products.map(
-          (product: {
-            id: string;
-            name: string;
-            description: string;
-            product_image: string;
-            price: string;
-            supermarket_id: string;
-            category: string;
-            quantity: number;
-          }) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onClickProduct={() => {
-                console.log("Product ID:", product.id);
-                router.push(
-                  `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
-                );
-              }}
-            />
-          ),
-        )} */}
-
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            categories={categories} // Pass categories to ProductCard
-            onClickProduct={() => {
-              // router.push(
-              //   `/dashboard/inventory/${supermarket_id}/product/${product.id}`,
-              // );
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
 };
 
 export default ProductsList;
