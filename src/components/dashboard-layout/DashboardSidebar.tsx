@@ -65,7 +65,7 @@ const DashboardSidebar = () => {
 
         <div className="flex flex-col text-white">
           <p className="text-[10px] uppercase opacity-[40%]">
-            Live Well Supermarket
+            {userData?.supermarket_name ?? "Supermarket"}
           </p>
           <p className="text-[14px] font-medium opacity-[80%]">
             {" "}

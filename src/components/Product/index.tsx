@@ -221,21 +221,20 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
       </div>
-      <div className="p-4">
-        <div className="ml-4 flex flex-col">
-          <div className="flex items-center justify-between">
+      <div className="p-1">
+        <div className="flex flex-col">
+          <div className="py-1">
             <h1 className="text-2xl font-semibold">{product.name}</h1>
-
-            {product.in_stock ? (
-              <span className="rounded-full bg-[#a0ff8e] p-4 text-green-600">
-                In Stock
-              </span>
-            ) : (
-              <span className="rounded-full bg-[#e9b5b5] px-3 py-1.5 text-center text-sm text-red-500">
-                Out of Stock
-              </span>
-            )}
           </div>
+          {product.in_stock ? (
+            <span className="rounded-full bg-[#a0ff8e] p-4 text-green-600">
+              In Stock
+            </span>
+          ) : (
+            <span className="w-[100px] rounded-full bg-[#e9b5b5] px-3 py-1.5 text-center text-[12px] text-red-500">
+              Out of Stock
+            </span>
+          )}
           <p className="text-lg text-gray-500">{product.description}</p>
           <div className="flex items-center justify-between">
             <p className="text-lg font-semibold text-purple-500">

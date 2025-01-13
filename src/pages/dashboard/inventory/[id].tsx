@@ -142,7 +142,7 @@ const ProductsList = () => {
           </Button>
         </div>
         <UserDashboard />
-        <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {/* {products.map(
             (product: {
               id: string;
@@ -197,7 +197,7 @@ const ProductsList = () => {
           Add Product
         </Button>
       </div>
-      <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto mt-8 grid max-w-[1200px] grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
         {/* {products.map(
           (product: {
             id: string;

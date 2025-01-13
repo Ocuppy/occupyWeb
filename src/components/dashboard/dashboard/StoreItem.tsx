@@ -78,14 +78,16 @@ const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore }) => {
       <div className="mx-4 flex items-center justify-between">
         {/* Store Photo */}
         {store.supermarket_photo ? (
-          <Image
-            src={store.supermarket_photo}
-            alt={`${store.name} logo`}
-            width={100}
-            height={50}
-            // className= object-cover"
-            // className="rounded-full"
-          />
+          <div className="h-[100px] w-[100px] overflow-hidden rounded-full">
+            <Image
+              src={store.supermarket_photo}
+              alt={`${store.name} logo`}
+              width={100}
+              height={50}
+              // className= object-cover"
+              // className="rounded-full"
+            />
+          </div>
         ) : (
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
             <FaStore className="text-gray-500" />
