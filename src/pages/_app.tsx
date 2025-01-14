@@ -7,6 +7,7 @@ import Layout from "@/components/dashboard-layout/Layout";
 import { Inter, Nunito_Sans } from "next/font/google";
 import { DashboardMenuVisibilityProvider } from "@/contexts/DashboardMenuVisibilityContext";
 import { NotificationProvider } from "@/contexts/NotificationContext";
+import { SelectedSupermarketProvider } from "@/contexts/SelectedSupermarketContext";
 import Providers from "@/store/redux/Provider";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -25,11 +26,13 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout =
     Component.getLayout ??
     ((page) => (
-      <DashboardMenuVisibilityProvider>
-        <NotificationProvider>
-          <Layout className={`${nunito.variable}`}>{page}</Layout>
-        </NotificationProvider>
-      </DashboardMenuVisibilityProvider>
+      <SelectedSupermarketProvider>
+        <DashboardMenuVisibilityProvider>
+          <NotificationProvider>
+            <Layout className={`${nunito.variable}`}>{page}</Layout>
+          </NotificationProvider>
+        </DashboardMenuVisibilityProvider>
+      </SelectedSupermarketProvider>
     ));
 
   return (

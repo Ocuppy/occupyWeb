@@ -16,6 +16,7 @@ import { useContext, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
 import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
+import { useSelectedSupermarket } from "@/contexts/SelectedSupermarketContext";
 
 const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
   return (
@@ -30,6 +31,7 @@ const DashboardSidebar = () => {
   const router = useRouter();
 
   const context = useContext(DashboardMenuVisibilityContext);
+  const { selectedSupermarketName } = useSelectedSupermarket();
 
   if (!context) {
     throw new Error("ToggleComponent must be used within a VisibilityProvider");
@@ -64,8 +66,10 @@ const DashboardSidebar = () => {
         </Avatar>
 
         <div className="flex flex-col text-white">
-          <p className="text-[10px] uppercase opacity-[40%]">
-            {userData?.supermarket_name ?? "Supermarket"}
+          <p className="u text-[16px] font-semibold">
+            {selectedSupermarketName ||
+              userData?.supermarket_name ||
+              "Welcome 👋"}
           </p>
           <p className="text-[14px] font-medium opacity-[80%]">
             {" "}

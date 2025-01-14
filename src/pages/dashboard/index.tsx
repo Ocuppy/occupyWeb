@@ -32,7 +32,7 @@ import ActionButtons from "@/components/dashboard/settings/ActionButtons";
 // imort Router from "next/router";
 import UserDashboard from "@/components/dashboard/dashboard/UserDashboard";
 import { useRouter } from "next/router";
-
+import { useSelectedSupermarket } from "@/contexts/SelectedSupermarketContext";
 const inter = Inter({ subsets: ["latin"] });
 const getTimeOfDay = () => {
   const currentHour = new Date().getHours();
@@ -50,6 +50,15 @@ const getTimeOfDay = () => {
 
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
+  const { setSelectedSupermarketId, setSelectedSupermarketName } =
+    useSelectedSupermarket();
+  useEffect(() => {
+    // Check if we're on the main dashboard page
+    if (router.pathname === "/dashboard") {
+      setSelectedSupermarketId(null);
+      setSelectedSupermarketName(null);
+    }
+  }, [router.pathname, setSelectedSupermarketId, setSelectedSupermarketName]);
 
   const [showMarketDet, setShowMarketDet] = useState(false);
   const [selectedSupermarket, setSelectedSupermarket] = useState(null);
@@ -95,6 +104,12 @@ const Page: NextPageWithLayout = () => {
   }
 
   console.log("Supermarkets:", supermarkets);
+
+  const handleStoreClick = (store: any) => {
+    setSelectedSupermarketId(store.id);
+    setSelectedSupermarketName(store.business_name);
+    router.push(`dashboard/inventory/${store.id}`);
+  };
   if (supermarkets.length > 0) {
     return (
       <div className="h-full rounded-md bg-white px-4 py-6">
@@ -132,7 +147,8 @@ const Page: NextPageWithLayout = () => {
                 // onClickStore={() => console.log("Store clicked:", store.id)}
                 onClickStore={() =>
                   //  router.push(`/dashboard/inventory/${supermarket_id}`);
-                  router.push(`dashboard/inventory/${store.id}`)
+                  // router.push(`dashboard/inventory/${store.id}`)
+                  handleStoreClick(store)
                 }
               />
             ),
