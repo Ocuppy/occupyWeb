@@ -18,6 +18,7 @@ import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSli
 import { useAppSelector, useAppDispatch } from "@/store/redux/hooks";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import useFcmToken from "@/hooks/useFcmToken";
+import { logOut } from "@/store/redux/services/authSlice/authSlice";
 
 const DashboardHeader = () => {
   const { token, notificationPermissionStatus } = useFcmToken();
@@ -50,6 +51,10 @@ const DashboardHeader = () => {
     throw new Error("Home must be used within a NotificationProvider");
   }
   const { showNotification } = notificationContext;
+
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
 
   const handleShowNotification = () => {
     showNotification("This is a notification message!");
@@ -108,7 +113,9 @@ const DashboardHeader = () => {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Option</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-600" onClick={handleLogout}>
+                Log Out
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

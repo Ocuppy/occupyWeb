@@ -38,16 +38,16 @@ export const DashboardLinks: Record<string, IDashboardLinks[]> = {
         { title: "Rider's Assigning", url: "/riders-assigning" },
       ],
     },
-    {
-      icon: InventoryIcon,
-      title: "Inventory",
-      url: ADMIN_DASHBOARD_URL + "/inventory",
-      subLinks: [
-        { title: "Pending", url: "/pending" },
-        { title: "Approved", url: "/approved" },
-        { title: "Price Management", url: "/price-management" },
-      ],
-    },
+    // {
+    //   icon: InventoryIcon,
+    //   title: "Inventory",
+    //   url: ADMIN_DASHBOARD_URL + "/inventory",
+    //   subLinks: [
+    //     { title: "Pending", url: "/pending" },
+    //     { title: "Approved", url: "/approved" },
+    //     { title: "Price Management", url: "/price-management" },
+    //   ],
+    // },
     // {
     //   icon: CategoriesIcon,
     //   title: "Categories",
