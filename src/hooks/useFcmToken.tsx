@@ -1,10 +1,8 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { onMessage, Unsubscribe } from "firebase/messaging";
 import { fetchToken, messaging } from "../../firebase";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import { OrderNotificationContext } from "@/contexts/OrderNotificationContext";
 
 async function getNotificationPermissionAndToken() {
   // Step 1: Check if Notifications are supported in the browser.
@@ -37,6 +35,11 @@ const useFcmToken = () => {
   const [token, setToken] = useState<string | null>(null); // State to store the FCM token.
   const retryLoadToken = useRef(0); // Ref to keep track of retry attempts.
   const isLoading = useRef(false); // Ref to keep track if a token fetch is currently in progress.
+  const orderNotificationContext = useContext(OrderNotificationContext);
+  if (!orderNotificationContext) {
+    throw new Error("Home must be used within a NotificationProvider");
+  }
+  const { showNotification } = orderNotificationContext;
 
   const loadToken = async () => {
     // Step 4: Prevent multiple fetches if already fetched or in progress.
@@ -105,51 +108,36 @@ const useFcmToken = () => {
         const link = payload.fcmOptions?.link || payload.data?.link;
 
         if (link) {
-          toast.info(
-            `${payload.notification?.title}: ${payload.notification?.body}`,
-            {
-              action: {
-                label: "Visit",
-                onClick: () => {
-                  const link = payload.fcmOptions?.link || payload.data?.link;
-                  if (link) {
-                    router.push(link);
-                  }
-                },
-              },
-            },
-          );
+          showNotification(String(payload.notification?.body), link);
         } else {
-          toast.info(
-            `${payload.notification?.title}: ${payload.notification?.body}`,
-          );
+          showNotification(String(payload.notification?.body));
         }
 
         // --------------------------------------------
         // Disable this if you only want toast notifications.
-        const n = new Notification(
-          payload.notification?.title || "New message",
-          {
-            body: payload.notification?.body || "This is a new message",
-            data: link ? { url: link } : undefined,
-          },
-        );
-        let sound: HTMLAudioElement;
-        sound = new Audio("/audio/notification-bell.wav");
-        sound.play().catch((error) => {
-          console.error("Failed to play sound:", error);
-        });
+        // const n = new Notification(
+        //   payload.notification?.title || "New message",
+        //   {
+        //     body: payload.notification?.body || "This is a new message",
+        //     data: link ? { url: link } : undefined,
+        //   },
+        // );
+        // let sound: HTMLAudioElement;
+        // sound = new Audio("/audio/notification-bell.wav");
+        // sound.play().catch((error) => {
+        //   console.error("Failed to play sound:", error);
+        // });
 
-        // Step 10: Handle notification click event to navigate to a link if present.
-        n.onclick = (event) => {
-          event.preventDefault();
-          const link = (event.target as any)?.data?.url;
-          if (link) {
-            router.push(link);
-          } else {
-            console.log("No link found in the notification payload");
-          }
-        };
+        // // Step 10: Handle notification click event to navigate to a link if present.
+        // n.onclick = (event) => {
+        //   event.preventDefault();
+        //   const link = (event.target as any)?.data?.url;
+        //   if (link) {
+        //     router.push(link);
+        //   } else {
+        //     console.log("No link found in the notification payload");
+        //   }
+        // };
         // --------------------------------------------
       });
 
@@ -166,7 +154,7 @@ const useFcmToken = () => {
 
     // Step 11: Cleanup the listener when the component unmounts.
     return () => unsubscribe?.();
-  }, [token, router, toast]);
+  }, [token, router, showNotification]);
 
   return { token, notificationPermissionStatus }; // Return the token and permission status.
 };

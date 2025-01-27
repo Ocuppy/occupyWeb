@@ -116,44 +116,45 @@ const DashboardHeader = () => {
     </header>
   );
 
-  //   Notification Testing
-  //   const handleTestNotification = async () => {
-  //     const response = await fetch("/api/notification", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         token: token,
-  //         title: "Test Notification",
-  //         message: "This is a test notification",
-  //         link: "/dashboard/orders/ongoing",
-  //       }),
-  //     });
-  //
-  //     const data = await response.json();
-  //   };
-  //
-  //   return (
-  //     <main className="p-10">
-  //       {notificationPermissionStatus === "granted" ? (
-  //         <p>Permission to receive notifications has been granted.</p>
-  //       ) : notificationPermissionStatus !== null ? (
-  //         <p>
-  //           You have not granted permission to receive notifications. Please
-  //           enable notifications in your browser settings.
-  //         </p>
-  //       ) : null}
-  //
-  //       <Button
-  //         disabled={!token}
-  //         className="mt-5"
-  //         onClick={handleTestNotification}
-  //       >
-  //         Send Test Notification
-  //       </Button>
-  //     </main>
-  //   );
+  // Notification Testing
+  // const handleTestNotification = async () => {
+  //   const response = await fetch("/api/notification", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       token: token,
+  //       title: "Test Notification",
+  //       message: "This is a test notification",
+  //       link: "/dashboard/orders/ongoing",
+  //     }),
+  //   });
+
+  //   const data = await response.json();
+  //   console.log("response data", data);
+  // };
+
+  // return (
+  //   <main className="p-10">
+  //     {notificationPermissionStatus === "granted" ? (
+  //       <p>Permission to receive notifications has been granted.</p>
+  //     ) : notificationPermissionStatus !== null ? (
+  //       <p>
+  //         You have not granted permission to receive notifications. Please
+  //         enable notifications in your browser settings.
+  //       </p>
+  //     ) : null}
+
+  //     <Button
+  //       disabled={!token}
+  //       className="mt-5"
+  //       onClick={handleTestNotification}
+  //     >
+  //       Send Test Notification
+  //     </Button>
+  //   </main>
+  // );
 };
 
 export default DashboardHeader;
