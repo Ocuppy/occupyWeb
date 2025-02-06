@@ -8,6 +8,7 @@ import React from "react";
 const Approved: NextPageWithLayout = () => {
   return (
     <div>
+      <h1>Approved Inventory Page</h1>
       {/* <InventoryCard /> */}
       {/* <DataTable data={products} columns={columns} /> */}
     </div>

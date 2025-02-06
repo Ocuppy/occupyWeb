@@ -194,8 +194,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onEditProduct,
 }) => {
   // Add debug logs
-  console.log("Product category ID:", product.category);
-  console.log("Available categories:", categories);
+  // console.log("Product category ID:", product.category);
+  // console.log("Available categories:", categories);
 
   const categoryName =
     categories.find((cat) => cat.id.toString() === product.category.toString())
@@ -205,7 +205,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div
-      className="mx-auto flex w-[300px] cursor-pointer flex-col rounded-lg bg-white p-4 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl xl:w-[250px]"
+      className="mx-auto flex w-[300px] cursor-pointer flex-col rounded-lg bg-white p-4 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl xl:w-[20rem]"
       // className="flex w-[250px] cursor-pointer flex-col rounded-lg bg-slate-50 p-4 shadow-md hover:w-[260px]"
       onClick={onClickProduct}
     >

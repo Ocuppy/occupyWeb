@@ -290,7 +290,7 @@ const AddProduct: React.FC = () => {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => router.push("/dashboard/inventory")}
+                onClick={() => router.back()}
               >
                 Cancel
               </Button>

@@ -108,7 +108,7 @@ const Page: NextPageWithLayout = () => {
     location.reload();
   };
 
-  console.log("Supermarkets:", supermarkets);
+  // console.log("Supermarkets:", supermarkets);
   if (supermarkets.length > 0) {
     return (
       <div className="h-full rounded-md bg-white px-4 py-6">
