@@ -16,6 +16,7 @@ import { useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
 import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
+import { usePathname } from "next/navigation";
 
 const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
   return (
@@ -27,6 +28,7 @@ const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
 };
 
 const DashboardSidebar = () => {
+  const pathname = usePathname();
   const router = useRouter();
 
   const context = useContext(DashboardMenuVisibilityContext);
@@ -52,11 +54,13 @@ const DashboardSidebar = () => {
     skip: userID ? false : true,
   });
 
-  const getSupermarketId = () => {
+  const getSupermarketId = (): string => {
     const supermarket = sessionStorage.getItem("occupy-supermarket");
-    console.log("supermarket id");
     if (supermarket) {
-      console.log("supermarket", JSON.parse(supermarket));
+      const parsedSupermarketData = JSON.parse(supermarket);
+      return parsedSupermarketData.id;
+    } else {
+      return "";
     }
   };
 
@@ -102,7 +106,7 @@ const DashboardSidebar = () => {
       <Separator className="my-8 h-[2px]" />
       {hasId ? (
         <div className="flex flex-col gap-4">
-          {DashboardLinks.main.map((link) => {
+          {DashboardLinks.main.map((link, index) => {
             const isCurrentPath = link.url === router.pathname;
             return (
               <div key={link.url}>
@@ -110,7 +114,6 @@ const DashboardSidebar = () => {
                   <Accordion
                     onClick={(e) => {
                       e.stopPropagation();
-                      getSupermarketId();
                     }}
                     type="single"
                     collapsible
@@ -167,11 +170,18 @@ const DashboardSidebar = () => {
                 ) : (
                   <Link
                     className={`flex items-center rounded-lg p-2 py-[12px] pl-4 ${
-                      isCurrentPath
+                      pathname ===
+                      (index === 0
+                        ? link.url
+                        : `${link.url}/${getSupermarketId()}`)
                         ? "bg-white text-occupy-primary"
                         : "bg-transparent text-white"
                     }`}
-                    href={link.url}
+                    href={
+                      index === 0
+                        ? link.url
+                        : `${link.url}/${getSupermarketId()}`
+                    }
                   >
                     <ParentLinkComponent link={link} />
                   </Link>
