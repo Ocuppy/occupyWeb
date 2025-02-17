@@ -2,7 +2,7 @@ import { Input } from "../ui/input";
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { BellIcon, Menu } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { AngleLeftIcon, UserClockIcon } from "@/assets/icon/icons";
 import {
   DropdownMenu,
@@ -17,8 +17,12 @@ import { NotificationContext } from "@/contexts/NotificationContext";
 import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { useAppSelector, useAppDispatch } from "@/store/redux/hooks";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
+import useFcmToken from "@/hooks/useFcmToken";
+import { logOut } from "@/store/redux/services/authSlice/authSlice";
 
 const DashboardHeader = () => {
+  const { token, notificationPermissionStatus } = useFcmToken();
+
   const sideMenuContext = useContext(DashboardMenuVisibilityContext);
   if (!sideMenuContext) {
     throw new Error(
@@ -48,9 +52,13 @@ const DashboardHeader = () => {
   }
   const { showNotification } = notificationContext;
 
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
+
   const handleShowNotification = () => {
     showNotification("This is a notification message!");
-    console.log("triggering notification");
+    // console.log("triggering notification");
   };
 
   return (
@@ -82,12 +90,12 @@ const DashboardHeader = () => {
           >
             <UserClockIcon width={21} />
           </Button>
-          <Button
-            onClick={handleShowNotification}
-            className="rounded-lg bg-[#f6f6f6] px-4 py-6 text-black"
-          >
-            <BellIcon width={21} />
-          </Button>
+          {/* <Button */}
+          {/*   onClick={handleShowNotification} */}
+          {/*   className="rounded-lg bg-[#f6f6f6] px-4 py-6 text-black" */}
+          {/* > */}
+          {/*   <BellIcon width={21} /> */}
+          {/* </Button> */}
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
@@ -105,13 +113,55 @@ const DashboardHeader = () => {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Option</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-600" onClick={handleLogout}>
+                Log Out
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </Flex>
     </header>
   );
+
+  // Notification Testing
+  // const handleTestNotification = async () => {
+  //   const response = await fetch("/api/notification", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       token: token,
+  //       title: "Test Notification",
+  //       message: "This is a test notification",
+  //       link: "/dashboard/orders/ongoing",
+  //     }),
+  //   });
+
+  //   const data = await response.json();
+  //   console.log("response data", data);
+  // };
+
+  // return (
+  //   <main className="p-10">
+  //     {notificationPermissionStatus === "granted" ? (
+  //       <p>Permission to receive notifications has been granted.</p>
+  //     ) : notificationPermissionStatus !== null ? (
+  //       <p>
+  //         You have not granted permission to receive notifications. Please
+  //         enable notifications in your browser settings.
+  //       </p>
+  //     ) : null}
+
+  //     <Button
+  //       disabled={!token}
+  //       className="mt-5"
+  //       onClick={handleTestNotification}
+  //     >
+  //       Send Test Notification
+  //     </Button>
+  //   </main>
+  // );
 };
 
 export default DashboardHeader;

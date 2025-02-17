@@ -10,12 +10,13 @@ import {
 import Flex from "@/components/shared/Flex";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "../ui/separator";
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
 import { DashboardMenuVisibilityContext } from "@/contexts/DashboardMenuVisibilityContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
 import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
+import { usePathname } from "next/navigation";
 
 const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
   return (
@@ -27,6 +28,7 @@ const ParentLinkComponent = ({ link }: { link: IDashboardLinks }) => {
 };
 
 const DashboardSidebar = () => {
+  const pathname = usePathname();
   const router = useRouter();
 
   const context = useContext(DashboardMenuVisibilityContext);
@@ -51,6 +53,30 @@ const DashboardSidebar = () => {
   } = useGetSupermarketProfileQuery(userID, {
     skip: userID ? false : true,
   });
+
+  const getSupermarketId = (): string => {
+    const supermarket = sessionStorage.getItem("occupy-supermarket");
+    if (supermarket) {
+      const parsedSupermarketData = JSON.parse(supermarket);
+      return parsedSupermarketData.id;
+    } else {
+      return "";
+    }
+  };
+
+  const [hasId, setHasId] = useState(false);
+
+  useEffect(() => {
+    setHasId(hasSupermarketId());
+  }, []);
+
+  const hasSupermarketId = (): boolean => {
+    if (typeof window !== "undefined") {
+      const supermarket = sessionStorage.getItem("occupy-supermarket");
+      return !!supermarket; // Returns true if a value exists, otherwise false
+    }
+    return false; // Default to false when running on the server
+  };
 
   return (
     <aside
@@ -78,77 +104,98 @@ const DashboardSidebar = () => {
         </button>
       </div>
       <Separator className="my-8 h-[2px]" />
-      <p className="pl-4 text-[12px] text-white opacity-50">MAIN</p>
-      <div className="flex flex-col gap-4">
-        {DashboardLinks.main.map((link) => {
-          const isCurrentPath = link.url === router.pathname;
-          return (
-            <div key={link.url}>
-              {link.subLinks ? (
-                <Accordion
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  type="single"
-                  collapsible
-                >
-                  <AccordionItem value={link.url}>
-                    <AccordionTrigger
-                      className={`rounded-lg p-2 py-[12px] pl-4 ${
-                        isCurrentPath
-                          ? "bg-white text-occupy-primary"
-                          : "bg-transparent text-white"
-                      }`}
-                    >
-                      <ParentLinkComponent link={link} />
-                      {/* <Link
-                        href={link.url}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                        }}
+      {hasId ? (
+        <div className="flex flex-col gap-4">
+          {DashboardLinks.main.map((link, index) => {
+            const isCurrentPath = link.url === router.pathname;
+            return (
+              <div key={link.url}>
+                {link.subLinks ? (
+                  <Accordion
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                    type="single"
+                    collapsible
+                  >
+                    <AccordionItem value={link.url}>
+                      <AccordionTrigger
+                        className={`rounded-lg p-2 py-[12px] pl-4 ${
+                          isCurrentPath
+                            ? "bg-white text-occupy-primary"
+                            : "bg-transparent text-white"
+                        }`}
                       >
                         <ParentLinkComponent link={link} />
-                      </Link> */}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <div className="mth-4 ml-8">
-                        {link.subLinks.map((subLink, idx) => {
-                          const linkToClick = `${link.url}${subLink.url}`;
-                          const isCurrentPath = linkToClick === router.pathname;
-                          const isLast = idx === link?.subLinks?.length! - 1;
-                          return (
-                            <div
-                              className={`flex items-baseline ${
-                                !isLast && "mb-[-18px]"
-                              }`}
-                              key={idx}
-                            >
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="mth-4 ml-8">
+                          {link.subLinks.map((subLink, idx) => {
+                            const linkToClick = `${link.url}${subLink.url}`;
+                            const isCurrentPath =
+                              linkToClick === router.pathname;
+                            const isLast = idx === link?.subLinks?.length! - 1;
+                            return (
                               <div
-                                className={`border-l- w-[20px] rounded-bl-md border-b-[2px] border-l border-[#c183b0] ${
-                                  idx === 0 ? "h-[40px]" : "h-[50px]"
+                                className={`flex items-baseline ${
+                                  !isLast && "mb-[-18px]"
                                 }`}
-                              ></div>
-                              <Link
-                                href={linkToClick}
-                                onClick={() => {
-                                  toggleVisibility();
-                                }}
-                                className={`flex w-full items-center rounded-lg px-4 py-2 font-semibold ${
-                                  isCurrentPath
-                                    ? "bg-white text-occupy-primary"
-                                    : "bg-transparent text-[#c183b0]"
-                                }`}
+                                key={idx}
                               >
-                                {subLink.title}
-                              </Link>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              ) : (
+                                <div
+                                  className={`border-l- w-[20px] rounded-bl-md border-b-[2px] border-l border-[#c183b0] ${
+                                    idx === 0 ? "h-[40px]" : "h-[50px]"
+                                  }`}
+                                ></div>
+                                <Link
+                                  href={linkToClick}
+                                  onClick={() => {
+                                    toggleVisibility();
+                                  }}
+                                  className={`flex w-full items-center rounded-lg px-4 py-2 font-semibold ${
+                                    isCurrentPath
+                                      ? "bg-white text-occupy-primary"
+                                      : "bg-transparent text-[#c183b0]"
+                                  }`}
+                                >
+                                  {subLink.title}
+                                </Link>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                ) : (
+                  <Link
+                    className={`flex items-center rounded-lg p-2 py-[12px] pl-4 ${
+                      pathname ===
+                      (index === 0
+                        ? link.url
+                        : `${link.url}/${getSupermarketId()}`)
+                        ? "bg-white text-occupy-primary"
+                        : "bg-transparent text-white"
+                    }`}
+                    href={
+                      index === 0
+                        ? link.url
+                        : `${link.url}/${getSupermarketId()}`
+                    }
+                  >
+                    <ParentLinkComponent link={link} />
+                  </Link>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4">
+          {DashboardLinks.main.slice(0, 1).map((link) => {
+            const isCurrentPath = link.url === router.pathname;
+            return (
+              <div key={link.url}>
                 <Link
                   className={`flex items-center rounded-lg p-2 py-[12px] pl-4 ${
                     isCurrentPath
@@ -159,11 +206,12 @@ const DashboardSidebar = () => {
                 >
                   <ParentLinkComponent link={link} />
                 </Link>
-              )}
-            </div>
-          );
-        })}
-      </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       <Separator className="my-12 h-[2px]" />
       <p className="pl-4 text-[12px] text-white opacity-50">SETTINGS</p>
       <div>

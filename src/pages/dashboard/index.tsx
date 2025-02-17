@@ -94,7 +94,21 @@ const Page: NextPageWithLayout = () => {
     );
   }
 
-  console.log("Supermarkets:", supermarkets);
+  const saveSelectedSupermarket = (supermarket: {
+    id: any;
+    name: any;
+    business_name: any;
+    supermarket_photo: any;
+    is_online: any;
+    contact_person_name: any;
+    business_address: any;
+    contact_person_phone_number: any;
+  }) => {
+    sessionStorage.setItem("occupy-supermarket", JSON.stringify(supermarket));
+    location.reload();
+  };
+
+  // console.log("Supermarkets:", supermarkets);
   if (supermarkets.length > 0) {
     return (
       <div className="h-full rounded-md bg-white px-4 py-6">
@@ -132,7 +146,8 @@ const Page: NextPageWithLayout = () => {
                 // onClickStore={() => console.log("Store clicked:", store.id)}
                 onClickStore={() =>
                   //  router.push(`/dashboard/inventory/${supermarket_id}`);
-                  router.push(`dashboard/inventory/${store.id}`)
+                  // router.push(`dashboard/inventory/${store.id}`)
+                  saveSelectedSupermarket(store)
                 }
               />
             ),

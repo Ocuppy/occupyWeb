@@ -12,6 +12,7 @@ import {
 } from "@/contexts/DashboardMenuVisibilityContext";
 import { AnimatePresence, motion } from "framer-motion";
 import NotificationPopup from "../dashboard/notification/NotificationPopup";
+import OrderNotificationPopup from "../dashboard/order-notification-popup/OrderNotificationPopup";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import { selectAuthToken } from "@/store/redux/services/authSlice/authSlice";
@@ -53,6 +54,7 @@ const Layout = ({
     // <div className={cn("flex flex-auto flex-col bg-[#F9FBFD]", className)}>
     <div className={cn("bg-[#F9FBFD]", className)}>
       <NotificationPopup />
+      <OrderNotificationPopup />
       <Toaster />
       <div
         onClick={() => {

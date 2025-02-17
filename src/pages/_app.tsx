@@ -9,6 +9,7 @@ import { DashboardMenuVisibilityProvider } from "@/contexts/DashboardMenuVisibil
 import { NotificationProvider } from "@/contexts/NotificationContext";
 import Providers from "@/store/redux/Provider";
 import { Toaster } from "@/components/ui/toaster";
+import { OrderNotificationProvider } from "@/contexts/OrderNotificationContext";
 
 export const inter = Inter({ subsets: ["latin"] });
 export const nunito = Inter({ subsets: ["latin"], variable: "--font-nunito" });
@@ -27,7 +28,9 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     ((page) => (
       <DashboardMenuVisibilityProvider>
         <NotificationProvider>
-          <Layout className={`${nunito.variable}`}>{page}</Layout>
+          <OrderNotificationProvider>
+            <Layout className={`${nunito.variable}`}>{page}</Layout>
+          </OrderNotificationProvider>
         </NotificationProvider>
       </DashboardMenuVisibilityProvider>
     ));
