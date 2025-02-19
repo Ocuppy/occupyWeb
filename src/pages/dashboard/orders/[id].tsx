@@ -1,4 +1,3 @@
-import OrderCard from "@/components/dashboard/Order-Page/OrderCard";
 import { columns } from "@/components/dashboard/Order-Page/ongoing/column";
 import { DataTable } from "@/components/dashboard/Order-Page/ongoing/data-table";
 import orders from "@/data/orders";
@@ -15,7 +14,9 @@ const SupermarketOrdersPage = () => {
     { skip: !supermarket_id },
   );
 
-  console.log("Orders Data", data);
+  useEffect(() => {
+    console.log("Orders Data", data);
+  }, [data]);
 
   return (
     <div className="max-w-screen flex w-full flex-col">
