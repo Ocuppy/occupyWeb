@@ -180,7 +180,7 @@ const AddProduct: React.FC = () => {
     };
 
     fetchCategories();
-  }, []);
+  }, [toast]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

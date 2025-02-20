@@ -67,7 +67,7 @@ const Page: NextPageWithLayout = () => {
     };
 
     fetchEstates();
-  }, []);
+  }, [toast]);
 
   const formatPhoneNumber = (value: string) => {
     // Remove all non-digit characters
