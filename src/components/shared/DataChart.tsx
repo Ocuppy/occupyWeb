@@ -17,7 +17,7 @@ const DataChart = (props: ChartConfiguration) => {
         chart.destroy();
       };
     }
-  }, [data]);
+  }, [data, options, props]);
   return <canvas ref={chartRef} />;
 };
 Chart.register(...registerables);

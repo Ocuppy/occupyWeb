@@ -19,6 +19,7 @@ import { useAppSelector, useAppDispatch } from "@/store/redux/hooks";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import useFcmToken from "@/hooks/useFcmToken";
 import { logOut } from "@/store/redux/services/authSlice/authSlice";
+import Image from "next/image";
 
 const DashboardHeader = () => {
   const { token, notificationPermissionStatus } = useFcmToken();
@@ -99,7 +100,7 @@ const DashboardHeader = () => {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
-                <img src="/images/profile.png" alt="Profile Picture" />
+                <Image src="/images/profile.png" alt="Profile Picture" />
                 <div className="text-left">
                   <p className="text-sm font-medium text-black/80">
                     {userData?.first_name ?? "John"}{" "}

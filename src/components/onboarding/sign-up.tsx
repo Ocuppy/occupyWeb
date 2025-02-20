@@ -440,7 +440,7 @@ const Signup = () => {
     };
 
     fetchEstates();
-  }, []);
+  }, [toast]);
 
   const validateForm = () => {
     const validationErrors: { [key: string]: string } = {};
