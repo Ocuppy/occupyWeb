@@ -103,8 +103,8 @@ const DashboardHeader = () => {
                 <Image
                   src="/images/profile.png"
                   alt="Profile Picture"
-                  height={40}
-                  width={40}
+                  width={32}
+                  height={32}
                 />
                 <div className="text-left">
                   <p className="text-sm font-medium text-black/80">
