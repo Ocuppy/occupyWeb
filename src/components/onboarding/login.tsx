@@ -216,7 +216,7 @@
 // export default Login;
 
 import Image from "next/image";
-import OccupyLogo from "../../../public/occupy-logo.png";
+// import OccupyLogo from "../../../public/occupy-logo.png";
 import { Input } from "../ui/input";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -245,16 +245,24 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: loginValidationSchema,
-    onSubmit: async (values) => {
-      login({ email: values.email, password: values.password });
-    },
-  });
+// Define the validation schema outside useFormik
+const loginValidationSchema = Yup.object({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+});
+
+const formik = useFormik({
+  initialValues: {
+    email: "",
+    password: "",
+  },
+  validationSchema: loginValidationSchema, // Correct way to pass schema
+  onSubmit: async (values) => {
+    login({ email: values.email, password: values.password });
+  },
+});
 
   const { toast } = useToast();
 
@@ -286,16 +294,25 @@ const Login = () => {
   useEffect(() => {
     if (error) {
       if (isFetchBaseQueryErrorType(error)) {
-        // const errorData = error.data as {
-        //   messages: { message: string }[];
-        //   detail: string;
-        // } & Record<string, any>;
-
+        const errorData = error.data as {
+          messages?: { message: string }[];
+          detail?: string;
+        } & Record<string, any>;
+  
+        let errorMessage = "Invalid email or password"; // Default message
+        
+        // Check for specific error cases
+        if (errorData.detail) {
+          errorMessage = errorData.detail;
+        } else if (errorData.messages?.[0]?.message) {
+          errorMessage = errorData.messages[0].message;
+        } else if (error.status === 401) {
+          errorMessage = "Invalid email or password";
+        }
+  
         toast({
-          // description: `${errorData.messages[0].message}`,
-          // title: `${errorData.detail} `,
-          description: `Error signing in`,
-          title: `Error`,
+          description: errorMessage,
+          title: "Login Failed",
           variant: "destructive",
         });
       }
@@ -325,12 +342,12 @@ const Login = () => {
 
         {/* login form */}
         <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg bg-white px-6 py-12 lg:px-8 lg:shadow-lg">
-          <Image
+          {/* <Image
             onClick={() => router.push("/")}
             className="w-[120px]"
-            src={OccupyLogo}
+            // src={OccupyLogo}
             alt="logo"
-          />
+          /> */}
           <div className="flex w-full flex-col items-start gap-3">
             <h3 className="text-2xl font-medium text-[#12141A]">Login</h3>
             <p className="pb-12 text-sm font-medium text-[#606778]">
@@ -417,9 +434,10 @@ const Login = () => {
               <div className="w-full text-end">
                 <button
                   type="submit"
+                  disabled={isLoading}
                   className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
                 >
-                  Login
+                  {isLoading ? "Logining in..." : "Login In"}
                 </button>
                 <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
                   New to Occupy?{" "}
