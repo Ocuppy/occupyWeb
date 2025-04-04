@@ -24,11 +24,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
-import { Image } from "lucide-react";
+import { Image as ImgIcon } from "lucide-react";
 import { useAppSelector } from "@/store/redux/hooks";
-import { useEditProductMutation } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
+import {
+  useEditProductMutation,
+  useGetProductDetailQuery,
+} from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import { useGetUserSupermarketsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 // import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
+import Image from "next/image";
 
 const productSchema = z.object({
   product_id: z.string().min(1, "Product ID is required"),
@@ -74,6 +78,21 @@ interface Category {
   category_name: string;
 }
 
+interface Product {
+  id: string;
+  discounted_percentage: number;
+  name: string;
+  description: string;
+  product_image: string;
+  price: string;
+  discounted_price: string;
+  quantity: number;
+  in_stock: boolean;
+  date_updated: string;
+  category: number;
+  supermarket: string;
+}
+
 const EditProduct: React.FC = () => {
   const router = useRouter();
   const { id: productId } = router.query; // Correctly getting productId from the query
@@ -89,6 +108,12 @@ const EditProduct: React.FC = () => {
 
   const { data: supermarketsData, isLoading: isSupermarketsLoading } =
     useGetUserSupermarketsQuery(userID, { skip: !userID });
+
+  const productDetail = useGetProductDetailQuery({ productId }).data as Product;
+  const isFetchingProductDetail = useGetProductDetailQuery({ productId })
+    .isLoading as boolean;
+
+  console.log("Product Detail:", productDetail);
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
@@ -163,6 +188,21 @@ const EditProduct: React.FC = () => {
 
     fetchCategories();
   }, [toast]);
+
+  useEffect(() => {
+    if (productDetail) {
+      form.setValue("productName", productDetail.name);
+      form.setValue("description", productDetail.description);
+      form.setValue("price", productDetail.price);
+      form.setValue("quantity", productDetail.quantity);
+      const currentCategory = categories.find(
+        (entry) => entry.value == productDetail.category.toString(),
+      );
+      if (currentCategory) {
+        form.setValue("category", currentCategory);
+      }
+    }
+  }, [productDetail, form, categories]);
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -326,6 +366,17 @@ const EditProduct: React.FC = () => {
               {/* Media Section */}
               <div className="rounded-lg border bg-white p-6 shadow-sm">
                 <h2 className="mb-4 text-lg font-semibold">Media</h2>
+                {productDetail && (
+                  <div className="flex items-center gap-3">
+                    <h6>Current Image:</h6>
+                    <Image
+                      src={productDetail.product_image}
+                      alt={productDetail.name}
+                      width={70}
+                      height={50}
+                    />
+                  </div>
+                )}
                 <div className="flex flex-col items-center justify-center space-y-4">
                   <input
                     type="file"
@@ -339,7 +390,7 @@ const EditProduct: React.FC = () => {
                     className="cursor-pointer rounded-lg border-2 border-dashed p-6 text-center"
                   >
                     <div className="flex flex-col items-center space-y-2">
-                      <Image
+                      <ImgIcon
                         width={48}
                         height={48}
                         // alt="hello "

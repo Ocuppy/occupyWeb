@@ -4,7 +4,7 @@ import SupermarketMockup from "@/assets/images/supermarket-mockup.png";
 import Container from "@/components/shared/Container";
 import { Button } from "@/components/ui/button";
 import Image, { StaticImageData } from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface MockupItem {
   image: StaticImageData;
@@ -36,7 +36,24 @@ const mockupData: Record<string, MockupItem> = {
 const MockupSlider = () => {
   const TabHeads = Object.keys(mockupData);
   const [currentTab, setCurrentTab] = useState("customer");
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const mockupObj = mockupData[currentTab];
+
+  useEffect(() => {
+    Object.values(mockupData).forEach((item) => {
+      const img = new window.Image();
+      img.src = item.image.src;
+    });
+  }, []);
+
+  const handleTabChange = (tab: string) => {
+    if (tab === currentTab || isTransitioning) return;
+
+    setIsTransitioning(true);
+    setCurrentTab(tab);
+
+    setTimeout(() => setIsTransitioning(false), 300);
+  };
 
   return (
     <Container
@@ -52,10 +69,7 @@ const MockupSlider = () => {
         <div className="mx-auto flex w-fit flex-wrap gap-4">
           {TabHeads.map((tab) => (
             <Button
-              onClick={() => {
-                console.log(tab);
-                setCurrentTab(tab);
-              }}
+              onClick={() => handleTabChange(tab)}
               key={tab}
               value={tab}
               className={`rounded-full px-6 py-6 text-base font-semibold capitalize md:px-8 md:text-[1.375rem] ${
@@ -69,8 +83,31 @@ const MockupSlider = () => {
             </Button>
           ))}
         </div>
-        <div className="mt-8 grid items-center gap-4 pb-12 md:grid-cols-2 md:pb-0">
-          <Image src={mockupObj.image} alt={"mockup-image"} />
+
+        <div
+          className={`
+            mt-8 grid items-center gap-4 pb-12 
+            md:grid-cols-2 md:pb-0
+            transition-opacity duration-300 ease-in-out
+            ${isTransitioning ? "opacity-50" : "opacity-100"}
+          `}
+        >
+          <div className="relative h-[400px] w-full">
+            {TabHeads.map((tab) => (
+              <Image
+                key={tab}
+                src={mockupData[tab].image}
+                alt={`${tab}-mockup`}
+                fill
+                className={`
+                  object-contain transition-opacity duration-300
+                  ${currentTab === tab ? "opacity-100" : "opacity-0 absolute"}
+                `}
+                priority={currentTab === tab}
+              />
+            ))}
+          </div>
+
           <div className="w-full md:w-[90%]">
             <p className="mb-4 text-4xl font-bold leading-tight text-[#090335] lg:text-[36px]">
               {mockupObj.title}

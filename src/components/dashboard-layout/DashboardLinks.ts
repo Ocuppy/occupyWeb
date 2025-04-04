@@ -26,13 +26,13 @@ export const DashboardLinks: Record<string, IDashboardLinks[]> = {
   main: [
     {
       icon: HomeIcon,
-      title: "Dashboard",
-      url: "/dashboard",
+      title: "Select Supermarket",
+      url: "/select-supermarket",
     },
     {
       icon: InventoryIcon,
-      title: "Inventory",
-      url: ADMIN_DASHBOARD_URL + "/inventory",
+      title: "Dashboard",
+      url: ADMIN_DASHBOARD_URL + "/dashboard",
       // subLinks: [
       //   { title: "Pending", url: "/pending" },
       //   { title: "Approved", url: "/approved" },

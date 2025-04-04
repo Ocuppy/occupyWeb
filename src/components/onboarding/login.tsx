@@ -361,7 +361,7 @@ const formik = useFormik({
               <div className="flex w-full flex-col gap-2">
                 <label
                   htmlFor="email"
-                  className="text-sm font-medium text-[#606778]"
+                  className="text-lg font-medium text-[#606778]"
                 >
                   Email
                 </label>
@@ -373,14 +373,14 @@ const formik = useFormik({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
-                  className={
-                    formik.touched.email && formik.errors.email
-                      ? "w-full border-red-700"
-                      : "w-full"
-                  }
+                  className={`
+                    w-full  bg-white text-lg
+                    ${formik.touched.email && formik.errors.email ? "border-occupy-primary" : ""}
+                    text-[#101828]   // Added text and placeholder colors
+                  `}
                 />
                 {formik.touched.email && formik.errors.email ? (
-                  <div className="text-sm text-red-500">
+                  <div className="text-lg text-red-500 font-medium">
                     {formik.errors.email}
                   </div>
                 ) : null}
@@ -389,7 +389,7 @@ const formik = useFormik({
               <div className="relative flex w-full flex-col gap-2">
                 <label
                   htmlFor="password"
-                  className="text-sm font-medium text-[#606778]"
+                  className="text-lg font-medium text-[#606778]"
                 >
                   Password
                 </label>
@@ -401,11 +401,11 @@ const formik = useFormik({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
-                  className={
-                    formik.touched.password && formik.errors.password
-                      ? "w-full border-red-700"
-                      : "w-full"
-                  }
+                  className={`
+                    w-full border-[#D0D5DD] bg-white text-lg
+                    ${formik.touched.password && formik.errors.password ? "border-occupy-primary" : ""}
+                    text-[#101828]  // Added text and placeholder colors
+                  `}
                 />
                 <div
                   className="absolute right-4 top-[2.85rem] cursor-pointer"
@@ -414,7 +414,7 @@ const formik = useFormik({
                   {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                 </div>
                 {formik.touched.password && formik.errors.password ? (
-                  <div className="text-sm text-red-500">
+                  <div className="text-lg text-red-500 font-medium">
                     {formik.errors.password}
                   </div>
                 ) : null}
