@@ -72,7 +72,7 @@ interface StoreItemProps {
 const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore }) => {
   return (
     <div
-      className="flex h-[150px] cursor-pointer items-center rounded-lg border hover:bg-gray-100"
+      className="flex h-full cursor-pointer flex-col items-center rounded-lg border hover:bg-gray-100 lg:h-[150px] lg:flex-row"
       onClick={onClickStore}
     >
       {/* Store Photo */}
@@ -82,7 +82,8 @@ const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore }) => {
           alt={`${store.name} logo`}
           width={100}
           height={50}
-          className="h-full w-[290px] rounded-lg object-cover"
+          priority
+          className="h-full w-full rounded-lg object-cover lg:w-[290px]"
           // className="rounded-full"
         />
       ) : (

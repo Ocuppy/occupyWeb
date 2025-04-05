@@ -111,7 +111,7 @@ const Page: NextPageWithLayout = () => {
   // console.log("Supermarkets:", supermarkets);
   if (supermarkets.length > 0) {
     return (
-      <div className="h-full rounded-md bg-white px-4 py-6">
+      <div className="container mx-auto h-full rounded-md bg-white px-4 py-6">
         <SpaceBetween>
           <p className="text-[20px] font-medium">Manage Store</p>
           <Button onClick={() => Router.push("/dashboard/store/add")}>
