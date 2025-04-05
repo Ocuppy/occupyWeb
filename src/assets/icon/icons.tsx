@@ -222,3 +222,21 @@ export const SettingsIcon = () => (
     />
   </svg>
 );
+
+export const PackageIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M4.22 3.47A.75.75 0 0 1 5 3h14a.75.75 0 0 1 .53 1.28l-7.25 7.25a.75.75 0 0 1-1.06 0L4.47 4.53a.75.75 0 0 1-.25-.82zM12 12.81l7.72-7.72A.75.75 0 0 1 21 5v12.25a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1-.75-.75V15a2.25 2.25 0 1 0-4.5 0v2.25a.75.75 0 0 1-.75.75h-6a.75.75 0 0 1-.75-.75V5a.75.75 0 0 1 1.28-.53L12 12.81z"
+      fill="currentColor"
+    />
+  </svg>
+);
