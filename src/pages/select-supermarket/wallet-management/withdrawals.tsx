@@ -104,7 +104,7 @@ const Page = () => {
               className={cn(
                 "px-0 gap-4 hover:bg-transparent hover:text-occupy-primary hover-opacity-80",
                 activeTab === tab.value &&
-                  "text-occupy-primary border-b border-b-[3px] rounded-[0px] border-b-occupy-primary transition-all duration-300"
+                  "text-occupy-primary border-b-[3px] rounded-[0px] border-b-occupy-primary transition-all duration-300"
               )}
               onClick={() => setActiveTab(tab.value)}
               variant={"ghost"}

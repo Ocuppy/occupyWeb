@@ -1,6 +1,6 @@
-import OrderCard from "@/components/dashboard/Order-Page/OrderCard";
-import { columns } from "@/components/dashboard/Order-Page/Riders/column";
-import { DataTable } from "@/components/dashboard/Order-Page/Riders/data-table";
+import OrderCard from "@/components/select-supermarket/Order-Page/OrderCard";
+import { columns } from "@/components/select-supermarket/Order-Page/Riders/column";
+import { DataTable } from "@/components/select-supermarket/Order-Page/Riders/data-table";
 
 import riders from "@/data/riders";
 import React from "react";

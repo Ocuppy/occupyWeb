@@ -8,7 +8,7 @@ import {
   useGetProductsQuery,
 } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import ProductCard from "@/components/Product";
-import UserDashboard from "@/components/dashboard/dashboard/UserDashboard";
+import UserDashboard from "@/components/select-supermarket/select-supermarket/UserDashboard";
 import products from "@/data/productData";
 import { ArrowLeft } from "lucide-react";
 

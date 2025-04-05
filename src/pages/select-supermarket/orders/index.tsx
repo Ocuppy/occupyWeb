@@ -1,5 +1,5 @@
-import Inventory from "@/components/dashboard/inventory";
-import InventoryCard from "@/components/dashboard/inventory/InventoryCard";
+import Inventory from "@/components/select-supermarket/dashboard";
+import InventoryCard from "@/components/select-supermarket/dashboard/InventoryCard";
 import { NextPageWithLayout } from "@/pages/_app";
 import React from "react";
 

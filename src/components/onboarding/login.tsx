@@ -216,7 +216,7 @@
 // export default Login;
 
 import Image from "next/image";
-// import OccupyLogo from "../../../public/occupy-logo.png";
+import OccupyLogo from "../../../public/occupy-logo.png";
 import { Input } from "../ui/input";
 import Link from "next/link";
 import { Button } from "../ui/button";
@@ -342,12 +342,12 @@ const formik = useFormik({
 
         {/* login form */}
         <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg bg-white px-6 py-12 lg:px-8 lg:shadow-lg">
-          {/* <Image
+          <Image
             onClick={() => router.push("/")}
             className="w-[120px]"
-            // src={OccupyLogo}
+            src={OccupyLogo}
             alt="logo"
-          /> */}
+          />
           <div className="flex w-full flex-col items-start gap-3">
             <h3 className="text-2xl font-medium text-[#12141A]">Login</h3>
             <p className="pb-12 text-sm font-medium text-[#606778]">

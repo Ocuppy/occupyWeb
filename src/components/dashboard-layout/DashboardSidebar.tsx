@@ -85,7 +85,7 @@ const DashboardSidebar = () => {
     >
       <div className="relative flex items-center gap-4 pt-4">
         <Avatar>
-          <AvatarImage src={"images/avatar.png"} alt="profile-avatar" />
+        <AvatarImage src="/images/avatar.png" alt="profile-avatar" />
           <AvatarFallback className="bg-slate-400">CN</AvatarFallback>
         </Avatar>
 

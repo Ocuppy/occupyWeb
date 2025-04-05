@@ -1,5 +1,5 @@
-import { columns } from "@/components/dashboard/Order-Page/ongoing/column";
-import { DataTable } from "@/components/dashboard/Order-Page/ongoing/data-table";
+import { columns } from "@/components/select-supermarket/Order-Page/ongoing/column";
+import { DataTable } from "@/components/select-supermarket/Order-Page/ongoing/data-table";
 import orders from "@/data/orders";
 import { useGetSuperMarketOrdersQuery } from "@/store/redux/services/superMarketOrdersSlice/superMarketOrdersApiSlice";
 import { useRouter } from "next/router";

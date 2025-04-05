@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import CategoryItem from "../dashboard/CategoryItem";
+import CategoryItem from "../select-supermarket/CategoryItem";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal } from "lucide-react";

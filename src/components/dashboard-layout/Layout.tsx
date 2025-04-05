@@ -11,8 +11,8 @@ import {
   DashboardMenuVisibilityProvider,
 } from "@/contexts/DashboardMenuVisibilityContext";
 import { AnimatePresence, motion } from "framer-motion";
-import NotificationPopup from "../dashboard/notification/NotificationPopup";
-import OrderNotificationPopup from "../dashboard/order-notification-popup/OrderNotificationPopup";
+import NotificationPopup from "../select-supermarket/notification/NotificationPopup";
+import OrderNotificationPopup from "../select-supermarket/order-notification-popup/OrderNotificationPopup";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import { selectAuthToken } from "@/store/redux/services/authSlice/authSlice";

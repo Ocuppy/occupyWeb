@@ -1,7 +1,11 @@
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 import {
   keys,
   walletData,
-} from "@/components/dashboard/wallet-management/mockdata";
+} from "@/components/select-supermarket/wallet-management/mockdata";
 import CustomTabslist from "@/components/shared/CustomTablist";
 import Flex from "@/components/shared/Flex";
 import SpaceBetween from "@/components/shared/SpaceBetween";
@@ -13,9 +17,16 @@ import { TableCell, TableHead, TableRow } from "@/components/ui/table";
 import CustomSelect from "@/components/shared/CustomSelect";
 import { format } from "date-fns";
 import { useDisclosure } from "@/hooks/useDisclosure";
-import ViewTransactiondetailModal from "@/components/dashboard/wallet-management/ViewTransactiondetailModal";
-import InitiateWithdrawalModal from "@/components/dashboard/wallet-management/InitiateWithdrawalModal";
-import RevenueChart from "@/components/dashboard/wallet-management/RevenueChart";
+import ViewTransactiondetailModal from "@/components/select-supermarket/wallet-management/ViewTransactiondetailModal";
+import InitiateWithdrawalModal from "@/components/select-supermarket/wallet-management/InitiateWithdrawalModal";
+import RevenueChart from "@/components/select-supermarket/wallet-management/RevenueChart";
+
+// types
+type Wallet = {
+  id: string;
+  balance: number;
+  currency: string;
+};
 
 const tableHeadings = ["Amount", "Customer", "Reference", "Channel", "Paid On"];
 
@@ -35,13 +46,35 @@ const Page = () => {
     isOpen: isWithdrawalOpen,
     toggleOpenState: toggleWithdrawalOpenState,
   } = useDisclosure();
+
+  const { query } = useRouter();
+  const id = query.id as string;
+
+  const [wallet, setWallet] = useState<Wallet | null>(null);
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get<Wallet>(`/api/wallet/${id}`)
+        .then((res) => {
+          setWallet(res.data);
+        })
+        .catch((err) => console.error("Error fetching wallet:", err));
+    }
+  }, [id]);
+
   return (
     <div className="p-6 rounded-md h-full bg-white">
       <p className="text-[20px] text-[#1C2A53] font-medium">
         Wallet Management
       </p>
+
       <Flex className="gap-8 flex-wrap xl:flex-nowrap items-start">
-        <WalletBalance walletName="XYZ Wallet" walletNumber="444 221 224 ***" />
+        <WalletBalance
+          walletName={`Wallet ID: ${wallet?.id ?? "Loading..."}`}
+          walletNumber={`Balance: ${wallet?.balance ?? "..."}`} // Show balance in the subtitle
+        />
+
         <Flex>
           <div className="w-full grow">
             <Tabs defaultValue="Week">
@@ -51,10 +84,11 @@ const Page = () => {
               <RevenueChart />
             </div>
           </div>
+
           <div className="w-[260px] border border-[#E0E0E0] p-4 rounded-lg">
             <Flex className="justify-between">
               <p className="text-[12px] font-semibold">Total Revenue</p>
-              <div className=" flex items-center text-[10px]">
+              <div className="flex items-center text-[10px]">
                 <p className="whitespace-nowrap">Sort by:</p>
                 <CustomSelect
                   selectTriggerClassName="text-[10px] py-1 h-fit px-2"
@@ -83,6 +117,7 @@ const Page = () => {
           </div>
         </Flex>
       </Flex>
+
       <Flex className="justify-end mt-6 gap-4">
         <Button className="font-[400]" onClick={toggleWithdrawalOpenState}>
           Initiate Withdrawal
@@ -94,12 +129,13 @@ const Page = () => {
           Download all
         </Button>
       </Flex>
+
       <CustomTable
         currentPage={3}
         totalPages={8}
         TableHeadComponent={<TableHeadChildren />}
       >
-        {walletData.map((item: never, rowIndex: number) => (
+        {walletData.map((item: any, rowIndex: number) => (
           <TableRow key={rowIndex}>
             {keys.map((key, cellIndex) => (
               <TableCell key={cellIndex + String(item[key])}>
@@ -118,6 +154,7 @@ const Page = () => {
           </TableRow>
         ))}
       </CustomTable>
+
       <ViewTransactiondetailModal
         isOpen={isViewOpen}
         toggleOpenState={toggleViewOpenState}

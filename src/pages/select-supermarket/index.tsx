@@ -4,13 +4,13 @@ import { NextPageWithLayout } from "../_app";
 import SpaceBetween from "@/components/shared/SpaceBetween";
 import { Button } from "@/components/ui/button";
 import Router from "next/router";
-import StoreItem from "@/components/dashboard/dashboard/StoreItem";
+import StoreItem from "@/components/select-supermarket/select-supermarket/StoreItem";
 import { SetStateAction, useEffect, useMemo, useState } from "react";
-import SupermarketDetails from "@/components/dashboard/dashboard/SupermarketDetails";
+import SupermarketDetails from "@/components/select-supermarket/select-supermarket/SupermarketDetails";
 import Image from "next/image";
 import illustration from "../../../public/images/illustration.png";
 import { Inter } from "next/font/google";
-import CategoryItem from "@/components/dashboard/dashboard/CategoryItem";
+import CategoryItem from "@/components/select-supermarket/select-supermarket/CategoryItem";
 import {
   ArrowLeft,
   ArrowRight,
@@ -19,18 +19,18 @@ import {
   Loader2,
   Route,
 } from "lucide-react";
-import NoSupermarkets from "@/components/dashboard/dashboard/NoSupermarkets";
-import CategoryBar from "@/components/dashboard/dashboard/CategoryBar";
-import TransactionsTable from "@/components/dashboard/dashboard/TransactionsTable";
+import NoSupermarkets from "@/components/select-supermarket/select-supermarket/NoSupermarkets";
+import CategoryBar from "@/components/select-supermarket/select-supermarket/CategoryBar";
+import TransactionsTable from "@/components/select-supermarket/select-supermarket/TransactionsTable";
 import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { useGetUserSupermarketsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
-import AccountStatus from "@/components/dashboard/dashboard/AccountStatus";
+import AccountStatus from "@/components/select-supermarket/select-supermarket/AccountStatus";
 import store from "@/store/redux/store";
-import ActionButtons from "@/components/dashboard/settings/ActionButtons";
+import ActionButtons from "@/components/select-supermarket/settings/ActionButtons";
 // imort Router from "next/router";
-import UserDashboard from "@/components/dashboard/dashboard/UserDashboard";
+import UserDashboard from "@/components/select-supermarket/select-supermarket/UserDashboard";
 import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });

@@ -1,7 +1,7 @@
 import DashboardCard from "@/components/shared/DashboardCard";
 import Flex from "@/components/shared/Flex";
 import WalletBalance from "@/components/shared/WalletBalance";
-import CategoryItem from "@/components/dashboard/dashboard/CategoryItem";
+import CategoryItem from "@/components/select-supermarket/select-supermarket/CategoryItem";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";

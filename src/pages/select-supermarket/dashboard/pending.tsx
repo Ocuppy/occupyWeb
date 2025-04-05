@@ -1,6 +1,6 @@
-import { columns } from "@/components/dashboard/inventory/GroceryTable/column";
-import { DataTable } from "@/components/dashboard/inventory/GroceryTable/data-table";
-import InventoryCard from "@/components/dashboard/inventory/InventoryCard";
+import { columns } from "@/components/select-supermarket/dashboard/GroceryTable/column";
+import { DataTable } from "@/components/select-supermarket/dashboard/GroceryTable/data-table";
+import InventoryCard from "@/components/select-supermarket/dashboard/InventoryCard";
 import products from "@/data/productData";
 import { NextPageWithLayout } from "@/pages/_app";
 import { ChevronDown, X, Filter } from "lucide-react";

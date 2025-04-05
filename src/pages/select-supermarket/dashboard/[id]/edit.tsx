@@ -1,4 +1,4 @@
-import EditProduct from "@/components/dashboard/inventory/Forms/EditProduct";
+import EditProduct from "@/components/select-supermarket/dashboard/Forms/EditProduct";
 import { NextPageWithLayout } from "@/pages/_app";
 
 const Page: NextPageWithLayout = () => {
