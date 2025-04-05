@@ -100,7 +100,12 @@ const DashboardHeader = () => {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
-                <Image src="/images/profile.png" alt="Profile Picture" />
+                <Image
+                  src="/images/profile.png"
+                  alt="Profile Picture"
+                  height={40}
+                  width={40}
+                />
                 <div className="text-left">
                   <p className="text-sm font-medium text-black/80">
                     {userData?.first_name ?? "John"}{" "}
