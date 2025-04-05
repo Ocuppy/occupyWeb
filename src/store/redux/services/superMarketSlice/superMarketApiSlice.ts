@@ -113,6 +113,15 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
       },
       // Add data transformation to handle the response
     }),
+
+    getProductDetail: builder.query({
+      query: ({ productId }) => {
+        return {
+          url: `/store/customers/supermarketproduct-detail/${productId}/`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -125,4 +134,5 @@ export const {
   useGetProductsQuery,
   useDeleteProductMutation,
   useEditProductMutation,
+  useGetProductDetailQuery,
 } = superMarketApiSlice;

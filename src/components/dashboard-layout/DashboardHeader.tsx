@@ -20,6 +20,11 @@ import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import useFcmToken from "@/hooks/useFcmToken";
 import { logOut } from "@/store/redux/services/authSlice/authSlice";
 import Image from "next/image";
+import { OrderNotificationContext } from "@/contexts/OrderNotificationContext";
+import { fetchToken } from "../../../firebase";
+import { headers } from "next/headers";
+
+const baseUrl = "https://backend.occupymart.com/api";
 
 const DashboardHeader = () => {
   const { token, notificationPermissionStatus } = useFcmToken();
@@ -38,6 +43,31 @@ const DashboardHeader = () => {
   }, [dispatch]);
 
   const userID = useAppSelector((state) => state.auth.userID);
+
+  useEffect(() => {
+    fetchToken().then((token) => {
+      const sessionToken = sessionStorage.getItem("token");
+
+      const updateNotificationTokenReqOptions = {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionToken}`,
+        },
+        body: JSON.stringify({
+          notification_token: token,
+        }),
+      };
+      const updateNotificationTokenReq = fetch(
+        `${baseUrl}/accounts/accounts/update-notification-token/${userID}/`,
+        updateNotificationTokenReqOptions,
+      );
+      updateNotificationTokenReq
+        .then((response) => response.json())
+        .catch((err) => console.error(err));
+    });
+  }, [userID]);
+
   const {
     data: userData,
     error,
@@ -47,7 +77,7 @@ const DashboardHeader = () => {
   });
   const { toggleVisibility } = sideMenuContext;
 
-  const notificationContext = useContext(NotificationContext);
+  const notificationContext = useContext(OrderNotificationContext);
   if (!notificationContext) {
     throw new Error("Home must be used within a NotificationProvider");
   }
@@ -100,7 +130,12 @@ const DashboardHeader = () => {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
-                <Image src="/images/profile.png" alt="Profile Picture" />
+                <Image
+                  src="/images/profile.png"
+                  alt="Profile Picture"
+                  width={32}
+                  height={32}
+                />
                 <div className="text-left">
                   <p className="text-sm font-medium text-black/80">
                     {userData?.first_name ?? "John"}{" "}
@@ -157,7 +192,7 @@ const DashboardHeader = () => {
   //     <Button
   //       disabled={!token}
   //       className="mt-5"
-  //       onClick={handleTestNotification}
+  //       onClick={handleShowNotification}
   //     >
   //       Send Test Notification
   //     </Button>
