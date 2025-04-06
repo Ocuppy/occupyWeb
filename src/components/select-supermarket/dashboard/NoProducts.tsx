@@ -16,7 +16,7 @@ const NoProducts = () => {
         Proceed to add a product and upboard your product to start your progess
       </p>
       <div>
-        <Button onClick={() => Router.push("/dashboard/inventory/add")}>Continue</Button>
+        <Button onClick={() => Router.push("/select-supermarket/dashboard/add")}>Continue</Button>
       </div>
     </Flex>
   );

@@ -165,7 +165,6 @@ import { useDeleteProductMutation } from "@/store/redux/services/superMarketSlic
 
 interface ProductCardProps {
   product: {
-    in_stock: boolean;
     id: string;
     name: string;
     description: string;
@@ -174,6 +173,7 @@ interface ProductCardProps {
     supermarket_id: string;
     price: string;
     quantity: number;
+    in_stock: boolean; // <-- Ensure it's not optional
     image?: string;
   };
   categories: Array<{
@@ -184,6 +184,7 @@ interface ProductCardProps {
   onClickProduct: () => void;
   onDeleteProduct: (productId: string) => void;
   onEditProduct: (productId: string) => void;
+  className?: string;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -205,7 +206,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div
-      className="mx-auto flex w-[300px] cursor-pointer flex-col rounded-lg bg-white p-4 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl xl:w-[20rem]"
+  className="flex w-full max-w-[200px] flex-col rounded-lg bg-white p-2 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
       // className="flex w-[250px] cursor-pointer flex-col rounded-lg bg-slate-50 p-4 shadow-md hover:w-[260px]"
       onClick={onClickProduct}
     >
@@ -227,18 +228,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
       <div className="px-2 py-4 pb-0">
         <div className="flex flex-col">
-          <p className="text-lg font-semibold text-purple-500">
+          <p className="text-sm font-semibold text-purple-500">
             {categoryName}
           </p>
 
           <div className="mb-3 flex items-center justify-between">
             <h1 className="text-2xl font-medium">{product.name}</h1>
             {product.in_stock ? (
-              <span className="rounded-full bg-[#a0ff8e] p-4 text-green-600">
+              <span className="rounded-full bg-[#a0ff8e] px-2 py-1 text-xs text-green-600">
                 In Stock
               </span>
             ) : (
-              <span className="rounded-full bg-[#e9b5b5] px-3 py-1.5 text-center text-sm text-red-500">
+              <span className="rounded-full bg-[#e9b5b5] px-2 py-1 text-xs text-red-600">
                 Out of Stock
               </span>
             )}

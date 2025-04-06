@@ -17,7 +17,7 @@ const Inventory = () => {
   };
 
   const handleItemClick = (id: string) => {
-    Router.push(`/dashboard/inventory/${id}`);
+    Router.push(`/select-supermarket/dashboard/${id}`);
   };
 
   const filteredData = products.filter((item) =>
@@ -35,7 +35,7 @@ const Inventory = () => {
           onChange={handleSearch}
         />
         <div className="flex gap-2 items-center">
-          <Button onClick={() => Router.push("/dashboard/inventory/add")} className="py-1 px-3">
+          <Button onClick={() => Router.push("/select-supermarket/dashboard/add")} className="py-1 px-3">
             Add Product
           </Button>
           <Button className="ml-auto hidden py-1 px-3 bg-transparent text-[#5D6679] border lg:flex">
