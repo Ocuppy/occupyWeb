@@ -93,6 +93,7 @@ const EditProduct: React.FC = () => {
     Array<{ value: string; label: string; pk: string }>
   >([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   // UPDATED DEFAULT VALUES
   const form = useForm<ProductFormData>({
@@ -158,9 +159,22 @@ const EditProduct: React.FC = () => {
     }
   }, [productDetail, categories, form, productId]);
 
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) form.setValue("photo", file);
+    if (file) {
+      form.setValue("photo", file);
+      // Create a preview URL for the image
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+    }
   };
 
   const [editProductMutation] = useEditProductMutation();
@@ -294,37 +308,40 @@ const EditProduct: React.FC = () => {
               </div>
 
               <div className="rounded-lg border bg-white p-6 shadow-sm">
-                <h2 className="mb-4 text-lg font-semibold">Media</h2>
-                {productDetail?.product_image && (
-                  <div className="flex items-center gap-3">
-                    <h6>Current Image:</h6>
-                    <Image
-                      src={productDetail.product_image}
-                      alt={productDetail.name}
-                      width={70}
-                      height={50}
-                    />
-                  </div>
-                )}
-                <div className="flex flex-col items-center justify-center space-y-4">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    id="image-upload"
-                  />
-                  <label
-                    htmlFor="image-upload"
-                    className="cursor-pointer rounded-lg border-2 border-dashed p-6 text-center"
-                  >
-                    <div className="flex flex-col items-center space-y-2">
-                      <ImgIcon width={48} height={48} className="text-gray-400" />
-                      <p>Drag and drop image here, or click to upload</p>
-                    </div>
-                  </label>
-                </div>
-              </div>
+  <h2 className="mb-4 text-lg font-semibold">Media</h2>
+  <div className="flex flex-col items-center justify-center">
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleImageUpload}
+      className="hidden"
+      id="image-upload"
+    />
+    <label htmlFor="image-upload" className="cursor-pointer">
+      {imagePreview ? (
+        <Image
+          src={imagePreview}
+          alt="Preview"
+          width={200}
+          height={200}
+          className="object-cover rounded-lg"
+        />
+      ) : productDetail?.product_image ? (
+        <Image
+          src={productDetail.product_image}
+          alt={productDetail.name}
+          width={200}
+          height={200}
+          className="object-cover rounded-lg"
+        />
+      ) : (
+        <div className="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center">
+          <ImgIcon width={48} height={48} className="text-gray-400" />
+        </div>
+      )}
+    </label>
+  </div>
+</div>
 
               <div className="rounded-lg border bg-white p-6 shadow-sm">
                 <h2 className="mb-4 text-lg font-semibold">Pricing</h2>
@@ -396,10 +413,11 @@ const EditProduct: React.FC = () => {
                           <Checkbox
                             checked={field.value}
                             onCheckedChange={field.onChange}
+                            className="h-6 w-6" // Add this to make checkbox bigger
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
-                          <FormLabel>In Stock</FormLabel>
+                          <FormLabel className="text-lg">In Stock</FormLabel> {/* Increased text size */}
                         </div>
                       </FormItem>
                     )}
