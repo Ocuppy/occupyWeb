@@ -287,7 +287,7 @@ const formik = useFormik({
         }),
       );
 
-      router.push("/dashboard");
+      router.push("/select-supermarket");
     }
   }, [isSuccess, data, dispatch, router, toast]);
 
