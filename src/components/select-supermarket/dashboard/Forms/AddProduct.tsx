@@ -179,7 +179,7 @@ const AddProduct: React.FC = () => {
           description: "Product added successfully!",
           variant: "default",
         });
-        router.push(`/dashboard/inventory/${supermarket_id}`);
+        router.push(`/select-supermarket/dashboard/${supermarket_id}`);
       } else {
         toast({
           title: "Error",
