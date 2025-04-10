@@ -72,33 +72,33 @@ interface StoreItemProps {
 const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore }) => {
   return (
     <div
-      className="flex h-[150px] cursor-pointer items-center justify-between rounded-lg border p-4 hover:bg-gray-100"
+      className="flex h-full cursor-pointer flex-col items-center rounded-lg border hover:bg-gray-100 lg:h-[150px] lg:flex-row"
       onClick={onClickStore}
     >
-      <div className="mx-4 flex items-center justify-between">
-        {/* Store Photo */}
-        {store.supermarket_photo ? (
-          <Image
-            src={store.supermarket_photo}
-            alt={`${store.name} logo`}
-            width={100}
-            height={50}
-            // className= object-cover"
-            // className="rounded-full"
-          />
-        ) : (
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-            <FaStore className="text-gray-500" />
-          </div>
-        )}
-
+      {/* Store Photo */}
+      {store.supermarket_photo ? (
+        <Image
+          src={store.supermarket_photo}
+          alt={`${store.name} logo`}
+          width={100}
+          height={50}
+          priority
+          className="h-full w-full rounded-lg object-cover lg:w-[290px]"
+          // className="rounded-full"
+        />
+      ) : (
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-200">
+          <FaStore className="text-gray-500" />
+        </div>
+      )}
+      <div className="flex w-full items-center justify-between p-4">
         {/* Store details */}
-        <div className="flex flex-col items-start justify-center pl-[40px]">
-          <h3 className="text-lg font-semibold">{store.name}</h3>
+        <div className="flex flex-col items-start justify-center">
+          <h3 className="text-lg font-semibold text-[#5D6679]">{store.name}</h3>
           <p className="text-gray-500">{store.business_address}</p>
           <p className="text-xl text-[#5D6679]">{store.contact_person_name}</p>
           <p className="text-gray-500">{store.business_name}</p>
-          {/* <div className="text-right"> */}
+
           <p className="text-sm text-[#858D9D]">
             {store.contact_person_phone_number}
           </p>
@@ -116,14 +116,14 @@ const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore }) => {
         </div>
 
         {/* Edit Button */}
+        <Button
+          onClick={onClickStore}
+          variant="outline"
+          className="h-[40px] w-[90px] rounded border border-occupy-primary bg-white px-4 py-2 text-sm font-semibold text-occupy-primary hover:bg-occupy-primary hover:text-white"
+        >
+          Edit
+        </Button>
       </div>
-      <Button
-        onClick={onClickStore}
-        variant="outline"
-        className="text-occupy-primary"
-      >
-        Edit
-      </Button>
 
       {/* Contact Info */}
     </div>

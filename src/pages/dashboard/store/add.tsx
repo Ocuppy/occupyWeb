@@ -67,7 +67,7 @@ const Page: NextPageWithLayout = () => {
     };
 
     fetchEstates();
-  }, [toast]);
+  }, []);
 
   const formatPhoneNumber = (value: string) => {
     // Remove all non-digit characters
@@ -112,7 +112,7 @@ const Page: NextPageWithLayout = () => {
       business_reg_number: data.regNumber,
       name: data.supermarketName,
       supermarket_photo: data.supermarketPhoto,
-      // name: userData.userID,
+      business_address: data.supermarketAddress,
       contact_person_email: data.email,
       contact_person_phone_number: data.phoneNumber,
       can_run_online_store: true,
