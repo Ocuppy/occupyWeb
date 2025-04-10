@@ -5,7 +5,7 @@ import Layout from "@/components/base-layout/Layout";
 const Page: NextPageWithLayout = () => {
   return (
     <section className="mx-auto my-7 w-[85vw] max-w-[94.8125rem]">
-      <header className="mb-6 mx-[40%]">
+      <header className="mb-6 text-center">
         <h1 className="text-4xl font-bold text-[#242331]">Privacy Policy</h1>
         <p className="text-[#797979]">Effective Date: April 10, 2025</p>
       </header>

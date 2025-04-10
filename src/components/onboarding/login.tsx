@@ -245,16 +245,24 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: loginValidationSchema,
-    onSubmit: async (values) => {
-      login({ email: values.email, password: values.password });
-    },
-  });
+// Define the validation schema outside useFormik
+const loginValidationSchema = Yup.object({
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+});
+
+const formik = useFormik({
+  initialValues: {
+    email: "",
+    password: "",
+  },
+  validationSchema: loginValidationSchema, // Correct way to pass schema
+  onSubmit: async (values) => {
+    login({ email: values.email, password: values.password });
+  },
+});
 
   const { toast } = useToast();
 
@@ -279,23 +287,32 @@ const Login = () => {
         }),
       );
 
-      router.push("/dashboard");
+      router.push("/select-supermarket");
     }
   }, [isSuccess, data, dispatch, router, toast]);
 
   useEffect(() => {
     if (error) {
       if (isFetchBaseQueryErrorType(error)) {
-        // const errorData = error.data as {
-        //   messages: { message: string }[];
-        //   detail: string;
-        // } & Record<string, any>;
-
+        const errorData = error.data as {
+          messages?: { message: string }[];
+          detail?: string;
+        } & Record<string, any>;
+  
+        let errorMessage = "Invalid email or password"; // Default message
+        
+        // Check for specific error cases
+        if (errorData.detail) {
+          errorMessage = errorData.detail;
+        } else if (errorData.messages?.[0]?.message) {
+          errorMessage = errorData.messages[0].message;
+        } else if (error.status === 401) {
+          errorMessage = "Invalid email or password";
+        }
+  
         toast({
-          // description: `${errorData.messages[0].message}`,
-          // title: `${errorData.detail} `,
-          description: `Error signing in`,
-          title: `Error`,
+          description: errorMessage,
+          title: "Login Failed",
           variant: "destructive",
         });
       }
@@ -344,7 +361,7 @@ const Login = () => {
               <div className="flex w-full flex-col gap-2">
                 <label
                   htmlFor="email"
-                  className="text-sm font-medium text-[#606778]"
+                  className="text-lg font-medium text-[#606778]"
                 >
                   Email
                 </label>
@@ -356,14 +373,14 @@ const Login = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
-                  className={
-                    formik.touched.email && formik.errors.email
-                      ? "w-full border-red-700"
-                      : "w-full"
-                  }
+                  className={`
+                    w-full  bg-white text-lg
+                    ${formik.touched.email && formik.errors.email ? "border-occupy-primary" : ""}
+                    text-[#101828]   // Added text and placeholder colors
+                  `}
                 />
                 {formik.touched.email && formik.errors.email ? (
-                  <div className="text-sm text-red-500">
+                  <div className="text-lg text-red-500 font-medium">
                     {formik.errors.email}
                   </div>
                 ) : null}
@@ -372,7 +389,7 @@ const Login = () => {
               <div className="relative flex w-full flex-col gap-2">
                 <label
                   htmlFor="password"
-                  className="text-sm font-medium text-[#606778]"
+                  className="text-lg font-medium text-[#606778]"
                 >
                   Password
                 </label>
@@ -384,11 +401,11 @@ const Login = () => {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
-                  className={
-                    formik.touched.password && formik.errors.password
-                      ? "w-full border-red-700"
-                      : "w-full"
-                  }
+                  className={`
+                    w-full border-[#D0D5DD] bg-white text-lg
+                    ${formik.touched.password && formik.errors.password ? "border-occupy-primary" : ""}
+                    text-[#101828]  // Added text and placeholder colors
+                  `}
                 />
                 <div
                   className="absolute right-4 top-[2.85rem] cursor-pointer"
@@ -397,7 +414,7 @@ const Login = () => {
                   {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                 </div>
                 {formik.touched.password && formik.errors.password ? (
-                  <div className="text-sm text-red-500">
+                  <div className="text-lg text-red-500 font-medium">
                     {formik.errors.password}
                   </div>
                 ) : null}
@@ -417,9 +434,10 @@ const Login = () => {
               <div className="w-full text-end">
                 <button
                   type="submit"
+                  disabled={isLoading}
                   className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
                 >
-                  Login
+                  {isLoading ? "Logining in..." : "Login In"}
                 </button>
                 <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
                   New to Occupy?{" "}

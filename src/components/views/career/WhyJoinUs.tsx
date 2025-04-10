@@ -99,7 +99,7 @@ const WhyJoinUs = () => {
           <WhyJoinUsCard key={data.title} {...data} />
         ))}
       </section>
-      <section>
+      <section id="featured-jobs">
         <header className="my-5 text-center">
           <h6 className="text-4xl">Featured Jobs</h6>
         </header>
@@ -158,7 +158,7 @@ const WhyJoinUs = () => {
               <p>Full Time | Remote</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div>
             <button
               onClick={() => {
                 Router.push("/career/apply");
@@ -166,9 +166,6 @@ const WhyJoinUs = () => {
               className="rounded-lg bg-occupy-primary px-5 py-2 text-white"
             >
               APPLY NOW
-            </button>
-            <button className="rounded-lg border border-black px-5 py-2 text-black">
-              DETAILS
             </button>
           </div>
         </div> */}

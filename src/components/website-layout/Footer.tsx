@@ -23,7 +23,7 @@ const Footer = () => {
                 <p className="text-2xl font-bold">Account</p>
               </div>
               <div className="flex flex-col gap-3">
-                <Link href={"/#"}>My Account</Link>
+                <Link href={"/login"}>My Account</Link>
                 <Link href={"/#"}>FAQs</Link>
               
               </div>
@@ -32,6 +32,7 @@ const Footer = () => {
               <p className="text-2xl font-bold">Help</p>
               <div className="flex flex-col gap-3">
                 <Link href={"/#"}>Contact</Link>
+                <Link href={"/career"}>Careers</Link>
               </div>
               <div className="flex flex-col gap-3">
                 <Link href={"/career/privacy"}>Privacy</Link>

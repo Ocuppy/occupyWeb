@@ -17,7 +17,14 @@ const Header = () => {
         </p>
 
         <button
-          onClick={() => Router.push("/auth/login")}
+          onClick={() => {
+            if (typeof window !== 'undefined') {
+              const jobsSection = document.getElementById('featured-jobs');
+              if (jobsSection) {
+                jobsSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }
+          }}
           className="rounded-full bg-occupy-primary px-16 py-4 text-sm font-medium text-white"
         >
           Join Us

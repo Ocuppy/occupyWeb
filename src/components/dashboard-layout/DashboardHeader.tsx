@@ -1,4 +1,4 @@
-import { Input } from "../ui/input";
+import { usePathname } from 'next/navigation';
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
 import { BellIcon, Menu } from "lucide-react";
@@ -26,48 +26,29 @@ import { headers } from "next/headers";
 
 const baseUrl = "https://backend.occupymart.com/api";
 
+const SEARCH_VISIBLE_ROUTES = [
+  '/orders',
+  '/inventory'
+];
+
 const DashboardHeader = () => {
+  const pathname = usePathname();
   const { token, notificationPermissionStatus } = useFcmToken();
+  const showSearchBar = SEARCH_VISIBLE_ROUTES.some(route => pathname?.includes(route));
 
   const sideMenuContext = useContext(DashboardMenuVisibilityContext);
   if (!sideMenuContext) {
     throw new Error(
-      "DashbordMenuButton toggle must be used within a VisibilityProvider",
+      "DashboardMenuButton toggle must be used within a VisibilityProvider",
     );
   }
 
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(getCredentials());
   }, [dispatch]);
 
   const userID = useAppSelector((state) => state.auth.userID);
-
-  useEffect(() => {
-    fetchToken().then((token) => {
-      const sessionToken = sessionStorage.getItem("token");
-
-      const updateNotificationTokenReqOptions = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionToken}`,
-        },
-        body: JSON.stringify({
-          notification_token: token,
-        }),
-      };
-      const updateNotificationTokenReq = fetch(
-        `${baseUrl}/accounts/accounts/update-notification-token/${userID}/`,
-        updateNotificationTokenReqOptions,
-      );
-      updateNotificationTokenReq
-        .then((response) => response.json())
-        .catch((err) => console.error(err));
-    });
-  }, [userID]);
-
   const {
     data: userData,
     error,
@@ -87,59 +68,48 @@ const DashboardHeader = () => {
     dispatch(logOut());
   };
 
-  const handleShowNotification = () => {
-    showNotification("This is a notification message!");
-    // console.log("triggering notification");
-  };
-
   return (
     <header className="fixed right-0 z-10 flex w-screen items-center bg-white py-5 xl:w-full xl:pl-[270px] xl:pr-4">
       <Flex className="w-full justify-between px-4 xl:pl-10">
-        <input
-          type="search"
-          name=""
-          id=""
-          className="h-10 w-full max-w-[500px] rounded-lg bg-[#F9FAFB] px-3 py-6 text-sm ring-offset-white file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-slate-950 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300"
-          placeholder="Search for products etc..."
-        />
-        {/* <Input
-          className=""
-          placeholder="Search your grocery products etc . . . "
-        /> */}
+        {/* Conditional Search Bar */}
+        <div className={`transition-all duration-300 ${showSearchBar ? 'w-full max-w-[500px]' : 'w-0'}`}>
+          {showSearchBar && (
+            <input
+              type="search"
+              className="h-10 w-full rounded-lg bg-[#F9FAFB] px-3 py-6 text-sm ring-offset-white file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus:outline-none focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              placeholder="Search for products etc..."
+              aria-label="Search products"
+            />
+          )}
+        </div>
+
+        {/* Spacer when search is hidden */}
+        {!showSearchBar && <div className="flex-1" />}
 
         <button onClick={toggleVisibility} className="xl:hidden">
           <Menu className="text-black" />
         </button>
+
         <div className="hidden items-center gap-8 xl:flex">
           <div className="flex items-center space-x-2">
             <Label htmlFor="online-mode">Online</Label>
             <Switch id="online-mode" />
           </div>
-          <Button
+          
+          {/* <Button
             onClick={() => {}}
             className="rounded-lg bg-[#f6f6f6] px-4 py-6 text-black"
           >
             <UserClockIcon width={21} />
-          </Button>
-          {/* <Button */}
-          {/*   onClick={handleShowNotification} */}
-          {/*   className="rounded-lg bg-[#f6f6f6] px-4 py-6 text-black" */}
-          {/* > */}
-          {/*   <BellIcon width={21} /> */}
-          {/* </Button> */}
+          </Button> */}
+
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
-                <Image
-                  src="/images/profile.png"
-                  alt="Profile Picture"
-                  width={32}
-                  height={32}
-                />
+                <Image src="/images/profile.png" alt="Profile Picture" width={100} height={100}/>
                 <div className="text-left">
                   <p className="text-sm font-medium text-black/80">
-                    {userData?.first_name ?? "John"}{" "}
-                    {userData?.last_name ?? "Doe"}
+                    {userData?.first_name ?? "John"} {userData?.last_name ?? "Doe"}
                   </p>
                   <p className="text-[0.625rem] uppercase text-black/30">
                     Supermarket
@@ -192,7 +162,7 @@ const DashboardHeader = () => {
   //     <Button
   //       disabled={!token}
   //       className="mt-5"
-  //       onClick={handleShowNotification}
+  //       onClick={handleTestNotification}
   //     >
   //       Send Test Notification
   //     </Button>
