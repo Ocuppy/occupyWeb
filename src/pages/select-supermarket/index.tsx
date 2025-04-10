@@ -114,7 +114,7 @@ const Page: NextPageWithLayout = () => {
       <div className="h-full rounded-md bg-white px-4 py-6">
         <SpaceBetween>
           <p className="text-[20px] font-medium">Manage Store</p>
-          <Button onClick={() => Router.push("/dashboard/store/add")}>
+          <Button onClick={() => Router.push("/select-supermarket/store/add")}>
             Add Store
           </Button>
         </SpaceBetween>
