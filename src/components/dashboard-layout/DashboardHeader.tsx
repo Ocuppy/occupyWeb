@@ -20,6 +20,11 @@ import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import useFcmToken from "@/hooks/useFcmToken";
 import { logOut } from "@/store/redux/services/authSlice/authSlice";
 import Image from "next/image";
+import { OrderNotificationContext } from "@/contexts/OrderNotificationContext";
+import { fetchToken } from "../../../firebase";
+import { headers } from "next/headers";
+
+const baseUrl = "https://backend.occupymart.com/api";
 
 const SEARCH_VISIBLE_ROUTES = [
   '/orders',
@@ -44,12 +49,16 @@ const DashboardHeader = () => {
   }, [dispatch]);
 
   const userID = useAppSelector((state) => state.auth.userID);
-  const { data: userData } = useGetSupermarketProfileQuery(userID, {
+  const {
+    data: userData,
+    error,
+    isLoading,
+  } = useGetSupermarketProfileQuery(userID, {
     skip: userID ? false : true,
   });
   const { toggleVisibility } = sideMenuContext;
 
-  const notificationContext = useContext(NotificationContext);
+  const notificationContext = useContext(OrderNotificationContext);
   if (!notificationContext) {
     throw new Error("Home must be used within a NotificationProvider");
   }
@@ -97,12 +106,7 @@ const DashboardHeader = () => {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
-                <Image
-                  src="/images/profile.png"
-                  alt="Profile Picture"
-                  width={32}
-                  height={32}
-                />
+                <Image src="/images/profile.png" alt="Profile Picture" />
                 <div className="text-left">
                   <p className="text-sm font-medium text-black/80">
                     {userData?.first_name ?? "John"} {userData?.last_name ?? "Doe"}
@@ -124,6 +128,46 @@ const DashboardHeader = () => {
       </Flex>
     </header>
   );
+
+  // Notification Testing
+  // const handleTestNotification = async () => {
+  //   const response = await fetch("/api/notification", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       token: token,
+  //       title: "Test Notification",
+  //       message: "This is a test notification",
+  //       link: "/dashboard/orders/ongoing",
+  //     }),
+  //   });
+
+  //   const data = await response.json();
+  //   console.log("response data", data);
+  // };
+
+  // return (
+  //   <main className="p-10">
+  //     {notificationPermissionStatus === "granted" ? (
+  //       <p>Permission to receive notifications has been granted.</p>
+  //     ) : notificationPermissionStatus !== null ? (
+  //       <p>
+  //         You have not granted permission to receive notifications. Please
+  //         enable notifications in your browser settings.
+  //       </p>
+  //     ) : null}
+
+  //     <Button
+  //       disabled={!token}
+  //       className="mt-5"
+  //       onClick={handleTestNotification}
+  //     >
+  //       Send Test Notification
+  //     </Button>
+  //   </main>
+  // );
 };
 
 export default DashboardHeader;
