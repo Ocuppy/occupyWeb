@@ -245,24 +245,24 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
 
-// Define the validation schema outside useFormik
-const loginValidationSchema = Yup.object({
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string()
-    .required("Password is required")
-    .min(8, "Password must be at least 8 characters"),
-});
+  // Define the validation schema outside useFormik
+  const loginValidationSchema = Yup.object({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters"),
+  });
 
-const formik = useFormik({
-  initialValues: {
-    email: "",
-    password: "",
-  },
-  validationSchema: loginValidationSchema, // Correct way to pass schema
-  onSubmit: async (values) => {
-    login({ email: values.email, password: values.password });
-  },
-});
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: loginValidationSchema, // Correct way to pass schema
+    onSubmit: async (values) => {
+      login({ email: values.email, password: values.password });
+    },
+  });
 
   const { toast } = useToast();
 
@@ -298,9 +298,9 @@ const formik = useFormik({
           messages?: { message: string }[];
           detail?: string;
         } & Record<string, any>;
-  
+
         let errorMessage = "Invalid email or password"; // Default message
-        
+
         // Check for specific error cases
         if (errorData.detail) {
           errorMessage = errorData.detail;
@@ -309,7 +309,7 @@ const formik = useFormik({
         } else if (error.status === 401) {
           errorMessage = "Invalid email or password";
         }
-  
+
         toast({
           description: errorMessage,
           title: "Login Failed",
@@ -373,14 +373,10 @@ const formik = useFormik({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.email}
-                  className={`
-                    w-full  bg-white text-lg
-                    ${formik.touched.email && formik.errors.email ? "border-occupy-primary" : ""}
-                    text-[#101828]   // Added text and placeholder colors
-                  `}
+                  className={`w-full bg-white text-lg ${formik.touched.email && formik.errors.email ? "border-occupy-primary" : ""} // Added text and placeholder colors text-[#101828]`}
                 />
                 {formik.touched.email && formik.errors.email ? (
-                  <div className="text-lg text-red-500 font-medium">
+                  <div className="text-lg font-medium text-red-500">
                     {formik.errors.email}
                   </div>
                 ) : null}
@@ -401,11 +397,7 @@ const formik = useFormik({
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
-                  className={`
-                    w-full border-[#D0D5DD] bg-white text-lg
-                    ${formik.touched.password && formik.errors.password ? "border-occupy-primary" : ""}
-                    text-[#101828]  // Added text and placeholder colors
-                  `}
+                  className={`w-full border-[#D0D5DD] bg-white text-lg ${formik.touched.password && formik.errors.password ? "border-occupy-primary" : ""} // Added text and placeholder colors text-[#101828]`}
                 />
                 <div
                   className="absolute right-4 top-[2.85rem] cursor-pointer"
@@ -414,7 +406,7 @@ const formik = useFormik({
                   {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                 </div>
                 {formik.touched.password && formik.errors.password ? (
-                  <div className="text-lg text-red-500 font-medium">
+                  <div className="text-lg font-medium text-red-500">
                     {formik.errors.password}
                   </div>
                 ) : null}
@@ -450,11 +442,6 @@ const formik = useFormik({
                 </p>
               </div>
             </form>
-          </div>
-          <div className="flex w-full items-center justify-center gap-3 text-center text-sm font-light text-black">
-            <Link href="#">Help</Link>
-            <Link href="#">Privacy</Link>
-            <Link href="#">Terms</Link>
           </div>
         </div>
       </div>

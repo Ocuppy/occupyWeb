@@ -4,7 +4,6 @@ import DashboardHeader from "./DashboardHeader";
 import { Button } from "../ui/button";
 import { AngleLeftIcon } from "@/assets/icon/icons";
 import { cn } from "@/lib/utils";
-import { inter } from "@/pages/_app";
 import { Toaster } from "../ui/toaster";
 import {
   DashboardMenuVisibilityContext,
@@ -88,12 +87,7 @@ const Layout = ({
         <div className="relative mb-12 flex min-h-screen min-w-0 max-w-[100vw] flex-auto flex-col overflow-y-auto overflow-x-hidden">
           <DashboardHeader />
 
-          <main
-            className={cn(
-              "mt-32 h-full flex-1 grow px-4 py-4",
-              inter.className,
-            )}
-          >
+          <main className={cn("font-inter mt-32 h-full flex-1 grow px-4 py-4")}>
             {children}
           </main>
         </div>
