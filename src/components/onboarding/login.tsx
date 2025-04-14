@@ -429,7 +429,7 @@ const Login = () => {
                   disabled={isLoading}
                   className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
                 >
-                  {isLoading ? "Logining in..." : "Login In"}
+                  {isLoading ? "Logining in..." : "Login"}
                 </button>
                 <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
                   New to Occupy?{" "}

@@ -1,7 +1,39 @@
 import { baseApiSlice } from "../baseApiSlice";
 
+interface Supermarket {
+  id: string;
+  is_online: boolean;
+}
+
 export const superMarketApiSlice = baseApiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    updateSupermarketStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `/store/supermarkets/online-offline-switch/${id}/`,
+        method: 'PATCH',
+        body: { is_online: status },
+      }),
+      // Optional: Add optimistic update logic
+      async onQueryStarted({ id, status }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          superMarketApiSlice.util.updateQueryData(
+            'getUserSupermarkets',
+            undefined,
+            (draft: Supermarket[]) => {
+              const supermarket = draft.find(s => s.id === id);
+              if (supermarket) {
+                supermarket.is_online = status;
+              }
+            })
+          );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+    }),
+
     getEstates: builder.query({
       query: () => ({
         url: "/admin/estates",
@@ -135,4 +167,5 @@ export const {
   useDeleteProductMutation,
   useEditProductMutation,
   useGetProductDetailQuery,
+  useUpdateSupermarketStatusMutation,
 } = superMarketApiSlice;

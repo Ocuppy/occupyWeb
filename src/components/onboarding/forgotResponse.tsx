@@ -45,11 +45,6 @@ const ForgotResponse: React.FC<ForgotResponseProps> = ({ resetForm,resendEmail }
           </Link>
         </p>
       </div>
-      <div className="flex w-full items-center justify-center gap-3 text-center text-sm font-light text-black">
-        <Link href="#">Help</Link>
-        <Link href="#">Privacy</Link>
-        <Link href="#">Terms</Link>
-      </div>
     </div>
   );
 };

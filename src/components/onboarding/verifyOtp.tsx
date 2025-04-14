@@ -65,7 +65,7 @@ const VerifyOtp: React.FC = () => {
     }
   }, [error, toast]);
 
-  const [timeLeft, setTimeLeft] = useState(30 * 60);
+  const [timeLeft, setTimeLeft] = useState(2 * 60);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -102,15 +102,18 @@ const VerifyOtp: React.FC = () => {
           Dashboard
         </h1>
 
-        <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg bg-white px-6 py-12 lg:px-8 lg:shadow-lg">
-          <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
-          <div className="flex w-full flex-col items-start gap-3">
-            <h3 className="text-2xl font-medium text-[#12141A]">
+        <div className="flex w-full flex-col items-center gap-8 rounded-lg bg-white px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:shadow-lg">
+          {/* Logo */}
+          <Image className="w-[100px] sm:w-[120px]" src={OccupyLogo} alt="logo" />
+  
+          {/* Content Container */}
+          <div className="flex w-full flex-col items-center gap-3"> {/* Changed to items-center */}
+            <h3 className="text-xl sm:text-2xl font-medium text-[#12141A] text-center"> {/* Added text-center */}
               OTP verification
             </h3>
-            <p className="pb-12 text-sm font-medium text-[#606778]">
+            <p className="pb-6 sm:pb-12 text-sm text-center font-medium text-[#606778]">
               Please enter the 6-digit verification code that was sent to your
-              mail. It’s valid for 30 minutes
+              mail. It's valid for 2 minutes. {/* Changed from 30 to 2 minutes */}
             </p>
             <Formik
               initialValues={initialValues}
@@ -122,7 +125,7 @@ const VerifyOtp: React.FC = () => {
                 errors,
                 touched,
               }: FormikProps<FormValues>) => (
-                <Form className="w-full">
+                <Form className="w-full max-w-xs mx-auto">
                   <div className="mx-auto w-fit">
                     <InputOTP
                       maxLength={6}
@@ -141,14 +144,14 @@ const VerifyOtp: React.FC = () => {
                     </InputOTP>
                   </div>
                   {errors.otp && touched.otp && (
-                    <div className="mt-2 text-sm text-red-500">
+                    <div className="mt-2 text-sm text-red-500 text-center">
                       {errors.otp}
                     </div>
                   )}
-                  <div className="mt-8 w-full text-end md:mt-4">
+                  <div className="mt-8 w-full md:mt-4 text-center">
                     <button
                       type="submit"
-                      className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
+                      className="w-full rounded-md bg-occupy-primary p-3 text-sm sm:text-base text-white"
                     >
                       Proceed
                     </button>
@@ -162,11 +165,6 @@ const VerifyOtp: React.FC = () => {
                 </Form>
               )}
             </Formik>
-          </div>
-          <div className="flex w-full items-center justify-center gap-3 text-center text-sm font-light text-black">
-            <Link href="#">Help</Link>
-            <Link href="#">Privacy</Link>
-            <Link href="#">Terms</Link>
           </div>
         </div>
       </div>

@@ -847,12 +847,6 @@ const Signup = () => {
                   </Link>
                 </p>
               </div>
-
-              <div className="flex items-center justify-center gap-3 text-center text-sm font-light text-black">
-                <Link href="#">Help</Link>
-                <Link href="#">Privacy</Link>
-                <Link href="#">Terms</Link>
-              </div>
             </form>
           </div>
         </div>

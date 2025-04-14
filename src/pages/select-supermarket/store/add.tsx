@@ -1,3 +1,5 @@
+"use client";
+
 import { withSteppedFormContextProvider } from "@/contexts/SteppedFormContext";
 import { NextPageWithLayout } from "@/pages/_app";
 import { useState, useEffect } from "react";
@@ -5,62 +7,95 @@ import { Input } from "@/components/ui/input";
 import Flex from "@/components/shared/Flex";
 import Select from "react-select";
 import { Button } from "@/components/ui/button";
-import { InformationIcon } from "@/assets/icon/icons";
-import { useToast } from "@/components/ui/use-toast";
+import { Loader2 } from "lucide-react";
+import { useToast, ToastReturn} from "@/components/ui/use-toast";
 import { useAppSelector } from "@/store/redux/hooks";
 import { useForm } from "react-hook-form";
 import { useAddSupermarketMutation } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
-import Router from "next/router";
+import { useRouter } from "next/navigation";
 
 const baseUrl = "https://backend.occupymart.com/api";
 
+interface Estate {
+  name: string;
+  address: string;
+  id: number;
+}
+
+interface FormData {
+  email: string;
+  phoneNumber: string;
+  supermarketAddress: string;
+  supermarketPhoto: FileList;
+  supermarketName: string;
+  supermarketLocation: string;
+  inspectionDate: string;
+  salesName: string;
+  regNumber: string;
+}
+
 const Page: NextPageWithLayout = () => {
-  const [estateList, setEstateList] = useState([]);
+  const router = useRouter();
+  // const { toast } = useToast();
+  const [estateList, setEstateList] = useState<{label: string, value: string}[]>([]);
   const [loadingEstate, setLoadingEstate] = useState(true);
   const [addLoading, setAddLoading] = useState(false);
+  const [currentToastId, setCurrentToastId] = useState<string | null>(null);
 
-  const userID = useAppSelector((state) => state.auth.userID);
-  const profileID = useAppSelector(
-    (state: { auth: { profileID: string } }) => state.auth.profileID,
-  );
+  const profileID = useAppSelector((state: { auth: { profileID: string } }) => state.auth.profileID);
 
-  const userData = useAppSelector((state) => state.auth);
-
-  const toast = useToast();
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors },
-  } = useForm();
+    watch,
+  } = useForm<FormData>();
+
+  const { toast } = useToast();
+  const [currentToast, setCurrentToast] = useState<ToastReturn | null>(null);
+  
+  const showToast = (
+    title: string,
+    description: string,
+    variant: 'default' | 'destructive' = 'default'
+  ) => {
+    // Dismiss previous toast if exists
+    if (currentToast) {
+      currentToast.dismiss();
+    }
+  
+    const newToast = toast({
+      title,
+      description,
+      variant,
+    });
+    
+    setCurrentToast(newToast);
+  };
 
   useEffect(() => {
     const fetchEstates = async () => {
       try {
+        setLoadingEstate(true);
         const response = await fetch(`${baseUrl}/admin/estates/`);
+        
         if (!response.ok) {
           throw new Error("Failed to fetch estates");
         }
-        const data = await response.json();
+        
+        const data: Estate[] = await response.json();
         setEstateList(
-          data.map((estate: { name: string; address: string; id: number }) => ({
+          data.map((estate) => ({
             label: `${estate.name} - ${estate.address}`,
             value: `${estate.id}`,
           })),
         );
-        toast.toast({
-          title: "Success",
-          description: "Estates loaded successfully!",
-          variant: "default",
-        });
+        
+        showToast("Success", "Estates loaded successfully!");
       } catch (error) {
         console.error("Error fetching estates:", error);
-        toast.toast({
-          title: "Error",
-          description: "Failed to fetch estates. Please try again.",
-          variant: "destructive",
-        });
+        showToast("Error", "Failed to fetch estates. Please try again.", "destructive");
       } finally {
         setLoadingEstate(false);
       }
@@ -69,39 +104,30 @@ const Page: NextPageWithLayout = () => {
     fetchEstates();
   }, []);
 
-  const formatPhoneNumber = (value: string) => {
-    // Remove all non-digit characters
+  const formatPhoneNumber = (value: string): string => {
     const cleaned = value.replace(/\D/g, "");
-
-    // If the number starts with 0, replace it with 234
     let formatted = cleaned.startsWith("0")
       ? `234${cleaned.slice(1)}`
       : cleaned.startsWith("234")
         ? cleaned
         : `234${cleaned}`;
 
-    // Format for display
     return formatted.length > 3
       ? `+${formatted.slice(0, 3)} ${formatted.slice(3)}`
       : formatted;
   };
 
-  // In your component
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhoneNumber(e.target.value);
     setValue("phoneNumber", formatted);
   };
 
   const [addSupermarket] = useAddSupermarketMutation();
-  const onSubmit = async (data: any) => {
-    // Validate inspection date
+
+  const onSubmit = async (data: FormData) => {
     const inspectionDate = new Date(data.inspectionDate);
     if (isNaN(inspectionDate.getTime())) {
-      toast.toast({
-        title: "Error",
-        description: "Please provide a valid inspection date.",
-        variant: "destructive",
-      });
+      showToast("Error", "Please provide a valid inspection date.", "destructive");
       return;
     }
 
@@ -124,45 +150,33 @@ const Page: NextPageWithLayout = () => {
       shop_owner: profileID,
     };
 
-    // Handle file upload separately
     const formData = new FormData();
     Object.entries(payload).forEach(([key, value]) => {
-      formData.append(key, String(value));
+      if (value !== undefined) {
+        formData.append(key, String(value));
+      }
     });
 
-    // if (data.supermarketPhoto && data.supermarketPhoto[0]) {
-    //   formData.append("supermarket_photo", data.supermarketPhoto[0]);
-    // }
     if (data.supermarketPhoto && data.supermarketPhoto[0]) {
       formData.append("supermarket_photo", data.supermarketPhoto[0]);
     }
 
     try {
       setAddLoading(true);
-      const result = await addSupermarket(formData);
+      const result = await addSupermarket(formData).unwrap();
 
-      if (result.data) {
+      if (result) {
         localStorage.setItem("storeCreated", "true");
-        toast.toast({
-          title: "Success",
-          description: "Supermarket added successfully",
-          variant: "default",
-        });
-        Router.push("/dashboard"); // Redirect to dashboard after successful submission
-      } else {
-        toast.toast({
-          title: "Error",
-          description: "Failed to add supermarket",
-          variant: "destructive",
-        });
+        showToast("Success", "Supermarket added successfully");
+        router.push("/select-supermarket");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error adding supermarket:", error);
-      toast.toast({
-        title: "Error",
-        description: "An unexpected error occurred",
-        variant: "destructive",
-      });
+      showToast(
+        "Error", 
+        error.data?.message || "Failed to add supermarket", 
+        "destructive"
+      );
     } finally {
       setAddLoading(false);
     }
@@ -178,107 +192,173 @@ const Page: NextPageWithLayout = () => {
             className="flex flex-col gap-5"
           >
             <div>
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email" className="block mb-1 text-sm font-medium">
+                Email
+              </label>
               <Input
                 id="email"
                 placeholder="Enter email"
-                {...register("email", { required: true })}
+                {...register("email", { required: "Email is required" })}
               />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">{errors.email.message}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="phoneNumber">Phone Number</label>
-              {/* <Input
-                id="phoneNumber"
-                placeholder="Enter phone number"
-                {...register("phoneNumber", { required: true })}
-              /> */}
+              <label htmlFor="phoneNumber" className="block mb-1 text-sm font-medium">
+                Phone Number
+              </label>
               <Input
                 id="phoneNumber"
                 placeholder="Enter phone number"
                 {...register("phoneNumber", {
-                  required: true,
+                  required: "Phone number is required",
                   onChange: handlePhoneChange,
                 })}
               />
+              {errors.phoneNumber && (
+                <p className="mt-1 text-sm text-red-500">{errors.phoneNumber.message}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="supermarketAddress">Supermarket Address</label>
+              <label htmlFor="supermarketAddress" className="block mb-1 text-sm font-medium">
+                Supermarket Address
+              </label>
               <Input
                 id="supermarketAddress"
                 placeholder="Enter supermarket address"
-                {...register("supermarketAddress", { required: true })}
+                {...register("supermarketAddress", { 
+                  required: "Address is required" 
+                })}
               />
+              {errors.supermarketAddress && (
+                <p className="mt-1 text-sm text-red-500">{errors.supermarketAddress.message}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="supermarketPhoto">Supermarket Photo</label>
-              {/* <Input
-                {...register("photo")}
-                placeholder="Upload Image"
-                type="file"
-              /> */}
+              <label htmlFor="supermarketPhoto" className="block mb-1 text-sm font-medium">
+                Supermarket Photo
+              </label>
               <Input
                 id="supermarketPhoto"
                 type="file"
                 accept="image/*"
-                {...register("supermarketPhoto", { required: true })}
+                {...register("supermarketPhoto", { 
+                  required: "Photo is required" 
+                })}
               />
+              {errors.supermarketPhoto && (
+                <p className="mt-1 text-sm text-red-500">{errors.supermarketPhoto.message}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="supermarketName">Supermarket Name</label>
+              <label htmlFor="supermarketName" className="block mb-1 text-sm font-medium">
+                Supermarket Name
+              </label>
               <Input
                 id="supermarketName"
                 placeholder="Enter supermarket name"
-                {...register("supermarketName", { required: true })}
+                {...register("supermarketName", { 
+                  required: "Name is required" 
+                })}
               />
+              {errors.supermarketName && (
+                <p className="mt-1 text-sm text-red-500">{errors.supermarketName.message}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="supermarketLocation">Supermarket Location</label>
+              <label htmlFor="supermarketLocation" className="block mb-1 text-sm font-medium">
+                Supermarket Location
+              </label>
               <Select
                 id="supermarketLocation"
                 options={estateList}
-                placeholder="Select supermarket location"
-                onChange={(selectedOption: { value: string } | null) => {
-                  setValue("supermarketLocation", selectedOption?.value);
+                isLoading={loadingEstate}
+                placeholder={loadingEstate ? "Loading locations..." : "Select supermarket location"}
+                onChange={(selectedOption) => {
+                  setValue("supermarketLocation", selectedOption?.value || "");
+                }}
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    minHeight: "40px",
+                  }),
                 }}
               />
+              {errors.supermarketLocation && (
+                <p className="mt-1 text-sm text-red-500">Location is required</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="inspectionDate">Date of Inspection</label>
+              <label htmlFor="inspectionDate" className="block mb-1 text-sm font-medium">
+                Date of Inspection
+              </label>
               <Input
                 id="inspectionDate"
                 type="date"
                 placeholder="Select date of inspection"
-                {...register("inspectionDate", { required: true })}
+                {...register("inspectionDate", { 
+                  required: "Inspection date is required" 
+                })}
               />
+              {errors.inspectionDate && (
+                <p className="mt-1 text-sm text-red-500">{errors.inspectionDate.message}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="salesName">Sales Name</label>
+              <label htmlFor="salesName" className="block mb-1 text-sm font-medium">
+                Sales Name
+              </label>
               <Input
                 id="salesName"
                 placeholder="Enter sales name"
-                {...register("salesName", { required: true })}
+                {...register("salesName", { 
+                  required: "Sales name is required" 
+                })}
               />
+              {errors.salesName && (
+                <p className="mt-1 text-sm text-red-500">{errors.salesName.message}</p>
+              )}
             </div>
 
             <div>
-              <label htmlFor="regNumber">Registration Number</label>
+              <label htmlFor="regNumber" className="block mb-1 text-sm font-medium">
+                Registration Number
+              </label>
               <Input
                 id="regNumber"
                 placeholder="Enter registration number"
-                {...register("regNumber", { required: true })}
+                {...register("regNumber", { 
+                  required: "Registration number is required" 
+                })}
               />
+              {errors.regNumber && (
+                <p className="mt-1 text-sm text-red-500">{errors.regNumber.message}</p>
+              )}
             </div>
 
             <div className="flex justify-center py-4">
-              <Button type="submit" size="lg" disabled={addLoading}>
-                {addLoading ? "Submitting..." : "Add Supermarket"}
+              <Button 
+                type="submit" 
+                size="lg" 
+                disabled={addLoading || loadingEstate}
+                className="min-w-[200px]"
+              >
+                {addLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
+                  </>
+                ) : (
+                  "Add Supermarket"
+                )}
               </Button>
             </div>
           </form>
