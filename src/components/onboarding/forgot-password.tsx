@@ -231,7 +231,13 @@ const ForgotPassword = () => {
   }, [error, toast]);
 
   return (
-    <section className="flex min-h-screen w-full lg:relative lg:items-center lg:justify-center">
+    <section
+      className="flex min-h-screen w-full font-[inter] lg:relative lg:items-center lg:justify-center"
+      style={{
+        backgroundImage: `url('/images/onboarding.png')`,
+        backgroundSize: "cover",
+      }}
+    >
       {isLoading && (
         <div className="fixed right-0 top-0 z-[10000] h-screen w-screen bg-white bg-opacity-20 backdrop-blur-sm">
           <div className="flex h-full w-full items-center justify-center">
@@ -239,17 +245,8 @@ const ForgotPassword = () => {
           </div>
         </div>
       )}
-      <div className="left-0 top-0 hidden h-full w-full lg:absolute lg:block">
-        <Image
-          src={"/images/onboarding.png"}
-          alt=""
-          layout="fill"
-          objectFit="cover"
-          className="h-full w-full"
-        />
-      </div>
 
-      <div className="flex w-full items-center justify-start gap-20 lg:relative lg:z-10 lg:px-8 lg:py-20">
+      <div className="flex w-full flex-col items-center justify-start gap-20 py-20 lg:relative lg:z-10 lg:flex-row lg:px-8">
         <h1 className="hidden w-full max-w-2xl text-5xl font-bold text-[#EBF7FB] lg:block">
           Manage your Supermarket Operations with ease using our intuitive
           Dashboard
@@ -257,7 +254,7 @@ const ForgotPassword = () => {
 
         {/* forget password form */}
         {!isComplete ? (
-          <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg px-6 py-12 lg:bg-white lg:px-8 lg:shadow-lg">
+          <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg bg-white px-6 py-12 lg:px-8 lg:shadow-lg">
             <Image className="w-[120px]" src={OccupyLogo} alt="logo" />
             <div className="flex w-full flex-col items-start gap-3">
               <h3 className="text-2xl font-medium text-[#12141A]">
