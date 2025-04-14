@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { usePathname } from 'next/navigation';
 import { Switch } from "../ui/switch";
 import { Label } from "../ui/label";
@@ -17,12 +18,20 @@ import { NotificationContext } from "@/contexts/NotificationContext";
 import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
 import { useAppSelector, useAppDispatch } from "@/store/redux/hooks";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
+import {useUpdateSupermarketStatusMutation} from "@/store/redux/services/superMarketSlice/superMarketApiSlice"
 import useFcmToken from "@/hooks/useFcmToken";
 import { logOut } from "@/store/redux/services/authSlice/authSlice";
 import Image from "next/image";
 import { OrderNotificationContext } from "@/contexts/OrderNotificationContext";
 import { fetchToken } from "../../../firebase";
 import { headers } from "next/headers";
+import { useToast} from "@/components/ui/use-toast";
+
+interface Supermarket {
+  id: string;
+  is_online: boolean;
+  // Add other properties if any, like name, location, etc.
+}
 
 const baseUrl = "https://backend.occupymart.com/api";
 
@@ -35,6 +44,79 @@ const DashboardHeader = () => {
   const pathname = usePathname();
   const { token, notificationPermissionStatus } = useFcmToken();
   const showSearchBar = SEARCH_VISIBLE_ROUTES.some(route => pathname?.includes(route));
+  const [selectedSupermarket, setSelectedSupermarket] = useState<Supermarket | null>(null);
+  const [updateStatus, { isLoading: isUpdating }] = useUpdateSupermarketStatusMutation();
+  const { toast } = useToast();
+  const [isOnline, setIsOnline] = useState(false);
+
+useEffect(() => {
+  const handleStorageChange = () => {
+    const storedSupermarket = sessionStorage.getItem('occupy-supermarket');
+    if (storedSupermarket) {
+      const supermarket = JSON.parse(storedSupermarket);
+      setSelectedSupermarket(supermarket);
+      setIsOnline(supermarket.is_online);
+    }
+  };
+
+  window.addEventListener('storage', handleStorageChange);
+  return () => window.removeEventListener('storage', handleStorageChange);
+}, []);
+
+  useEffect(() => {
+    const storedSupermarket = sessionStorage.getItem('occupy-supermarket');
+    if (storedSupermarket) {
+      const supermarket = JSON.parse(storedSupermarket);
+      setSelectedSupermarket(supermarket);
+      setIsOnline(supermarket.is_online);
+    } else {
+      // Reset online status if no supermarket is selected
+      setIsOnline(false);
+    }
+  }, []);
+
+
+  const handleToggle = async (checked: boolean) => {
+    if (!selectedSupermarket) return;
+    
+    try {
+      // Optimistically update UI
+      setIsOnline(checked);
+      
+      // Update the supermarket list in session storage
+      const updatedSupermarket = {
+        ...selectedSupermarket,
+        is_online: checked
+      };
+      
+      sessionStorage.setItem("occupy-supermarket", JSON.stringify(updatedSupermarket));
+      setSelectedSupermarket(updatedSupermarket);
+      
+      // Call API to update status
+      const response = await updateStatus({
+        id: selectedSupermarket.id,
+        status: checked
+      }).unwrap();
+      
+      if (response) {
+        toast({
+          title: checked ? 'Online' : 'Offline',
+          description: checked 
+            ? 'Your supermarket is now visible to customers' 
+            : 'Your supermarket is now offline',
+        });
+      }
+    } catch (error) {
+      console.error('Failed to update status:', error);
+      // Revert on error
+      setIsOnline(!checked);
+      toast({
+        title: 'Error',
+        description: 'Failed to update status. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const sideMenuContext = useContext(DashboardMenuVisibilityContext);
   if (!sideMenuContext) {
@@ -93,7 +175,12 @@ const DashboardHeader = () => {
         <div className="hidden items-center gap-8 xl:flex">
           <div className="flex items-center space-x-2">
             <Label htmlFor="online-mode">Online</Label>
-            <Switch id="online-mode" />
+            <Switch 
+              id="online-mode" 
+              disabled={!selectedSupermarket} 
+              checked={isOnline}
+              onCheckedChange={handleToggle}
+            />
           </div>
           
           {/* <Button

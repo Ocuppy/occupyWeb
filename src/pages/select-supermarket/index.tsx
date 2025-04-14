@@ -1,39 +1,41 @@
 "use client";
 
+import { useEffect, useState, SetStateAction } from "react";
 import { NextPageWithLayout } from "../_app";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import { Loader2 } from "lucide-react";
 import SpaceBetween from "@/components/shared/SpaceBetween";
 import { Button } from "@/components/ui/button";
-import Router from "next/router";
 import StoreItem from "@/components/select-supermarket/select-supermarket/StoreItem";
-import { SetStateAction, useEffect, useMemo, useState } from "react";
-import SupermarketDetails from "@/components/select-supermarket/select-supermarket/SupermarketDetails";
-import Image from "next/image";
-import illustration from "../../../public/images/illustration.png";
-import { Inter } from "next/font/google";
-import CategoryItem from "@/components/select-supermarket/select-supermarket/CategoryItem";
-import {
-  ArrowLeft,
-  ArrowRight,
-  MoveLeft,
-  MoveRight,
-  Loader2,
-  Route,
-} from "lucide-react";
-import NoSupermarkets from "@/components/select-supermarket/select-supermarket/NoSupermarkets";
-import CategoryBar from "@/components/select-supermarket/select-supermarket/CategoryBar";
-import TransactionsTable from "@/components/select-supermarket/select-supermarket/TransactionsTable";
 import { useGetSupermarketProfileQuery } from "@/store/redux/services/profileSlice/profileApiSlice";
-import { useGetUserSupermarketsQuery } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
+import SupermarketDetails from "@/components/select-supermarket/select-supermarket/SupermarketDetails";
+import AccountStatus from "@/components/select-supermarket/select-supermarket/AccountStatus";
+import UserDashboard from "@/components/select-supermarket/select-supermarket/UserDashboard";
+import TransactionsTable from "@/components/select-supermarket/select-supermarket/TransactionsTable";
+import { useToast } from "@/components/ui/use-toast";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
-import AccountStatus from "@/components/select-supermarket/select-supermarket/AccountStatus";
-import store from "@/store/redux/store";
-import ActionButtons from "@/components/select-supermarket/settings/ActionButtons";
-// imort Router from "next/router";
-import UserDashboard from "@/components/select-supermarket/select-supermarket/UserDashboard";
-import { useRouter } from "next/router";
+import {
+  useGetUserSupermarketsQuery,
+  useUpdateSupermarketStatusMutation,
+} from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
+import { Inter } from "next/font/google";
+import Router from "next/router";
+
+type Supermarket = {
+  id: string;
+  name: string;
+  business_name: string;
+  supermarket_photo?: string;
+  is_online: boolean;
+  contact_person_name: string;
+  business_address: string;
+  contact_person_phone_number: string;
+};
 
 const inter = Inter({ subsets: ["latin"] });
+
 const getTimeOfDay = () => {
   const currentHour = new Date().getHours();
 
@@ -50,17 +52,21 @@ const getTimeOfDay = () => {
 
 const Page: NextPageWithLayout = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { toast } = useToast();
 
   const [showMarketDet, setShowMarketDet] = useState(false);
-  const [selectedSupermarket, setSelectedSupermarket] = useState(null);
+  const [selectedSupermarket, setSelectedSupermarket] = useState<Supermarket | null>(null);
 
-  const dispatch = useAppDispatch();
+    // This will be shared with DashboardHeader
+  const [globalSupermarketStatus, setGlobalSupermarketStatus] = useState(false);
 
   useEffect(() => {
     dispatch(getCredentials());
   }, [dispatch]);
 
   const userID = useAppSelector((state) => state.auth.userID);
+
   const {
     data: userData,
     error,
@@ -77,14 +83,64 @@ const Page: NextPageWithLayout = () => {
     skip: !userID,
   });
 
-  // Safely get the array of supermarkets
-  console.log("Supermarkets data:", supermarketsData);
   const supermarkets = supermarketsData;
 
-  const toggleMarketDet = (supermarket: SetStateAction<null>) => {
-    setSelectedSupermarket(supermarket);
-    setShowMarketDet(!showMarketDet);
+  const [updateSupermarketStatus, { isLoading: isUpdating }] =
+    useUpdateSupermarketStatusMutation();
+
+    // Update the saveSelectedSupermarket function
+    const saveSelectedSupermarket = (supermarket: Supermarket) => {
+      console.log('Saving supermarket:', supermarket);
+      sessionStorage.setItem("occupy-supermarket", JSON.stringify(supermarket));
+      console.log('SessionStorage after save:', sessionStorage.getItem("occupy-supermarket"));
+      location.reload();
+    };
+
+  // Enhanced status change handler
+  const handleStatusChange = async (id: string, newStatus: boolean) => {
+    try {
+      await updateSupermarketStatus({
+        supermarket_id: id,
+        is_online: newStatus,
+      }).unwrap();
+      
+      // Update the selected supermarket if it exists
+      if (selectedSupermarket && selectedSupermarket.id === id) {
+        const updatedSupermarket = {
+          ...selectedSupermarket,
+          is_online: newStatus
+        };
+        setSelectedSupermarket(updatedSupermarket);
+        sessionStorage.setItem("occupy-supermarket", JSON.stringify(updatedSupermarket));
+      }
+      
+      toast({
+        title: "Status Updated",
+        description: `Supermarket is now ${newStatus ? "online" : "offline"}`,
+      });
+    } catch (err: any) {
+      toast({
+        title: "Error",
+        description: err?.data?.message || "Failed to update status",
+        variant: "destructive",
+      });
+    }
   };
+
+  // const saveSelectedSupermarket = (supermarket: {
+  //   id: any;
+  //   name: any;
+  //   business_name: any;
+  //   supermarket_photo: any;
+  //   is_online: any;
+  //   contact_person_name: any;
+  //   business_address: any;
+  //   contact_person_phone_number: any;
+  // }) => {
+  //   sessionStorage.setItem("occupy-supermarket", JSON.stringify(supermarket));
+  //   location.reload();
+  // };
+  
 
   if (isSupermarketsLoading) {
     return (
@@ -94,24 +150,9 @@ const Page: NextPageWithLayout = () => {
     );
   }
 
-  const saveSelectedSupermarket = (supermarket: {
-    id: any;
-    name: any;
-    business_name: any;
-    supermarket_photo: any;
-    is_online: any;
-    contact_person_name: any;
-    business_address: any;
-    contact_person_phone_number: any;
-  }) => {
-    sessionStorage.setItem("occupy-supermarket", JSON.stringify(supermarket));
-    location.reload();
-  };
-
-  // console.log("Supermarkets:", supermarkets);
   if (supermarkets.length > 0) {
     return (
-      <div className="container mx-auto h-full rounded-md bg-white px-4 py-6">
+      <div className="h-full rounded-md bg-white px-4 py-6">
         <SpaceBetween>
           <p className="text-[20px] font-medium">Manage Store</p>
           <Button onClick={() => Router.push("/select-supermarket/store/add")}>
@@ -119,53 +160,61 @@ const Page: NextPageWithLayout = () => {
           </Button>
         </SpaceBetween>
         <div className="mx-auto mt-8 flex max-w-[900px] flex-col gap-8">
-          {supermarkets.map(
-            (store: {
-              id: any;
-              name: any;
-              business_name: any;
-              supermarket_photo: any;
-              is_online: any;
-              contact_person_name: any;
-              business_address: any;
-              contact_person_phone_number: any;
-            }) => (
-              <StoreItem
-                key={store.id}
-                store={{
-                  id: store.id,
-                  name: store.name,
-                  business_name: store.business_name,
-                  supermarket_photo: store.supermarket_photo,
-                  business_address: store.business_address,
-                  is_online: store.is_online,
-                  contact_person_name: store.contact_person_name,
-                  contact_person_phone_number:
-                    store.contact_person_phone_number,
-                }}
-                // onClickStore={() => console.log("Store clicked:", store.id)}
-                onClickStore={() =>
-                  //  router.push(`/dashboard/inventory/${supermarket_id}`);
-                  // router.push(`dashboard/inventory/${store.id}`)
-                  saveSelectedSupermarket(store)
-                }
-              />
-            ),
-          )}
-
-          {/* {supermarkets.map((store: Supermarket) => (
+          {supermarkets.map((store: Supermarket) => (
             <StoreItem
               key={store.id}
               store={store}
-              onClickStore={() => toggleMarketDet(store)}
+              onClickStore={() => saveSelectedSupermarket(store)}
+              isSelected={selectedSupermarket?.id === store.id}
             />
-          ))} */}
+          ))}
         </div>
       </div>
     );
-
-    // Default view: List of stores
   }
+
+  // if (supermarkets.length > 0) {
+  //   return (
+  //     <div className="h-full rounded-md bg-white px-4 py-6">
+  //       <SpaceBetween>
+  //         <p className="text-[20px] font-medium">Manage Store</p>
+  //         <Button onClick={() => Router.push("/select-supermarket/store/add")}>
+  //           Add Store
+  //         </Button>
+  //       </SpaceBetween>
+  //       <div className="mx-auto mt-8 flex max-w-[900px] flex-col gap-8">
+  //         {supermarkets.map(
+  //           (store: {
+  //             id: any;
+  //             name: any;
+  //             business_name: any;
+  //             supermarket_photo: any;
+  //             is_online: any;
+  //             contact_person_name: any;
+  //             business_address: any;
+  //             contact_person_phone_number: any;
+  //           }) => (
+  //             <StoreItem
+  //               key={store.id}
+  //               store={{
+  //                 id: store.id,
+  //                 name: store.name,
+  //                 business_name: store.business_name,
+  //                 supermarket_photo: store.supermarket_photo,
+  //                 business_address: store.business_address,
+  //                 is_online: store.is_online,
+  //                 contact_person_name: store.contact_person_name,
+  //                 contact_person_phone_number:
+  //                   store.contact_person_phone_number,
+  //               }}
+  //               onClickStore={() => saveSelectedSupermarket(store)}
+  //             />
+  //           )
+  //         )}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   console.log("when supermarkets is == 0", supermarkets);
   if (supermarkets.length === 0) {
@@ -173,7 +222,7 @@ const Page: NextPageWithLayout = () => {
       <div className="h-full rounded-md bg-white px-4 py-6">
         <SpaceBetween>
           <p className="text-[20px] font-medium">Manage Store</p>
-          <Button onClick={() => Router.push("/dashboard/store/add")}>
+          <Button onClick={() => Router.push("/select-supermarket/store/add")}>
             Add Store
           </Button>
         </SpaceBetween>
@@ -188,7 +237,7 @@ const Page: NextPageWithLayout = () => {
             <Button
               type="submit"
               size="lg"
-              onClick={() => Router.push("/dashboard/store/add")}
+              onClick={() => Router.push("/select-supermarket/store/add")}
             >
               Continue
             </Button>
@@ -234,3 +283,4 @@ const Page: NextPageWithLayout = () => {
 };
 
 export default Page;
+
