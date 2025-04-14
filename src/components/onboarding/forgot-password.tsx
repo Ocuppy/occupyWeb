@@ -297,13 +297,13 @@ const ForgotPassword = () => {
                 </div>
 
                 <div className="w-full">
-                <button
-                  type="submit"
-                  // disabled={isLoading}
-                  className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
-                >
-                  {isLoading ? "Sending Email..." : "Send Email"}
-                </button>
+                  <button
+                    type="submit"
+                    // disabled={isLoading}
+                    className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
+                  >
+                    {isLoading ? "Sending Email..." : "Send Email"}
+                  </button>
                   <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
                     Remembered Password?{" "}
                     <Link
