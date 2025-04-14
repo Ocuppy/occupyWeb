@@ -437,7 +437,7 @@ const formik = useFormik({
                   disabled={isLoading}
                   className="w-full rounded-md bg-occupy-primary p-3 text-white lg:w-32"
                 >
-                  {isLoading ? "Logining in..." : "Login In"}
+                  {isLoading ? "Logining in..." : "Login"}
                 </button>
                 <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
                   New to Occupy?{" "}
@@ -450,11 +450,6 @@ const formik = useFormik({
                 </p>
               </div>
             </form>
-          </div>
-          <div className="flex w-full items-center justify-center gap-3 text-center text-sm font-light text-black">
-            <Link href="#">Help</Link>
-            <Link href="#">Privacy</Link>
-            <Link href="#">Terms</Link>
           </div>
         </div>
       </div>
