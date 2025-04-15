@@ -21,12 +21,30 @@ export function OrderDetails({ order }: OrderDetailsProps) {
   const [acceptOrder, { isLoading, isSuccess, isError }] =
     useAcceptOrderMutation();
 
+  const renderActionButtons = () => {
+    if (order.status !== "pending" || isSuccess) {
+      return <Button>Completed</Button>;
+    }
+
+    return (
+      <div className="flex justify-center gap-4 pt-4">
+        <Button
+          onClick={() => acceptOrder({ order_id: order.id })}
+          disabled={isLoading}
+        >
+          {isLoading ? "Accepting..." : "Accept"}
+        </Button>
+        <Button variant="outline">Reject</Button>
+      </div>
+    );
+  };
+
   return (
     <section className="w-full">
       <div className="max-h-[85vh] space-y-6 overflow-y-auto p-4">
         {/* Customer Details */}
         <div>
-          <h2 className="font mb-2 text-base">Customer Details</h2>
+          <h2 className="mb-2 text-base font-medium">Customer Details</h2>
           <div className="space-y-1">
             <p>
               <span className="text-sm font-medium text-[#858D9D]">
@@ -125,19 +143,7 @@ export function OrderDetails({ order }: OrderDetailsProps) {
 
         {/* Action Buttons */}
         <div className="mx-auto grid place-items-center">
-          {order.status != "pending" ? (
-            <p>Completed</p>
-          ) : (
-            <div className="flex justify-center space-x-2 pt-4">
-              <Button
-                onClick={() => acceptOrder({ order_id: order.id })}
-                disabled={isLoading}
-              >
-                {isLoading ? "Accepting..." : "Accept"}
-              </Button>
-              <Button variant="outline">Reject</Button>
-            </div>
-          )}
+          {renderActionButtons()}
         </div>
       </div>
     </section>
