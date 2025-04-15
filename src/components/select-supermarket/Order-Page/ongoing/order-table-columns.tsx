@@ -284,9 +284,14 @@ export const orderTableColumns: ColumnDef<APIOrderType>[] = [
 
       switch (statusValue) {
         case "pending":
-          status = "Processing";
+          status = "Pending";
           backgroundColor = "bg-[#E46A11]";
           textColor = "text-[#E46A11] font-bold";
+          break;
+        case "processing":
+          status = "Processing";
+          backgroundColor = "bg-[#066cd1]";
+          textColor = "text-[#06284a] font-bold";
           break;
         case "shipped":
           status = "Shipped";

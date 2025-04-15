@@ -1,7 +1,7 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { APIOrderType } from "../order-table-columns";
+import { useAcceptOrderMutation } from "@/store/redux/services/superMarketOrdersSlice/superMarketOrdersApiSlice";
 
 interface OrderDetailsProps {
   order: APIOrderType;
@@ -18,9 +18,12 @@ export function OrderDetails({ order }: OrderDetailsProps) {
   const serviceCharge = parseFloat(order.service_charge) || 0;
   const total = itemsTotal + deliveryFee + serviceCharge;
 
+  const [acceptOrder, { isLoading, isSuccess, isError }] =
+    useAcceptOrderMutation();
+
   return (
     <section className="w-full">
-      <div className="space-y-6 p-4">
+      <div className="max-h-[85vh] space-y-6 overflow-y-auto p-4">
         {/* Customer Details */}
         <div>
           <h2 className="font mb-2 text-base">Customer Details</h2>
@@ -121,9 +124,20 @@ export function OrderDetails({ order }: OrderDetailsProps) {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex justify-center space-x-2 pt-4">
-          <Button>Accept</Button>
-          <Button variant="outline">Reject</Button>
+        <div className="mx-auto grid place-items-center">
+          {order.status != "pending" ? (
+            <p>Completed</p>
+          ) : (
+            <div className="flex justify-center space-x-2 pt-4">
+              <Button
+                onClick={() => acceptOrder({ order_id: order.id })}
+                disabled={isLoading}
+              >
+                {isLoading ? "Accepting..." : "Accept"}
+              </Button>
+              <Button variant="outline">Reject</Button>
+            </div>
+          )}
         </div>
       </div>
     </section>
