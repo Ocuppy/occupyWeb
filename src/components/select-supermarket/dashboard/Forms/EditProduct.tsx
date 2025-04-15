@@ -208,7 +208,7 @@ const EditProduct: React.FC = () => {
       const response = await fetch(
         `${baseUrl}/store/edit-product/${productId}/`,
         {
-          method: "PUT",
+          method: "PATCH",
           body: formData,
           headers: {
             Authorization: `Bearer ${token}`,
