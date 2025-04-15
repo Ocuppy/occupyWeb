@@ -16,10 +16,10 @@ export function DataTableToolbar<TData>({
   return (
     <div className="flex items-center justify-between px-4 pb-4 text-sm sm:text-base">
       <div className="flex items-center gap-2">
-        <span className="whitespace-nowrap">Recent Orders</span>
-        <div className="rounded-full bg-[#0D894F] text-xs sm:text-base bg-opacity-25 px-2 py-1 text-[#0D894F]">
+        <span className="whitespace-nowrap">Orders</span>
+        {/* <div className="rounded-full bg-[#0D894F] text-xs sm:text-base bg-opacity-25 px-2 py-1 text-[#0D894F]">
           +2 Orders
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center gap-2">
