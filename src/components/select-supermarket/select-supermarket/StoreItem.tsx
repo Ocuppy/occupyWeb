@@ -29,11 +29,11 @@ const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore, isSelected =
     onClickStore();
   };
 
-  const handleEditClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    console.log('Edit button clicked');
-    // Add your edit functionality here
-  };
+  // const handleEditClick = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   console.log('Edit button clicked');
+  //   // Add your edit functionality here
+  // };
 
   return (
     <div className="relative"> {/* Container for absolute positioning */}
@@ -82,7 +82,7 @@ const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore, isSelected =
       </div>
 
       {/* Edit Button - Absolutely positioned */}
-      <div 
+      {/* <div 
         className="absolute right-4 top-1/2 -translate-y-1/2"
         onClick={handleEditClick}
       >
@@ -92,7 +92,7 @@ const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore, isSelected =
         >
           Edit
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

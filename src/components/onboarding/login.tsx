@@ -408,7 +408,7 @@ const formik = useFormik({
                   `}
                 />
                 <div
-                  className="absolute right-4 top-[2.85rem] cursor-pointer"
+                  className="absolute right-4 top-[3.4rem] cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}

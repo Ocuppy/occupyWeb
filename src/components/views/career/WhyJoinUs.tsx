@@ -71,15 +71,15 @@ const jobData = [
     id: 1,
     title: "Delivery Rider",
     type: "Full Time",
-    location: "Forte Royal Estate (Lugbe)",
-    linkApply: "https://github.com",
+    location: "Forte Royal Estate (Airport Road)",
+    linkApply: "https://forms.gle/KKZ3XGfrqDW6UUvk8",
   },
   {
     id: 2,
     title: "In-Store Order Coordinator",
     type: "Full Time",
-    location: "Forte Royal Estate (Lugbe)",
-    linkApply: "/career/apply",
+    location: "Forte Royal Estate (Airport Road)",
+    linkApply: "https://forms.gle/SnkoHECc3d77D55s8",
   },
   // You can add more job listings here
 ];

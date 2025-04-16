@@ -691,7 +691,7 @@ const Signup = () => {
                     placeholder="Your first name"
                     onChange={handleChange}
                     value={formValues.firstName}
-                    className={errors.firstName ? "border-red-700" : ""}
+                    className={errors.firstName ? "border-red-700" : "mb-2"}
                   />
                   {errors.firstName && (
                     <div className="text-sm text-red-500">

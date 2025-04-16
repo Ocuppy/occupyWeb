@@ -106,7 +106,7 @@ const ResetPassword = () => {
             </h3>
             <p className="mt-2 text-sm text-[#606778]">
               Please enter the 6-digit verification code that was sent to your
-              mail. It's valid for 30 minutes.
+              mail. It&apos;s valid for 30 minutes.
             </p>
           </div>
 
