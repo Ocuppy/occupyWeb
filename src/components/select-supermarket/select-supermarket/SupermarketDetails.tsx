@@ -75,7 +75,7 @@ const SupermarketDetails = ({
       </Flex>
 
       <ScrollArea className="w-full mt-12">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:flex 2xl:flex-wrap gap-4">
+<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:flex 2xl:flex-wrap gap-4 h-40">
           {Array(16)
             .fill("i")
             .map((_, idx) => (

@@ -153,6 +153,17 @@ useEffect(() => {
   return (
     <header className="fixed right-0 z-10 flex w-screen items-center bg-white py-5 xl:w-full xl:pl-[270px] xl:pr-4">
       <Flex className="w-full justify-between px-4 xl:pl-10">
+        {/* Mobile switch (centered) - Only visible on mobile */}
+        <div className="xl:hidden flex items-center space-x-2 absolute left-1/2 transform -translate-x-1/2">
+          <Label htmlFor="online-mode-mobile" className="">Online</Label>
+          <Switch 
+            id="online-mode-mobile" 
+            disabled={!selectedSupermarket} 
+            checked={isOnline}
+            onCheckedChange={handleToggle}
+          />
+        </div>
+  
         {/* Conditional Search Bar */}
         <div className={`transition-all duration-300 ${showSearchBar ? 'w-full max-w-[500px]' : 'w-0'}`}>
           {showSearchBar && (
@@ -164,14 +175,11 @@ useEffect(() => {
             />
           )}
         </div>
-
+  
         {/* Spacer when search is hidden */}
         {!showSearchBar && <div className="flex-1" />}
-
-        <button onClick={toggleVisibility} className="xl:hidden">
-          <Menu className="text-black" />
-        </button>
-
+  
+        {/* Desktop controls (right side) */}
         <div className="hidden items-center gap-8 xl:flex">
           <div className="flex items-center space-x-2">
             <Label htmlFor="online-mode">Online</Label>
@@ -183,17 +191,10 @@ useEffect(() => {
             />
           </div>
           
-          {/* <Button
-            onClick={() => {}}
-            className="rounded-lg bg-[#f6f6f6] px-4 py-6 text-black"
-          >
-            <UserClockIcon width={21} />
-          </Button> */}
-
           <DropdownMenu>
             <DropdownMenuTrigger>
               <div className="relative flex w-52 items-center gap-2 rounded-md border p-2">
-                <Image src="/images/profile.png" alt="Profile Picture" width={100} height={100}/>
+                <Image src="/images/profile.png" alt="Profile Picture" width={40} height={40} className="w-10 h-10"/>
                 <div className="text-left">
                   <p className="text-sm font-medium text-black/80">
                     {userData?.first_name ?? "John"} {userData?.last_name ?? "Doe"}
@@ -212,6 +213,11 @@ useEffect(() => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
+  
+        {/* Mobile menu button (right side) */}
+        <button onClick={toggleVisibility} className="xl:hidden">
+          <Menu className="text-black" />
+        </button>
       </Flex>
     </header>
   );
@@ -255,6 +261,5 @@ useEffect(() => {
   //     </Button>
   //   </main>
   // );
-};
-
+}
 export default DashboardHeader;
