@@ -400,7 +400,7 @@ const Login = () => {
                   className={`w-full border-[#D0D5DD] bg-white text-lg ${formik.touched.password && formik.errors.password ? "border-occupy-primary" : ""} // Added text and placeholder colors text-[#101828]`}
                 />
                 <div
-                  className="absolute right-4 top-[2.85rem] cursor-pointer"
+                  className="absolute right-4 top-[3.4rem] cursor-pointer"
                   onClick={togglePasswordVisibility}
                 >
                   {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}

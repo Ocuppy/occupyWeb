@@ -45,7 +45,7 @@ const productSchema = z.object({
     },
     {
       message: "Price must be a valid non-negative number",
-    }
+    },
   ),
   quantity: z.number().min(0, "Quantity must be non-negative"),
   in_stock: z.boolean().default(true), // ADDED
@@ -86,9 +86,9 @@ const EditProduct: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const userID = useAppSelector((state) => state.auth.userID);
 
-  const { data: productDetail, isLoading: isFetchingProductDetail } = 
+  const { data: productDetail, isLoading: isFetchingProductDetail } =
     useGetProductDetailQuery({ productId }, { skip: !productId });
-  
+
   const [categories, setCategories] = useState<
     Array<{ value: string; label: string; pk: string }>
   >([]);
@@ -99,7 +99,7 @@ const EditProduct: React.FC = () => {
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      product_id: productId as string || "",
+      product_id: (productId as string) || "",
       productName: "",
       description: "",
       price: "",
@@ -143,7 +143,7 @@ const EditProduct: React.FC = () => {
   useEffect(() => {
     if (productDetail && categories.length > 0) {
       const currentCategory = categories.find(
-        (c) => c.value === productDetail.category.toString()
+        (c) => c.value === productDetail.category.toString(),
       );
 
       form.reset({
@@ -183,50 +183,50 @@ const EditProduct: React.FC = () => {
   const onSubmit = async (data: ProductFormData) => {
     setIsSubmitting(true);
     try {
-      const token = sessionStorage.getItem('token');
-      console.log("This is the sessionStorage", sessionStorage)
-      
+      const token = sessionStorage.getItem("token");
+      console.log("This is the sessionStorage", sessionStorage);
+
       if (!token) {
         toast({
           title: "Error",
           description: "Please login again",
           variant: "destructive",
         });
-        router.push('/login');
+        router.push("/login");
         return;
       }
-  
+
       const formData = new FormData();
       formData.append("name", data.productName);
       formData.append("price", data.price.replace(/,/g, ""));
+      formData.append("description", data.description!.toString());
       formData.append("category", data.category.pk);
       formData.append("quantity", data.quantity.toString());
       formData.append("in_stock", data.in_stock.toString()); // ADDED
       if (data.photo) formData.append("product_image", data.photo);
-  
+
       const response = await fetch(
         `${baseUrl}/store/edit-product/${productId}/`,
         {
-          method: "PUT",
+          method: "PATCH",
           body: formData,
           headers: {
-            "Authorization": `JWT ${token}`,
-          }
-        }
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.detail || "Product update failed");
       }
-  
+
       toast({
         title: "Success",
         description: "Product updated successfully!",
         variant: "default",
       });
       router.back();
-      
     } catch (error) {
       console.error("Update error:", error);
       toast({
@@ -298,7 +298,10 @@ const EditProduct: React.FC = () => {
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Textarea placeholder="Product description" {...field} />
+                          <Textarea
+                            placeholder="Product description"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -308,40 +311,44 @@ const EditProduct: React.FC = () => {
               </div>
 
               <div className="rounded-lg border bg-white p-6 shadow-sm">
-  <h2 className="mb-4 text-lg font-semibold">Media</h2>
-  <div className="flex flex-col items-center justify-center">
-    <input
-      type="file"
-      accept="image/*"
-      onChange={handleImageUpload}
-      className="hidden"
-      id="image-upload"
-    />
-    <label htmlFor="image-upload" className="cursor-pointer">
-      {imagePreview ? (
-        <Image
-          src={imagePreview}
-          alt="Preview"
-          width={200}
-          height={200}
-          className="object-cover rounded-lg"
-        />
-      ) : productDetail?.product_image ? (
-        <Image
-          src={productDetail.product_image}
-          alt={productDetail.name}
-          width={200}
-          height={200}
-          className="object-cover rounded-lg"
-        />
-      ) : (
-        <div className="w-48 h-48 bg-gray-100 rounded-lg flex items-center justify-center">
-          <ImgIcon width={48} height={48} className="text-gray-400" />
-        </div>
-      )}
-    </label>
-  </div>
-</div>
+                <h2 className="mb-4 text-lg font-semibold">Media</h2>
+                <div className="flex flex-col items-center justify-center">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    className="hidden"
+                    id="image-upload"
+                  />
+                  <label htmlFor="image-upload" className="cursor-pointer">
+                    {imagePreview ? (
+                      <Image
+                        src={imagePreview}
+                        alt="Preview"
+                        width={200}
+                        height={200}
+                        className="rounded-lg object-cover"
+                      />
+                    ) : productDetail?.product_image ? (
+                      <Image
+                        src={productDetail.product_image}
+                        alt={productDetail.name}
+                        width={200}
+                        height={200}
+                        className="rounded-lg object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-48 w-48 items-center justify-center rounded-lg bg-gray-100">
+                        <ImgIcon
+                          width={48}
+                          height={48}
+                          className="text-gray-400"
+                        />
+                      </div>
+                    )}
+                  </label>
+                </div>
+              </div>
 
               <div className="rounded-lg border bg-white p-6 shadow-sm">
                 <h2 className="mb-4 text-lg font-semibold">Pricing</h2>
@@ -358,7 +365,10 @@ const EditProduct: React.FC = () => {
                             placeholder="Enter price"
                             {...field}
                             onChange={(e) => {
-                              let value = e.target.value.replace(/[^\d.,]/g, "");
+                              let value = e.target.value.replace(
+                                /[^\d.,]/g,
+                                "",
+                              );
                               const parts = value.split(".");
                               if (parts.length > 2) parts.pop();
                               value = parts.join(".");
@@ -371,7 +381,10 @@ const EditProduct: React.FC = () => {
                                 if (!isNaN(numValue)) {
                                   const formatted = numValue.toLocaleString(
                                     "en-US",
-                                    { minimumFractionDigits: 2, maximumFractionDigits: 2 }
+                                    {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2,
+                                    },
                                   );
                                   field.onChange(formatted);
                                 }
@@ -395,7 +408,9 @@ const EditProduct: React.FC = () => {
                             type="number"
                             placeholder="Enter quantity"
                             {...field}
-                            onChange={(e) => field.onChange(Number(e.target.value))}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
                           />
                         </FormControl>
                         <FormMessage />
@@ -417,7 +432,8 @@ const EditProduct: React.FC = () => {
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
-                          <FormLabel className="text-lg">In Stock</FormLabel> {/* Increased text size */}
+                          <FormLabel className="text-lg">In Stock</FormLabel>{" "}
+                          {/* Increased text size */}
                         </div>
                       </FormItem>
                     )}
@@ -437,8 +453,13 @@ const EditProduct: React.FC = () => {
                       <FormLabel>Category</FormLabel>
                       <Select
                         onValueChange={(value) => {
-                          const selected = categories.find(c => c.value === value);
-                          form.setValue("category", selected || { value: "", label: "", pk: "" });
+                          const selected = categories.find(
+                            (c) => c.value === value,
+                          );
+                          form.setValue(
+                            "category",
+                            selected || { value: "", label: "", pk: "" },
+                          );
                         }}
                         value={form.watch("category.value")}
                       >
@@ -449,7 +470,10 @@ const EditProduct: React.FC = () => {
                         </FormControl>
                         <SelectContent>
                           {categories.map((category) => (
-                            <SelectItem key={category.value} value={category.value}>
+                            <SelectItem
+                              key={category.value}
+                              value={category.value}
+                            >
                               {category.label}
                             </SelectItem>
                           ))}
