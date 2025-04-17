@@ -1,11 +1,11 @@
 import { SVGProps } from "react";
-import { 
-  HomeIcon, 
-  InventoryIcon, 
-  UserIcon, 
-  WalletIcon, 
+import {
+  HomeIcon,
+  InventoryIcon,
+  UserIcon,
+  WalletIcon,
   AnalyticsIcon,
-  PackageIcon // Add this import
+  PackageIcon, // Add this import
 } from "@/assets/icon/icons";
 
 interface IDashboardLink {

@@ -56,9 +56,10 @@ const Page: NextPageWithLayout = () => {
   const { toast } = useToast();
 
   const [showMarketDet, setShowMarketDet] = useState(false);
-  const [selectedSupermarket, setSelectedSupermarket] = useState<Supermarket | null>(null);
+  const [selectedSupermarket, setSelectedSupermarket] =
+    useState<Supermarket | null>(null);
 
-    // This will be shared with DashboardHeader
+  // This will be shared with DashboardHeader
   const [globalSupermarketStatus, setGlobalSupermarketStatus] = useState(false);
 
   useEffect(() => {
@@ -88,13 +89,16 @@ const Page: NextPageWithLayout = () => {
   const [updateSupermarketStatus, { isLoading: isUpdating }] =
     useUpdateSupermarketStatusMutation();
 
-    // Update the saveSelectedSupermarket function
-    const saveSelectedSupermarket = (supermarket: Supermarket) => {
-      console.log('Saving supermarket:', supermarket);
-      sessionStorage.setItem("occupy-supermarket", JSON.stringify(supermarket));
-      console.log('SessionStorage after save:', sessionStorage.getItem("occupy-supermarket"));
-      location.reload();
-    };
+  // Update the saveSelectedSupermarket function
+  const saveSelectedSupermarket = (supermarket: Supermarket) => {
+    console.log("Saving supermarket:", supermarket);
+    sessionStorage.setItem("occupy-supermarket", JSON.stringify(supermarket));
+    console.log(
+      "SessionStorage after save:",
+      sessionStorage.getItem("occupy-supermarket"),
+    );
+    location.reload();
+  };
 
   // Enhanced status change handler
   const handleStatusChange = async (id: string, newStatus: boolean) => {
@@ -103,17 +107,20 @@ const Page: NextPageWithLayout = () => {
         supermarket_id: id,
         is_online: newStatus,
       }).unwrap();
-      
+
       // Update the selected supermarket if it exists
       if (selectedSupermarket && selectedSupermarket.id === id) {
         const updatedSupermarket = {
           ...selectedSupermarket,
-          is_online: newStatus
+          is_online: newStatus,
         };
         setSelectedSupermarket(updatedSupermarket);
-        sessionStorage.setItem("occupy-supermarket", JSON.stringify(updatedSupermarket));
+        sessionStorage.setItem(
+          "occupy-supermarket",
+          JSON.stringify(updatedSupermarket),
+        );
       }
-      
+
       toast({
         title: "Status Updated",
         description: `Supermarket is now ${newStatus ? "online" : "offline"}`,
@@ -140,7 +147,6 @@ const Page: NextPageWithLayout = () => {
   //   sessionStorage.setItem("occupy-supermarket", JSON.stringify(supermarket));
   //   location.reload();
   // };
-  
 
   if (isSupermarketsLoading) {
     return (
@@ -283,4 +289,3 @@ const Page: NextPageWithLayout = () => {
 };
 
 export default Page;
-

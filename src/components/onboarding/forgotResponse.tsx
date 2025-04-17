@@ -8,20 +8,27 @@ interface ForgotResponseProps {
   resendEmail: () => void;
 }
 
-const ForgotResponse: React.FC<ForgotResponseProps> = ({ resetForm,resendEmail }) => {
+const ForgotResponse: React.FC<ForgotResponseProps> = ({
+  resetForm,
+  resendEmail,
+}) => {
   return (
-    <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg px-6 py-12 lg:bg-white lg:px-8 lg:shadow-lg">
+    <div className="flex w-full max-w-lg flex-col items-center gap-8 rounded-lg bg-white px-6 py-12 lg:bg-white lg:px-8 lg:shadow-lg">
       <Image className="w-[120px]" src={mail} alt="logo" />
       <div className="flex w-full flex-col items-start gap-3">
         <h3 className="text-2xl font-medium text-[#12141A]">Email Sent</h3>
-        <p className="pb-12 text-sm font-medium text-[#606778]">
+        <p className="pb-8 text-sm font-medium text-[#606778]">
           We have sent you an email at deborah@occupy.com. Check your inbox and
           follow the instruction to reset your account password.
         </p>
 
         <p className="pt-4 text-center text-sm text-[#7B8499] lg:text-end">
           Did not receive the email?{" "}
-          <Link href="#" onClick={resendEmail} className="font-medium text-[#A74E8E] underline">
+          <Link
+            href="#"
+            onClick={resendEmail}
+            className="font-medium text-[#A74E8E] underline"
+          >
             Resend Email
           </Link>
         </p>

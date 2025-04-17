@@ -206,7 +206,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
   return (
     <div
-  className="flex w-full max-w-[200px] flex-col rounded-lg bg-white p-2 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
+      className="flex w-full flex-col rounded-lg bg-white p-2 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
       // className="flex w-[250px] cursor-pointer flex-col rounded-lg bg-slate-50 p-4 shadow-md hover:w-[260px]"
       onClick={onClickProduct}
     >

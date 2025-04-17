@@ -9,8 +9,9 @@ import {
 } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import ProductCard from "@/components/Product";
 import UserDashboard from "@/components/select-supermarket/select-supermarket/UserDashboard";
+import StoreProducts from "@/components/select-supermarket/select-supermarket/StoreProducts";
 
-interface Product {
+export interface Product {
   id: string;
   name: string;
   description: string;
@@ -28,7 +29,7 @@ interface Category {
   category_image: string;
 }
 
-const ProductsList = () => {
+export default function InventoryPage() {
   const router = useRouter();
   const { id: supermarket_id } = router.query;
 
@@ -63,6 +64,7 @@ const ProductsList = () => {
 
   const handleClickProduct = (productId: string) => {
     console.log("Product clicked:", productId);
+    // You can later navigate or open a modal, etc.
   };
 
   const handleProductDelete = async (productId: string) => {
@@ -95,10 +97,10 @@ const ProductsList = () => {
   }
 
   // Transform products data with default in_stock value
-  const products: Product[] = productsData 
+  const products: Product[] = productsData
     ? productsData.map((product: Product) => ({
         ...product,
-        in_stock: product.in_stock ?? product.quantity > 0
+        in_stock: product.in_stock ?? product.quantity > 0,
       }))
     : [];
 
@@ -169,42 +171,14 @@ const ProductsList = () => {
         </Button>
       </div>
 
-      <UserDashboard />
-      
-      {/* Responsive product grid limited to 15 products */}
-      <div className="product-grid-container">
-        <div className="mx-auto mt-8 grid w-full gap-8 px-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {products.slice(0, 15).map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              categories={categories}
-              className="w-full h-[200px] p-2 text-sm transition-all hover:scale-105 hover:shadow-md"
-              onClickProduct={() => handleClickProduct(product.id)}
-              onDeleteProduct={handleProductDelete}
-              onEditProduct={handleProductEdit}
-            />
-          ))}
-        </div>
-
-        {/* View All Products button - will show when there are 16+ products */}
-        {products.length > 15 && (
-          <div className="mt-8 flex justify-center">
-            <Button
-              onClick={() => router.push({
-                pathname: '/inventory',
-                query: { supermarket_id: supermarket_id as string }
-              })}
-              variant="outline"
-              className="bg-white hover:bg-gray-50 border-gray-300"
-            >
-              View All Products ({products.length})
-            </Button>
-          </div>
-        )}
-      </div>
+      {/* Responsive product grid */}
+      <StoreProducts
+        productList={products}
+        categories={categories}
+        handleClickProduct={handleClickProduct}
+        handleProductDelete={handleProductDelete}
+        handleProductEdit={handleProductEdit}
+      />
     </div>
   );
-};
-
-export default ProductsList;
+}

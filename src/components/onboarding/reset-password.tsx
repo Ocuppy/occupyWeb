@@ -66,8 +66,15 @@ const ResetPassword = () => {
   });
 
   if (isSuccess) {
-    dispatch(setCredentials({ token: data.password }));
-    router.push("/dashboard");
+    toast({
+      title: "Success",
+      description: "Password reset successfully",
+      variant: "default",
+    });
+
+    setTimeout(() => {
+      router.push("/auth/login");
+    }, 1500);
   }
 
   useEffect(() => {
@@ -89,19 +96,19 @@ const ResetPassword = () => {
           <ClapSpinner />
         </div>
       )}
-      
-      <div className="w-full max-w-xl px-4 py-8 sm:px-6 sm:py-12 lg:bg-white lg:rounded-lg lg:shadow-lg">
+
+      <div className="w-full max-w-xl px-4 py-8 sm:px-6 sm:py-12 lg:rounded-lg lg:bg-white lg:shadow-lg">
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
-          <Image 
-            className="w-[100px] sm:w-[120px]" 
-            src={OccupyLogo} 
-            alt="logo" 
+          <Image
+            className="w-[100px] sm:w-[120px]"
+            src={OccupyLogo}
+            alt="logo"
           />
-          
+
           {/* Content */}
           <div className="w-full text-center">
-            <h3 className="text-xl sm:text-2xl font-medium text-[#12141A]">
+            <h3 className="text-xl font-medium text-[#12141A] sm:text-2xl">
               OTP Verification
             </h3>
             <p className="mt-2 text-sm text-[#606778]">
@@ -111,7 +118,10 @@ const ResetPassword = () => {
           </div>
 
           {/* Form */}
-          <form onSubmit={formik.handleSubmit} className="w-full max-w-md mx-auto">
+          <form
+            onSubmit={formik.handleSubmit}
+            className="mx-auto w-full max-w-md"
+          >
             {/* OTP Input */}
             <div className="flex flex-col items-center gap-4">
               <InputOTP
@@ -130,17 +140,15 @@ const ResetPassword = () => {
                   ))}
                 </InputOTPGroup>
               </InputOTP>
-              
+
               {formik.errors.otp && formik.touched.otp && (
-                <div className="text-sm text-red-500">
-                  {formik.errors.otp}
-                </div>
+                <div className="text-sm text-red-500">{formik.errors.otp}</div>
               )}
             </div>
 
             {/* Password Section */}
             <div className="mt-8 text-center">
-              <h3 className="text-xl sm:text-2xl font-medium text-[#12141A]">
+              <h3 className="text-xl font-medium text-[#12141A] sm:text-2xl">
                 Create New Password
               </h3>
               <p className="mt-2 text-sm text-[#606778]">
@@ -154,7 +162,7 @@ const ResetPassword = () => {
               <div className="relative">
                 <label
                   htmlFor="newPassword"
-                  className="block text-sm font-medium text-[#606778] mb-1"
+                  className="mb-1 block text-sm font-medium text-[#606778]"
                 >
                   New Password
                 </label>
@@ -190,7 +198,7 @@ const ResetPassword = () => {
               <div className="relative">
                 <label
                   htmlFor="confirmPassword"
-                  className="block text-sm font-medium text-[#606778] mb-1"
+                  className="mb-1 block text-sm font-medium text-[#606778]"
                 >
                   Confirm Password
                 </label>
@@ -203,7 +211,8 @@ const ResetPassword = () => {
                   onBlur={formik.handleBlur}
                   value={formik.values.confirmPassword}
                   className={
-                    formik.touched.confirmPassword && formik.errors.confirmPassword
+                    formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword
                       ? "border-red-700"
                       : ""
                   }
@@ -213,20 +222,25 @@ const ResetPassword = () => {
                   className="absolute right-3 top-9 text-gray-400"
                   onClick={toggleVisibility}
                 >
-                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  {showConfirmPassword ? (
+                    <EyeOff size={20} />
+                  ) : (
+                    <Eye size={20} />
+                  )}
                 </button>
-                {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                  <div className="mt-1 text-sm text-red-500">
-                    {formik.errors.confirmPassword}
-                  </div>
-                )}
+                {formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword && (
+                    <div className="mt-1 text-sm text-red-500">
+                      {formik.errors.confirmPassword}
+                    </div>
+                  )}
               </div>
             </div>
 
             {/* Submit Button */}
             <div className="mt-8">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full py-3 text-sm sm:text-base"
               >
                 Reset Password

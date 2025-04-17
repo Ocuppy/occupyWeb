@@ -21,6 +21,8 @@ interface FormValues {
 const VerifyOtp: React.FC = () => {
   const router = useRouter();
 
+  const { toast } = useToast();
+
   const [verifyAccount, { isLoading, isSuccess, error, data }] =
     useVerifyAccountMutation();
   const initialValues: FormValues = {
@@ -42,9 +44,16 @@ const VerifyOtp: React.FC = () => {
   };
 
   if (isSuccess) {
-    router.push("/auth/login");
+    toast({
+      title: "Success",
+      description: "OTP Verification successful",
+      variant: "default",
+    });
+
+    setTimeout(() => {
+      router.push("/auth/login");
+    }, 1500);
   }
-  const { toast } = useToast();
 
   useEffect(() => {
     if (error) {
@@ -104,16 +113,24 @@ const VerifyOtp: React.FC = () => {
 
         <div className="flex w-full flex-col items-center gap-8 rounded-lg bg-white px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:shadow-lg">
           {/* Logo */}
-          <Image className="w-[100px] sm:w-[120px]" src={OccupyLogo} alt="logo" />
-  
+          <Image
+            className="w-[100px] sm:w-[120px]"
+            src={OccupyLogo}
+            alt="logo"
+          />
+
           {/* Content Container */}
-          <div className="flex w-full flex-col items-center gap-3"> {/* Changed to items-center */}
-            <h3 className="text-xl sm:text-2xl font-medium text-[#12141A] text-center"> {/* Added text-center */}
+          <div className="flex w-full flex-col items-center gap-3">
+            {" "}
+            {/* Changed to items-center */}
+            <h3 className="text-center text-xl font-medium text-[#12141A] sm:text-2xl">
+              {" "}
+              {/* Added text-center */}
               OTP verification
             </h3>
-            <p className="pb-6 sm:pb-12 text-sm text-center font-medium text-[#606778]">
+            <p className="pb-6 text-center text-sm font-medium text-[#606778] sm:pb-12">
               Please enter the 6-digit verification code that was sent to your
-              mail. It&apos;s valid for 2 minutes.{/* Changed from 30 to 2 minutes */}
+              mail. It's valid for 2 minutes.
             </p>
             <Formik
               initialValues={initialValues}
@@ -125,7 +142,7 @@ const VerifyOtp: React.FC = () => {
                 errors,
                 touched,
               }: FormikProps<FormValues>) => (
-                <Form className="w-full max-w-xs mx-auto">
+                <Form className="mx-auto w-full max-w-xs">
                   <div className="mx-auto w-fit">
                     <InputOTP
                       maxLength={6}
@@ -144,14 +161,14 @@ const VerifyOtp: React.FC = () => {
                     </InputOTP>
                   </div>
                   {errors.otp && touched.otp && (
-                    <div className="mt-2 text-sm text-red-500 text-center">
+                    <div className="mt-2 text-center text-sm text-red-500">
                       {errors.otp}
                     </div>
                   )}
-                  <div className="mt-8 w-full md:mt-4 text-center">
+                  <div className="mt-8 w-full text-center md:mt-4">
                     <button
                       type="submit"
-                      className="w-full rounded-md bg-occupy-primary p-3 text-sm sm:text-base text-white"
+                      className="w-full rounded-md bg-occupy-primary p-3 text-sm text-white sm:text-base"
                     >
                       Proceed
                     </button>

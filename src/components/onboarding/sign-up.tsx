@@ -625,11 +625,45 @@ const Signup = () => {
     } catch (error: any) {
       console.error("Error:", error);
 
-      toast({
-        title: "Error",
-        description: error.message || "An unexpected error occurred",
-        variant: "destructive",
-      });
+      try {
+        // Try to parse the error message as JSON
+        const parsedError = JSON.parse(error.message);
+
+        // If we're here, it was parseable JSON
+        if (typeof parsedError === "object" && parsedError !== null) {
+          // Loop through the validation messages
+          const errorMessages = Object.entries(parsedError)
+            .map(([field, messages]) => {
+              if (Array.isArray(messages)) {
+                return messages
+                  .map((message) => `${field}: ${message}`)
+                  .join("\n");
+              }
+              return `${field}: ${messages}`;
+            })
+            .join("\n");
+
+          toast({
+            title: "Validation Error",
+            description: errorMessages,
+            variant: "destructive",
+          });
+        } else {
+          // It's JSON but not an object with validation messages
+          toast({
+            title: "Error",
+            description: error.message || "An unexpected error occurred",
+            variant: "destructive",
+          });
+        }
+      } catch (jsonError) {
+        // Not valid JSON, just display the original message
+        toast({
+          title: "Error",
+          description: error.message || "An unexpected error occurred",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -757,7 +791,7 @@ const Signup = () => {
                   }
                   value={formValues.estate}
                 >
-                  <SelectTrigger className="h-[37px] bg-[#F9F9FC] font-semibold">
+                  <SelectTrigger className="h-[37px] font-semibold">
                     <SelectValue placeholder="Select Estate" />
                   </SelectTrigger>
                   <SelectContent>
