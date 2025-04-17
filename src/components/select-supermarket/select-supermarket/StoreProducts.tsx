@@ -50,7 +50,7 @@ export default function StoreProducts({
   };
 
   // Handle page change
-  const handlePageChange = (page) => {
+  const handlePageChange = (page:number) => {
     setCurrentPage(page);
   };
 
