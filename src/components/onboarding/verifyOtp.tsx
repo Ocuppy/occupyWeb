@@ -130,7 +130,7 @@ const VerifyOtp: React.FC = () => {
             </h3>
             <p className="pb-6 text-center text-sm font-medium text-[#606778] sm:pb-12">
               Please enter the 6-digit verification code that was sent to your
-              mail. It's valid for 2 minutes.
+              mail. It&rsquo;s valid for 2 minutes.
             </p>
             <Formik
               initialValues={initialValues}
