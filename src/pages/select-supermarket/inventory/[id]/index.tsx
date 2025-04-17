@@ -9,8 +9,9 @@ import {
 } from "@/store/redux/services/superMarketSlice/superMarketApiSlice";
 import ProductCard from "@/components/Product";
 import UserDashboard from "@/components/select-supermarket/select-supermarket/UserDashboard";
+import StoreProducts from "@/components/select-supermarket/select-supermarket/StoreProducts";
 
-interface Product {
+export interface Product {
   id: string;
   name: string;
   description: string;
@@ -28,7 +29,7 @@ interface Category {
   category_image: string;
 }
 
-const ProductsList = () => {
+export default function InventoryPage() {
   const router = useRouter();
   const { id: supermarket_id } = router.query;
 
@@ -170,24 +171,14 @@ const ProductsList = () => {
         </Button>
       </div>
 
-      <UserDashboard />
-
       {/* Responsive product grid */}
-      <div className="mx-auto mt-8 grid w-full grid-cols-2 gap-8 px-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-        {products.slice(0, 20).map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            categories={categories}
-            className="h-[200px] w-full p-2 text-sm transition-all hover:scale-105 hover:shadow-md"
-            onClickProduct={() => handleClickProduct(product.id)}
-            onDeleteProduct={handleProductDelete}
-            onEditProduct={handleProductEdit}
-          />
-        ))}
-      </div>
+      <StoreProducts
+        productList={products}
+        categories={categories}
+        handleClickProduct={handleClickProduct}
+        handleProductDelete={handleProductDelete}
+        handleProductEdit={handleProductEdit}
+      />
     </div>
   );
-};
-
-export default ProductsList;
+}
