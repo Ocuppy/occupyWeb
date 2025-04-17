@@ -26,7 +26,7 @@ export default function StoreProducts({
   const [products, setProducts] = useState(productList);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [pageSize] = useState(8);
   const [totalPages, setTotalPages] = useState(1);
 
