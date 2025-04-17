@@ -155,7 +155,7 @@ useEffect(() => {
       <Flex className="w-full justify-between px-4 xl:pl-10">
         {/* Mobile switch (centered) - Only visible on mobile */}
         <div className="xl:hidden flex items-center space-x-2 absolute left-1/2 transform -translate-x-1/2">
-          <Label htmlFor="online-mode-mobile" className="">Online</Label>
+          <Label htmlFor="online-mode-mobile" className="text-xl">Online</Label>
           <Switch 
             id="online-mode-mobile" 
             disabled={!selectedSupermarket} 
