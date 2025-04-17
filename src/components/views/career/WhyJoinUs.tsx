@@ -71,7 +71,7 @@ const jobData = [
     id: 1,
     title: "Delivery Rider",
     type: "Full Time",
-    location: "Forte Royal Estate (Airport Road)",
+    location: "Forte Royal Estate (Road)",
     linkApply: "https://forms.gle/KKZ3XGfrqDW6UUvk8",
   },
   {
