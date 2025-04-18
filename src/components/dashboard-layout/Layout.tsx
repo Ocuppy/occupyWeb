@@ -16,6 +16,9 @@ import { useAppDispatch, useAppSelector } from "@/store/redux/hooks";
 import { getCredentials } from "@/store/redux/services/authSlice/authSlice";
 import { selectAuthToken } from "@/store/redux/services/authSlice/authSlice";
 import { useRouter } from "next/router";
+import { useToast } from "../ui/use-toast";
+import { fetchToken } from "../../../firebase";
+import NotificationHandler from "./NotificationHandler";
 // import { useRouter } from "next/navigation";
 
 const Layout = ({
@@ -35,6 +38,7 @@ const Layout = ({
 
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     dispatch(getCredentials());
@@ -55,6 +59,7 @@ const Layout = ({
       <NotificationPopup />
       <OrderNotificationPopup />
       <Toaster />
+
       <div
         onClick={() => {
           // console.log("layout");
@@ -87,7 +92,7 @@ const Layout = ({
         <div className="relative mb-12 flex min-h-screen min-w-0 max-w-[100vw] flex-auto flex-col overflow-y-auto overflow-x-hidden">
           <DashboardHeader />
 
-          <main className={cn("font-inter mt-32 h-full flex-1 grow px-4 py-4")}>
+          <main className={cn("mt-32 h-full flex-1 grow px-4 py-4 font-inter")}>
             {children}
           </main>
         </div>

@@ -10,8 +10,15 @@ import React, {
 interface OrderNotificationContextProps {
   message: string | null;
   link: string | null;
-  showNotification: (message: string, link?: string) => void;
+  title: string | null;
+  showNotification: (payload: NotificationPayload, link?: string) => void;
   hideNotification: () => void;
+}
+
+interface NotificationPayload {
+  title: string;
+  body: string;
+  icon: string;
 }
 
 export const OrderNotificationContext = createContext<
@@ -29,6 +36,9 @@ export const OrderNotificationProvider: FC<NotificationProviderProps> = ({
   const [link, setLink] = useState<string | null>(null);
   const notificationSound = useRef<HTMLAudioElement | null>(null);
 
+  // title
+  const [title, setTitle] = useState<string | null>(null);
+
   useEffect(() => {
     // Initialize the audio object only on the client side
     if (typeof window !== "undefined") {
@@ -36,8 +46,9 @@ export const OrderNotificationProvider: FC<NotificationProviderProps> = ({
     }
   }, []);
 
-  const showNotification = (message: string, link?: string) => {
-    setMessage(message);
+  const showNotification = (payload: NotificationPayload, link?: string) => {
+    setMessage(payload.body);
+    setTitle(payload.title);
     if (link) {
       setLink(link);
     }
@@ -65,7 +76,7 @@ export const OrderNotificationProvider: FC<NotificationProviderProps> = ({
 
   return (
     <OrderNotificationContext.Provider
-      value={{ message, link, showNotification, hideNotification }}
+      value={{ message, title, link, showNotification, hideNotification }}
     >
       {children}
     </OrderNotificationContext.Provider>

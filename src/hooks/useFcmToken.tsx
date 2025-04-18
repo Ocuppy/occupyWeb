@@ -13,6 +13,7 @@ async function getNotificationPermissionAndToken() {
 
   // Step 2: Check if permission is already granted.
   if (Notification.permission === "granted") {
+    console.info("Notification permission granted.");
     return await fetchToken();
   }
 
@@ -108,9 +109,9 @@ const useFcmToken = () => {
         const link = payload.fcmOptions?.link || payload.data?.link;
 
         if (link) {
-          showNotification(String(payload.notification?.body), link);
+          showNotification(payload?.notification, link);
         } else {
-          showNotification(String(payload.notification?.body));
+          showNotification(payload?.notification);
         }
 
         // --------------------------------------------

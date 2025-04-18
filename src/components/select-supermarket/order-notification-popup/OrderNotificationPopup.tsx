@@ -14,7 +14,7 @@ const OrderNotificationPopup: React.FC = () => {
     );
   }
 
-  const { message, link, hideNotification } = context;
+  const { message, title, link, hideNotification } = context;
 
   return message ? (
     <div className={styles.notificationContainer}>
@@ -28,7 +28,7 @@ const OrderNotificationPopup: React.FC = () => {
             transition={{ ease: "easeInOut", duration: 0.5 }}
           >
             <header className="flex w-full items-center justify-between rounded-t-md bg-slate-50 p-4">
-              <h6>Notification!</h6>
+              <h6>{title}</h6>
               <button>
                 <X onClick={hideNotification} />
               </button>
