@@ -80,6 +80,11 @@ const useFcmToken = () => {
       return;
     }
 
+    console.info(
+      `%ctoken: ${token}`,
+      "color: green; background: #c7c7c7; padding: 8px; font-size: 20px",
+    );
+
     // Step 7: Set the fetched token and mark as fetched.
     setNotificationPermissionStatus(Notification.permission);
     setToken(token);
