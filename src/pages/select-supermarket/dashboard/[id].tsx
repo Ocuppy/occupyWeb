@@ -191,13 +191,9 @@ const ProductsList = () => {
         {products.length > 15 && (
   <div className="mt-8 flex justify-center">
     <Button
-      onClick={() => router.push({
-        pathname: 'select-supermarket/inventory',
-        query: { supermarket_id: supermarket_id as string }
-      })}
-      // variant="outline"
-      size="lg"  // Added size prop
-      className="hover:bg-gray-50 border-gray-300 text-white"  // Simplified classes
+      onClick={() => router.push(`/select-supermarket/inventory/${supermarket_id}`)}
+      size="lg"
+      className="border-gray-300 text-white"
     >
       View All Products ({products.length})
     </Button>
