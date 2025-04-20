@@ -25,7 +25,6 @@ const Footer = () => {
               <div className="flex flex-col gap-3">
                 <Link href={"/auth/login"}>My Account</Link>
                 <Link href={"/#"}>FAQs</Link>
-              
               </div>
             </div>
             <div className="flex grow flex-col gap-4">
@@ -75,9 +74,7 @@ const Footer = () => {
                 height={40}
               />
             </Link> */}
-            <Link
-              href={"https://www.linkedin.com/company/occupy-mart/ "}
-            >
+            <Link href={"https://www.linkedin.com/company/occupy-mart/ "}>
               <Image
                 src={"/icons/linkedin.svg"}
                 alt="icon"

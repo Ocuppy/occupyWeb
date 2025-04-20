@@ -5,7 +5,7 @@ import Layout from "@/components/base-layout/Layout";
 const Page: NextPageWithLayout = () => {
   return (
     <section className="mx-auto my-7 w-[85vw] max-w-[94.8125rem]">
-      <header className="mb-6 text-center">
+      <header className="mb-6 text-balance">
         <h1 className="text-4xl font-bold text-[#242331]">Privacy Policy</h1>
         <p className="text-[#797979]">Effective Date: April 10, 2025</p>
       </header>
@@ -89,13 +89,22 @@ const Page: NextPageWithLayout = () => {
         </section>
 
         <section>
+          <h2 className="text-2xl font-semibold text-[#242331] mb-2">Account Deletion</h2>
+          <p className="text-[#797979]">
+            If you wish to delete your Occupy account, you can do so by contacting our support team at 
+            <a href="mailto:support@occupy.com" className="text-blue-600 underline ml-1">admin@occupymart.com </a> 
+            with the subject line “Account Deletion Request”. We will process your request within 48 hours.
+          </p>
+        </section>
+
+        <section>
           <h2 className="text-2xl font-semibold text-[#242331] mb-2">Contact Us</h2>
           <p className="text-[#797979]">
             If you have any questions or concerns about this Privacy Policy, please contact us:
           </p>
           <ul className="mt-2 text-[#797979]">
-            <li>Email: support@occupy.com</li>
-            <li>Phone: 09061140728</li>
+            <li>Email: admin@occupymart.com</li>
+            <li>Phone: +2349061140728</li>
           </ul>
         </section>
       </div>
