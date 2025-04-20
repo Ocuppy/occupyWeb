@@ -163,30 +163,37 @@ export const orderTableColumns: ColumnDef<APIOrderType>[] = [
     ),
     cell: ({ row }) => {
       const order = row.original;
-      const mainProduct = order.ordered_items[0].product;
+      const mainProduct =
+        order.ordered_items.length > 0 ? order.ordered_items[0]?.product : null;
       const additionalProductsCount = order.ordered_items.length - 1;
 
       return (
-        <div className="flex items-center">
-          <div className="h-[44px] w-[44px] rounded-lg border-none bg-[#E0E2E7]">
-            <Image
-              src={mainProduct.product_image}
-              alt={mainProduct.name}
-              width={50}
-              height={50}
-            />
-          </div>
-          <div className="ml-2 flex flex-col">
-            <span className="text-sm font-medium text-[#333843]">
-              {mainProduct.name}
-            </span>
-            {additionalProductsCount > 0 && (
-              <span className="text-xs text-[#667085]">
-                +{additionalProductsCount} other products
-              </span>
-            )}
-          </div>
-        </div>
+        <>
+          {mainProduct ? (
+            <div className="flex items-center">
+              <div className="h-[44px] w-[44px] rounded-lg border-none bg-[#E0E2E7]">
+                <Image
+                  src={mainProduct?.product_image}
+                  alt={mainProduct?.name}
+                  width={50}
+                  height={50}
+                />
+              </div>
+              <div className="ml-2 flex flex-col">
+                <span className="text-sm font-medium text-[#333843]">
+                  {mainProduct.name}
+                </span>
+                {additionalProductsCount > 0 && (
+                  <span className="text-xs text-[#667085]">
+                    +{additionalProductsCount} other products
+                  </span>
+                )}
+              </div>
+            </div>
+          ) : (
+            <p>N/A</p>
+          )}
+        </>
       );
     },
     enableSorting: true,

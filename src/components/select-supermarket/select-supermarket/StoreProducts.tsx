@@ -50,17 +50,55 @@ export default function StoreProducts({
   };
 
   // Handle page change
-  const handlePageChange = (page:number) => {
+  const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
   // Generate page numbers
   const getPageNumbers = () => {
-    const pages = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(i);
+    const maxPagesToShow = 10;
+    const pageNumbers = [];
+
+    if (totalPages <= maxPagesToShow) {
+      // If we have fewer pages than the max, show all pages
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push({ page: i, display: i.toString() });
+      }
+    } else {
+      // Always show first page
+      pageNumbers.push({ page: 1, display: "1" });
+
+      if (currentPage > 4) {
+        // Add ellipsis if current page is far from the beginning
+        pageNumbers.push({ page: null, display: "..." });
+      }
+
+      // Calculate range around current page
+      let startPage = Math.max(2, currentPage - 2);
+      let endPage = Math.min(totalPages - 1, currentPage + 2);
+
+      // Adjust range to show more pages if we're at the beginning or end
+      if (currentPage <= 4) {
+        endPage = Math.min(totalPages - 1, 6);
+      } else if (currentPage > totalPages - 4) {
+        startPage = Math.max(2, totalPages - 6);
+      }
+
+      // Add page numbers around current page
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push({ page: i, display: i.toString() });
+      }
+
+      if (currentPage < totalPages - 3) {
+        // Add ellipsis if current page is far from the end
+        pageNumbers.push({ page: null, display: "..." });
+      }
+
+      // Always show last page
+      pageNumbers.push({ page: totalPages, display: totalPages.toString() });
     }
-    return pages;
+
+    return pageNumbers;
   };
 
   return (
@@ -102,13 +140,13 @@ export default function StoreProducts({
 
       {/* Pagination */}
       <div className="mt-6 flex items-center justify-between">
-        <div className="text-base text-gray-700 lg:text-lg">
+        <div className="text-base text-gray-600">
           Showing{" "}
           {filteredProducts.length > 0 ? (currentPage - 1) * pageSize + 1 : 0}{" "}
           to {Math.min(currentPage * pageSize, filteredProducts.length)} of{" "}
           {filteredProducts.length} products
         </div>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-x-4">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -117,20 +155,31 @@ export default function StoreProducts({
             Previous
           </button>
 
-          {getPageNumbers().map((page) => (
-            <button
-              key={page}
-              onClick={() => handlePageChange(page)}
-              className={`rounded-md px-4 py-2 ${currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
-            >
-              {page}
-            </button>
-          ))}
+          <div className="flex items-center gap-1">
+            {getPageNumbers().map((item, index) =>
+              item.page === null ? (
+                <span
+                  key={`ellipsis-${index}`}
+                  className="px-4 py-2 text-gray-700"
+                >
+                  {item.display}
+                </span>
+              ) : (
+                <button
+                  key={`page-${item.page}`}
+                  onClick={() => handlePageChange(item.page)}
+                  className={`rounded-md px-4 py-2 ${currentPage === item.page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+                >
+                  {item.display}
+                </button>
+              ),
+            )}
+          </div>
 
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            className={`rounded-md px-4 py-2 ${currentPage === totalPages ? "cursor-not-allowed bg-gray-200 text-gray-400" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
+            className={`ml-4 rounded-md px-4 py-2 ${currentPage === totalPages ? "cursor-not-allowed bg-gray-200 text-gray-400" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`}
           >
             Next
           </button>
