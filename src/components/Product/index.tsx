@@ -173,7 +173,7 @@ interface ProductCardProps {
     supermarket_id: string;
     price: string;
     quantity: number;
-    in_stock: boolean; // <-- Ensure it's not optional
+    in_stock: boolean;
     image?: string;
   };
   categories: Array<{
@@ -194,23 +194,30 @@ const ProductCard: React.FC<ProductCardProps> = ({
   onDeleteProduct,
   onEditProduct,
 }) => {
-  // Add debug logs
-  // console.log("Product category ID:", product.category);
-  // console.log("Available categories:", categories);
-
   const categoryName =
     categories.find((cat) => cat.id.toString() === product.category.toString())
       ?.category_name || "Unknown Category";
 
-  // console.log("Found category name:", categoryName);
-
   return (
     <div
-  className="flex w-full max-w-[200px] flex-col rounded-lg bg-white p-2 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
-      // className="flex w-[250px] cursor-pointer flex-col rounded-lg bg-slate-50 p-4 shadow-md hover:w-[260px]"
+      className="flex w-full max-w-[200px] flex-col rounded-lg bg-white p-2 shadow-md transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
       onClick={onClickProduct}
     >
-      <div className="w-full rounded-md">
+      {/* Stock status indicator (top-left) */}
+      <div className="left-2 top-2 z-10 mb-4 mt-2">
+        {product.in_stock ? (
+          <span className="rounded-full bg-[#a0ff8e] px-2 py-1 text-[10px] lg:text-lg text-green-600">
+            In Stock
+          </span>
+        ) : (
+          <span className="rounded-full bg-[#e9b5b5] px-2 py-1 text-[10px] lg:text-lg text-red-600">
+            Out of Stock
+          </span>
+        )}
+      </div>
+
+      {/* Product image */}
+      <div className="relative w-full rounded-md">
         {product.product_image ? (
           <Image
             src={product.product_image}
@@ -226,6 +233,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
         )}
       </div>
+
+      {/* Product details */}
       <div className="px-2 py-4 pb-0">
         <div className="flex flex-col">
           <p className="text-sm font-semibold text-purple-500">
@@ -234,18 +243,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
           <div className="mb-3 flex items-center justify-between">
             <h1 className="text-xl lg:text-2xl font-medium">{product.name}</h1>
-            {product.in_stock ? (
-              <span className="rounded-full bg-[#a0ff8e] px-2 py-1 text-[7px] lg:text-xs text-green-600">
-                In Stock
-              </span>
-            ) : (
-              <span className="rounded-full bg-[#e9b5b5] px-2 py-1 text-[7px] lg:text-xs text-red-600">
-                Out of Stock
-              </span>
-            )}
           </div>
+          
           <p className="text-base text-gray-400">{product.description}</p>
-
           <p className="text-lg font-semibold text-gray-500">
             Quantity: <span className="font-normal">{product.quantity}</span>
           </p>
@@ -255,24 +255,28 @@ const ProductCard: React.FC<ProductCardProps> = ({
               "en-US",
             )}
           </p>
+          
+          {/* Action buttons */}
           <div className="flex w-full items-center">
             <button
               className="flex w-1/2 items-center justify-center p-3 hover:bg-gray-300"
-              onClick={() => onEditProduct(product.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onEditProduct(product.id);
+              }}
             >
               <FaPencilAlt size={20} />
             </button>
             <button
-              className="flex w-1/2 place-items-center items-center justify-center p-3 hover:bg-red-200"
-              onClick={() => onDeleteProduct(product.id)}
+              className="flex w-1/2 items-center justify-center p-3 hover:bg-red-200"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDeleteProduct(product.id);
+              }}
             >
               <MdDelete color="red" size={20} />
             </button>
           </div>
-
-          {/* <button className="h-[50px] w-full rounded-full bg-green-500 py-2 text-xl font-semibold text-white">
-            Add to Cart
-          </button> */}
         </div>
       </div>
     </div>
