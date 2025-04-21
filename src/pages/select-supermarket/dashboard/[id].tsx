@@ -189,19 +189,16 @@ const ProductsList = () => {
 
         {/* View All Products button - will show when there are 16+ products */}
         {products.length > 15 && (
-          <div className="mt-8 flex justify-center">
-            <Button
-              onClick={() => router.push({
-                pathname: '/inventory',
-                query: { supermarket_id: supermarket_id as string }
-              })}
-              variant="outline"
-              className="bg-white hover:bg-gray-50 border-gray-300"
-            >
-              View All Products ({products.length})
-            </Button>
-          </div>
-        )}
+  <div className="mt-8 flex justify-center">
+    <Button
+      onClick={() => router.push(`/select-supermarket/inventory/${supermarket_id}`)}
+      size="lg"
+      className="border-gray-300 text-white"
+    >
+      View All Products ({products.length})
+    </Button>
+  </div>
+)}
       </div>
     </div>
   );
