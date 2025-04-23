@@ -46,9 +46,12 @@ export const OrderNotificationProvider: FC<NotificationProviderProps> = ({
     }
   }, []);
 
-  const showNotification = (payload: NotificationPayload, link?: string) => {
-    setMessage(payload.body);
-    setTitle(payload.title);
+  const showNotification = (
+    payload: NotificationPayload | undefined,
+    link?: string,
+  ) => {
+    setMessage(payload?.body ?? null);
+    setTitle(payload?.title ?? null);
     if (link) {
       setLink(link);
     }

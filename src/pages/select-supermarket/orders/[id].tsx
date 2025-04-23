@@ -23,7 +23,10 @@ const SupermarketOrdersPage = () => {
       ) : error ? (
         <div>Error loading orders. Please try again.</div>
       ) : (
-        <DataTable data={data || []} columns={columns} />
+        <DataTable
+          data={data ? [...data].sort((a: any, b: any) => b.id - a.id) : []}
+          columns={columns}
+        />
       )}
     </div>
   );
