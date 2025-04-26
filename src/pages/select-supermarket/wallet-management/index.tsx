@@ -65,7 +65,7 @@ const Page = () => {
               </div>
             </Flex>
             <Flex>
-              <p className="font-bold text-[26px] text-[#333333]">203k</p>
+              <p className="font-bold text-[26px] text-[#333333]">0</p>
               <svg
                 width="19"
                 height="11"

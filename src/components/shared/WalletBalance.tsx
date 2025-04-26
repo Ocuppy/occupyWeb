@@ -17,7 +17,7 @@ const WalletBalance = ({
       <div className="top-1/2 absolute text-white left-10 translate-y-[-50%]">
         <p className="text-[14px] ">{walletName || "Wallet Balance"}</p>
         <p className="text-[28px] font-semibold mb-4">
-          {amount || "NGN250,500.00"}
+          {amount || "NGN0"}
         </p>
         {walletNumber && (
           <p className="font-semibold text-[14px] text-[#FFEF60]">
