@@ -138,7 +138,7 @@ const AccountStatus = ({ isApproved }: { isApproved?: boolean }) => {
                   Total Revenue
                 </p>
                 <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold text-[#333333]">203k</p>
+                  <p className="text-2xl font-bold text-[#333333]">0</p>
                   <svg
                     width="19"
                     height="8"
@@ -183,7 +183,7 @@ const AccountStatus = ({ isApproved }: { isApproved?: boolean }) => {
                   Total Item Sold
                 </p>
                 <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold text-[#333333]">203k</p>
+                  <p className="text-2xl font-bold text-[#333333]">0</p>
                   <svg
                     width="19"
                     height="8"
@@ -228,7 +228,7 @@ const AccountStatus = ({ isApproved }: { isApproved?: boolean }) => {
                   Order fulfilled
                 </p>
                 <div className="flex items-center gap-2">
-                  <p className="text-2xl font-bold text-[#333333]">203k</p>
+                  <p className="text-2xl font-bold text-[#333333]">0</p>
                   <svg
                     width="19"
                     height="8"
@@ -257,7 +257,7 @@ const AccountStatus = ({ isApproved }: { isApproved?: boolean }) => {
             <div className="w-[19.9375rem] rounded-lg bg-gradient-to-r from-[#44A159] to-[#9CEA38] px-2 py-14">
               <div className="text-white">
                 <h5 className="text-sm">Wallet Balance</h5>
-                <h6 className="text-3xl font-semibold">NGN250,500.00</h6>
+                <h6 className="text-3xl font-semibold">NGN0</h6>
               </div>
             </div>
           </section>
