@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { APIOrderType } from "../order-table-columns";
 import { useAcceptOrderMutation } from "@/store/redux/services/superMarketOrdersSlice/superMarketOrdersApiSlice";
+import OrderProductImage from "./order-product-image";
 
 interface OrderDetailsProps {
   order: APIOrderType;
@@ -39,6 +40,8 @@ export function OrderDetails({ order }: OrderDetailsProps) {
     );
   };
 
+  console.log(order.ordered_items);
+
   return (
     <section className="w-full">
       <div className="max-h-[85vh] space-y-6 overflow-y-auto p-4">
@@ -65,14 +68,18 @@ export function OrderDetails({ order }: OrderDetailsProps) {
         <div>
           <h2 className="mb-2 text-lg font-semibold">Product Ordered</h2>
           <div className="overflow-hidden rounded-lg border">
-            <div className="grid grid-cols-3 bg-gray-100 p-2 font-medium">
+            <div className="grid grid-cols-4 bg-gray-100 p-2 font-medium">
+              <div>Image</div>
               <div>Product</div>
               <div>Quantity</div>
               <div>Status</div>
             </div>
             <div className="divide-y">
               {order.ordered_items.map((item) => (
-                <div key={item.id} className="grid grid-cols-3 p-2">
+                <div key={item.id} className="grid grid-cols-4 p-2">
+                  <div>
+                    <OrderProductImage image={item.product.product_image} />
+                  </div>
                   <div>{item.product.name}</div>
                   <div>{item.quantity}</div>
                   <div>
