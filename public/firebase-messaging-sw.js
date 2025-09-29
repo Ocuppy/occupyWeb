@@ -4,13 +4,13 @@ importScripts(
 );
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN, 
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyABA2ypU4e0Tg_VkuJlRrywJTV6hzl4B0k",
+  authDomain: "occupy-notification.firebaseapp.com", 
+  projectId: "occupy-notification",
+  storageBucket: "occupy-notification.firebasestorage.app",
+  messagingSenderId: "377753652412",
+  appId: "1:377753652412:web:c57ca4cf7dd98ea84f14b9",
+  measurementId: "G-EDJFV0DRHW",
 };
 
 firebase.initializeApp(firebaseConfig);
