@@ -152,7 +152,7 @@ const DashboardHeader = () => {
   const { showNotification } = notificationContext;
 
   useEffect(() => {
-    console.log('token', token)
+    // console.log('token', token)
     updateNotificationToken({id: userID, token});
   },[token])
   

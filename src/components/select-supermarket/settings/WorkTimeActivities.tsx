@@ -69,7 +69,7 @@ const WorkTimeActivities = ({
                       closeMenuOnSelect={false}
                       // components={animatedComponents}
                       onChange={(e) => {
-                        console.log(e, "eeeee");
+                        // console.log(e, "eeeee");
                       }}
                       defaultValue={""}
                       isMulti
@@ -80,7 +80,7 @@ const WorkTimeActivities = ({
                     <Input
                       key={idx}
                       onChange={(e) => {
-                        console.log(e, "eeeee");
+                        // console.log(e, "eeeee");
                       }}
                       className="w-1/4"
                       placeholder="hh:mm"

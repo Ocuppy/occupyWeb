@@ -13,7 +13,7 @@ export default function NotificationHandler() {
         const messagingInstance = await messaging();
 
         if (!messagingInstance) {
-          console.log("Messaging not supported or permission not granted");
+          // console.log("Messaging not supported or permission not granted");
           return;
         }
 

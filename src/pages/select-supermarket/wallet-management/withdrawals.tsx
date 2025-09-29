@@ -63,14 +63,20 @@ const Page = () => {
       <div>
         <SpaceBetween className="my-6">
           <Flex>
-            <SearchBar onSearch={(val) => console.log(val)} />
+            <SearchBar onSearch={(val) => {
+              // console.log(val)
+              }} />
             <CustomDropdown
               BtnComponent={<FilterIcon />}
               dropdownData={[
-                { label: "Something", onClick: () => console.log("something") },
+                { label: "Something", onClick: () => {
+                  // console.log("something")
+                } },
                 {
                   label: "Something 1",
-                  onClick: () => console.log("something"),
+                  onClick: () => {
+                    // console.log("something")
+                  },
                 },
               ]}
             />
@@ -87,10 +93,14 @@ const Page = () => {
               }
               triggerClassName="py-2"
               dropdownData={[
-                { label: "Something", onClick: () => console.log("something") },
+                { label: "Something", onClick: () => {
+                  // console.log("something")
+                } },
                 {
                   label: "Something 1",
-                  onClick: () => console.log("something"),
+                  onClick: () => {
+                    // console.log("something")
+                  },
                 },
               ]}
             />

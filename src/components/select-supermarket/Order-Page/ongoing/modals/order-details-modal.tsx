@@ -40,7 +40,7 @@ export function OrderDetails({ order }: OrderDetailsProps) {
     );
   };
 
-  console.log(order.ordered_items);
+  // console.log(order.ordered_items);
 
   return (
     <section className="w-full">

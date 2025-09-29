@@ -26,7 +26,7 @@ const InitiateWithdrawalModal = ({
   });
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    // console.log(data);
   };
   const withdrawalFormFields = [
     {

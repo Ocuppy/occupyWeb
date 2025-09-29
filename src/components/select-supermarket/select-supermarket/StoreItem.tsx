@@ -21,11 +21,11 @@ interface StoreItemProps {
 const StoreItem: React.FC<StoreItemProps> = ({ store, onClickStore, isSelected = false }) => {
   // Debugging - verify the handler is received
   useEffect(() => {
-    console.log('StoreItem mounted with onClickStore:', !!onClickStore);
+    // console.log('StoreItem mounted with onClickStore:', !!onClickStore);
   }, [onClickStore]);
 
   const handleCardClick = () => {
-    console.log('Card clicked, calling onClickStore');
+    // console.log('Card clicked, calling onClickStore');
     onClickStore();
   };
 

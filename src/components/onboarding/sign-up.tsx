@@ -696,7 +696,9 @@ const Signup = () => {
             className="w-[120px] cursor-pointer"
             src={OccupyLogo}
             alt="logo"
-            onClick={() => console.log("Redirect to home")}
+            onClick={() => {
+              // console.log("Redirect to home")
+            }}
           />
           <div className="flex flex-col items-start gap-3">
             <h3 className="text-2xl font-medium text-[#12141A]">

@@ -188,7 +188,7 @@ const EditProduct: React.FC = () => {
     setIsSubmitting(true);
     try {
       const token = sessionStorage.getItem("token");
-      console.log("This is the sessionStorage", sessionStorage);
+      // console.log("This is the sessionStorage", sessionStorage);
 
       if (!token) {
         toast({

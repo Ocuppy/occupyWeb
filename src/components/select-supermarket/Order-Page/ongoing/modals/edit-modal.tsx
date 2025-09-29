@@ -63,7 +63,7 @@ export default function EditDialog({ order }: EditProps) {
   });
 
   function onSubmit(values: editSchemaType) {
-    console.log(values);
+    // console.log(values);
   }
   return (
     <>

@@ -98,7 +98,7 @@ const Index = () => {
   ];
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    // console.log(data);
   };
   return (
     <div className="h-full rounded-md bg-white p-6">

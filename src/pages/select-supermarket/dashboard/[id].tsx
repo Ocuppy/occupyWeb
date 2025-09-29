@@ -62,7 +62,7 @@ const ProductsList = () => {
   }, []);
 
   const handleClickProduct = (productId: string) => {
-    console.log("Product clicked:", productId);
+    // console.log("Product clicked:", productId);
   };
 
   const handleProductDelete = async (productId: string) => {

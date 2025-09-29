@@ -37,7 +37,7 @@ messaging.onBackgroundMessage((payload) => {
 });
 
 self.addEventListener("notificationclick", function (event) {
-  console.log("[firebase-messaging-sw.js] Notification click received.");
+  // console.log("[firebase-messaging-sw.js] Notification click received.");
 
   event.notification.close();
 
@@ -59,7 +59,7 @@ self.addEventListener("notificationclick", function (event) {
         }
 
         if (clients.openWindow) {
-          console.log("OPENWINDOW ON CLIENT");
+          // console.log("OPENWINDOW ON CLIENT");
           return clients.openWindow(url);
         }
       }),

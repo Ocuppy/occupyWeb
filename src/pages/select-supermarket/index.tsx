@@ -91,12 +91,12 @@ const Page: NextPageWithLayout = () => {
 
   // Update the saveSelectedSupermarket function
   const saveSelectedSupermarket = (supermarket: Supermarket) => {
-    console.log("Saving supermarket:", supermarket);
+    // console.log("Saving supermarket:", supermarket);
     sessionStorage.setItem("occupy-supermarket", JSON.stringify(supermarket));
-    console.log(
-      "SessionStorage after save:",
-      sessionStorage.getItem("occupy-supermarket"),
-    );
+    // console.log(
+    //   "SessionStorage after save:",
+    //   sessionStorage.getItem("occupy-supermarket"),
+    // );
     location.reload();
   };
 
@@ -222,7 +222,7 @@ const Page: NextPageWithLayout = () => {
   //   );
   // }
 
-  console.log("when supermarkets is == 0", supermarkets);
+  // console.log("when supermarkets is == 0", supermarkets);
   if (supermarkets.length === 0) {
     return (
       <div className="h-full rounded-md bg-white px-4 py-6">

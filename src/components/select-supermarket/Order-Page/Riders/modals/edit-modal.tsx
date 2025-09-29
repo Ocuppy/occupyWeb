@@ -59,7 +59,7 @@ export default function EditDialog({ rider }: EditProps) {
   });
 
   function onSubmit(values: editSchemaType) {
-    console.log(values);
+    // console.log(values);
   }
   return (
     <>

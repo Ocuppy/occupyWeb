@@ -14,7 +14,7 @@ const SupermarketOrdersPage = () => {
     { skip: !supermarket_id },
   );
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="max-w-screen flex w-full flex-col">

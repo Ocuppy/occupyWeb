@@ -63,7 +63,7 @@ export default function InventoryPage() {
   }, []);
 
   const handleClickProduct = (productId: string) => {
-    console.log("Product clicked:", productId);
+    // console.log("Product clicked:", productId);
     // You can later navigate or open a modal, etc.
   };
 
