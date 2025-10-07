@@ -11,6 +11,8 @@
   white-space: nowrap;
   width: 32rem;
   max-width: 98vw;
+  border-left: 6px solid #A74E8E;
+  padding: 1.25rem 1rem;
 }
 
 .notificationContainer {

@@ -246,21 +246,23 @@ const DashboardHeader = () => {
 
   // Notification Testing
   // const handleTestNotification = async () => {
-  //   const response = await fetch("/api/notification", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       token: token,
-  //       title: "Test Notification",
-  //       message: "This is a test notification",
-  //       link: "/dashboard/orders/ongoing",
-  //     }),
-  //   });
+  //   // const response = await fetch("/api/notification", {
+  //   //   method: "POST",
+  //   //   headers: {
+  //   //     "Content-Type": "application/json",
+  //   //   },
+  //   //   body: JSON.stringify({
+  //   //     token: token,
+  //   //     title: "Test Notification",
+  //   //     message: "This is a test notification",
+  //   //     link: "/dashboard/orders/ongoing",
+  //   //   }),
+  //   // });
 
-  //   const data = await response.json();
-  //   console.log("response data", data);
+  //   // const data = await response.json();
+  //   // console.log("response data", data);
+
+  //   showNotification({title: 'title', body: 'Notif', icon: ''}, '/dashboard/orders/ongoing')
   // };
 
   // return (

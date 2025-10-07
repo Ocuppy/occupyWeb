@@ -12,7 +12,7 @@ interface OrderNotificationContextProps {
   link: string | null;
   title: string | null;
   showNotification: (
-    payload: NotificationPayload | undefined,
+    payload?: NotificationPayload,
     link?: string,
   ) => void;
   hideNotification: () => void;

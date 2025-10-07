@@ -17,7 +17,7 @@ const OrderNotificationPopup: React.FC = () => {
   const { message, title, link, hideNotification } = context;
 
   return message ? (
-    <div className={styles.notificationContainer}>
+    <div className={styles.notificationContainer} onClick={hideNotification}>
       <AnimatePresence>
         {message && (
           <motion.div
@@ -27,7 +27,18 @@ const OrderNotificationPopup: React.FC = () => {
             exit={{ y: "-100%", opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.5 }}
           >
-            <header className="flex w-full items-center justify-between rounded-t-md bg-slate-50 p-4">
+            <div className="flex items-start justify-between">
+              <div>
+                <h6 className="font-bold text-sm mb-4">{title}</h6>
+                <Link href={`${link}`} className="font-light opacity-70">
+                  {message}
+                </Link>
+              </div>
+              <button>
+                <X onClick={hideNotification} />
+              </button>
+            </div>
+            {/* <header className="flex w-full items-center justify-between rounded-t-md bg-slate-50 p-4">
               <h6>{title}</h6>
               <button>
                 <X onClick={hideNotification} />
@@ -37,7 +48,7 @@ const OrderNotificationPopup: React.FC = () => {
               <Link href={`${link}`} className={styles.link}>
                 {message}
               </Link>
-            </section>
+            </section> */}
           </motion.div>
         )}
       </AnimatePresence>
