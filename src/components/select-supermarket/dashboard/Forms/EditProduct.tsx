@@ -210,7 +210,7 @@ const EditProduct: React.FC = () => {
       if (data.photo) formData.append("product_image", data.photo);
 
       const response = await fetch(
-        `${baseUrl}store/edit-product/${productId}/`,
+        `${baseUrl}api/store/edit-product/${productId}/`,
         {
           method: "PATCH",
           body: formData,

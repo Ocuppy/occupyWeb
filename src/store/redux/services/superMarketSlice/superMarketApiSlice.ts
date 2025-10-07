@@ -103,7 +103,7 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
       query: ({ product_id, ...body }) => {
         const formData = new FormData();
 
-        formData.append("id", product_id);
+        // formData.append("id", product_id);
 
         Object.keys(body).forEach((key) => {
           if (key === "product_image" && body[key] instanceof File) {
@@ -115,8 +115,9 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
 
         return {
           url: `/store/edit-product/${product_id}/`,
-          method: "PUT",
+          method: "PATCH",
           body: formData,
+          headers: {}  
         };
       },
     }),
@@ -149,7 +150,7 @@ export const superMarketApiSlice = baseApiSlice.injectEndpoints({
     getProductDetail: builder.query({
       query: ({ productId }) => {
         return {
-          url: `/store/customers/supermarketproduct-detail/${productId}/`,
+          url: `/store/customers/supermarketproducts/${productId}/`,
           method: "GET",
         };
       },

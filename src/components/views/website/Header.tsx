@@ -94,8 +94,12 @@ const Header = () => {
 
         <Flex className="mt-4">
           {[
-            { desc: "App Store", onClick: () => {}, imgSrc: AppStoreIcon },
-            { desc: "Google Play", onClick: () => {}, imgSrc: PlayStoreIcon },
+            { desc: "App Store", onClick: () => {
+              window.open("https://apps.apple.com/us/app/occupy-estate-shopping/id6751633926", "_blank");
+            }, imgSrc: AppStoreIcon },
+            { desc: "Google Play", onClick: () => {
+              window.open("https://play.google.com/store/apps/details?id=com.barefooted.occupy&pcampaignid=web_share", "_blank");
+            }, imgSrc: PlayStoreIcon },
           ].map((data, idx) => (
             <Flex
               key={data.desc}
